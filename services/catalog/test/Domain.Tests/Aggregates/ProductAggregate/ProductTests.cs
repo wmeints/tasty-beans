@@ -5,7 +5,6 @@ using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Events;
 using RecommendCoffee.Catalog.Domain.Common;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace RecommendCoffee.Catalog.Domain.Tests.Aggregates.ProductAggregate;
@@ -23,7 +22,7 @@ public class ProductTests
             new[] { new ProductVariant(500, 7.71m) }
         );
 
-        var product  = Product.Load(aggregateId, new[] { domainEvent });
+        var product = Product.Load(aggregateId, new[] { domainEvent });
 
         product.Should().NotBeNull();
         product.Name.Should().Be("test");
@@ -103,5 +102,82 @@ public class ProductTests
                 new ProductVariant(weight, 7.50M)
             }));
         });
+    }
+
+    [Fact]
+    public void UpdateProductDetails_ValidInput_UpdatesState()
+    {
+        var product = Product.Register(new RegisterProductCommand(
+            "Power blend",
+            "A dark roast to get you started.",
+            new[]
+            {
+                new ProductVariant(250, 7.50M)
+            }));
+
+        product.Reset();
+
+        product.UpdateDetails(new UpdateProductDetailsCommand(
+            product.Id,
+            "Bitter sweet",
+            "A blend to dream of.",
+            new[]
+            {
+                new ProductVariant(250, 5.25m)
+            }));
+
+        product.Name.Should().Be("Bitter sweet");
+        product.Description.Should().Be("A blend to dream of.");
+        product.Variants.Should().BeEquivalentTo(new[] { new ProductVariant(250, 5.25m) });
+    }
+
+    [Fact]
+    public void UpdateProductDetails_ValidInput_GeneratesIntegrationEvent()
+    {
+        var product = Product.Register(new RegisterProductCommand(
+            "Power blend",
+            "A dark roast to get you started.",
+            new[]
+            {
+                new ProductVariant(250, 7.50M)
+            }));
+
+        product.Reset();
+
+        product.UpdateDetails(new UpdateProductDetailsCommand(
+            product.Id,
+            "Bitter sweet",
+            "A blend to dream of.",
+            new[]
+            {
+                new ProductVariant(250, 5.25m)
+            }));
+
+        product.EventsToPublish.Should().HaveCount(1);
+    }
+
+    [Fact]
+    public void UpdateProductDetails_ValidInput_GeneratesEventToStore()
+    {
+        var product = Product.Register(new RegisterProductCommand(
+            "Power blend",
+            "A dark roast to get you started.",
+            new[]
+            {
+                new ProductVariant(250, 7.50M)
+            }));
+
+        product.Reset();
+
+        product.UpdateDetails(new UpdateProductDetailsCommand(
+            product.Id,
+            "Bitter sweet",
+            "A blend to dream of.",
+            new[]
+            {
+                new ProductVariant(250, 5.25m)
+            }));
+
+        product.EventsToStore.Should().HaveCount(1);
     }
 }

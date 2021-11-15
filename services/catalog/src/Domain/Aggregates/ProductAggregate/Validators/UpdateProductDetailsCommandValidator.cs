@@ -3,9 +3,9 @@ using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Commands;
 
 namespace RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Validators;
 
-internal class RegisterProductCommandValidator : AbstractValidator<RegisterProductCommand>
+internal class UpdateProductDetailsCommandValidator : AbstractValidator<UpdateProductDetailsCommand>
 {
-    public RegisterProductCommandValidator()
+    public UpdateProductDetailsCommandValidator()
     {
         RuleFor(x => x.Name).NotEmpty().MaximumLength(500);
         RuleFor(x => x.Description).NotEmpty();

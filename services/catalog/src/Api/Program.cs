@@ -22,11 +22,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IEventStore<Product, Guid>, EventStore<Product, Guid>>();
 builder.Services.AddScoped<IProductInformationRepository, ProductInformationRepository>();
+builder.Services.AddScoped<IIntegrationEventPublisher, IntegrationEventPublisher>();
 builder.Services.AddScoped<ProductInformationProjector>();
 builder.Services.AddScoped<RegisterProductCommandHandler>();
 builder.Services.AddScoped<FindAllProductsQueryHandler>();
 builder.Services.AddScoped<FindProductQueryHandler>();
-builder.Services.AddScoped<IIntegrationEventPublisher, IntegrationEventPublisher>();
 
 builder.Services.AddMvc();
 builder.Services.AddProblemDetails(options =>
@@ -50,6 +50,13 @@ builder.Services.AddProblemDetails(options =>
         }
 
         return details;
+    });
+
+    options.Map<AggregateNotFoundException>(ex => new ProblemDetails
+    {
+        Status = 404,
+        Type = "https://httpstatuses.com/404",
+        Title = ex.Message
     });
 });
 
@@ -78,6 +85,12 @@ app.MapPost("/products", async (RegisterProductCommandHandler commandHandler, Re
 {
     var result = await commandHandler.Execute(request.ToCommand());
     return Results.CreatedAtRoute("GetProductDetails", new { id = result.ProductId });
+});
+
+app.MapPut("/products/{id}", async (UpdateProductDetailsCommandHandler commandHandler, Guid id, UpdateProductDetailsRequest request) =>
+{
+    await commandHandler.Execute(request.ToCommand(id));
+    return Results.AcceptedAtRoute("GetProductDetails", new { id });
 });
 
 using var scope = app.Services.CreateScope();

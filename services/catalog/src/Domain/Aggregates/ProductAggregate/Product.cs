@@ -30,6 +30,7 @@ public class Product : AggregateRoot<Guid>
     protected override Action GetEventHandler(Event @event) => @event switch
     {
         ProductRegistered evt => () => OnProductRegistered(evt),
+        ProductDetailsUpdated evt => () => OnProductDetailsUpdated(evt),
         _ => throw new InvalidOperationException($"Requested event {@event.GetType()} is not supported by this aggregate.")
     };
 
@@ -43,7 +44,7 @@ public class Product : AggregateRoot<Guid>
         var validator = new RegisterProductCommandValidator();
         var validationResult = validator.Validate(cmd);
 
-        if(!validationResult.IsValid)
+        if (!validationResult.IsValid)
         {
             var violations = validationResult.Errors.Select(x => new BusinessRuleViolation(x.PropertyName, x.ErrorMessage));
             throw new BusinessRulesViolationException(violations);
@@ -61,7 +62,31 @@ public class Product : AggregateRoot<Guid>
         return product;
     }
 
+    public void UpdateDetails(UpdateProductDetailsCommand cmd)
+    {
+        var validator = new UpdateProductDetailsCommandValidator();
+        var validationResult = validator.Validate(cmd);
+
+        if (!validationResult.IsValid)
+        {
+            var violations = validationResult.Errors.Select(x => new BusinessRuleViolation(x.PropertyName, x.ErrorMessage));
+            throw new BusinessRulesViolationException(violations);
+        }
+
+        var evt = new ProductDetailsUpdated(Id, cmd.Name, cmd.Description, cmd.Variants);
+
+        ApplyEvent(evt);
+        PublishEvent(evt);
+    }
+
     private void OnProductRegistered(ProductRegistered evt)
+    {
+        Name = evt.Name;
+        Description = evt.Description;
+        _variants = evt.Variants.ToList();
+    }
+
+    private void OnProductDetailsUpdated(ProductDetailsUpdated evt)
     {
         Name = evt.Name;
         Description = evt.Description;

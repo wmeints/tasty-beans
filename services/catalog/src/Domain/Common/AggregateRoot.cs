@@ -20,6 +20,12 @@ public abstract class AggregateRoot<TKey>
 
     public TKey Id { get; protected set; }
 
+    public void Reset()
+    {
+        _eventsToPublish.Clear();
+        _eventsToStore.Clear();
+    }
+
     protected abstract Action GetEventHandler(Event @event);
 
     protected void BeginReplaying()
@@ -65,4 +71,6 @@ public abstract class AggregateRoot<TKey>
     {
         _eventsToPublish.Add(@event);
     }
+
+    
 }
