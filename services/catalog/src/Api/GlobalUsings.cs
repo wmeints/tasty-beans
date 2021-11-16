@@ -1,0 +1,15 @@
+﻿global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using Hellang.Middleware.ProblemDetails;
+global using RecommendCoffee.Catalog.Api.Models.Requests;
+global using RecommendCoffee.Catalog.Application.CommandHandlers;
+global using RecommendCoffee.Catalog.Application.Persistence;
+global using RecommendCoffee.Catalog.Application.QueryHandlers;
+global using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
+global using RecommendCoffee.Catalog.Domain.Common;
+global using RecommendCoffee.Catalog.Domain.Projections.ProductInfoProjection;
+global using RecommendCoffee.Catalog.Domain.Projections.ProductInfoProjection.Queries;
+global using RecommendCoffee.Catalog.Infrastructure.Persistence;
+global using RecommendCoffee.Catalog.Application.IntegrationEvents;
+global using RecommendCoffee.Catalog.Infrastructure.IntegrationEvents;
+global using RecommendCoffee.Catalog.Api;
