@@ -42,6 +42,8 @@ using (var scope = app.Services.CreateScope())
     await dbContext.Database.MigrateAsync();
 }
 
+app.UseStaticFiles();
+
 app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
