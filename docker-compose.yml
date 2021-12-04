@@ -1,0 +1,24 @@
+version: "3.4"
+services:
+  workflow-engine:
+    build:
+      context: services/workflow/engine
+      dockerfile: Dockerfile
+    image: recommend-coffee/workflow-engine
+    container_name: workflow-engine
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl","-XGET", "http://localhost:8080/camunda"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+  task-dispatcher:
+    build:
+      context: services/workflow/dispatcher
+      dockerfile: Dockerfile
+    image: recommend-coffee/task-dispatcher
+    container_name: task-dispatcher
+    depends_on:
+      - workflow-engine
