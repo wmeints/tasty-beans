@@ -1,0 +1,9 @@
+﻿global using Hellang.Middleware.ProblemDetails;
+global using Microsoft.EntityFrameworkCore;
+global using RecommendCoffee.Customers.Api;
+global using RecommendCoffee.Customers.Application.IntegrationEvents;
+global using RecommendCoffee.Customers.Application.Persistence;
+global using RecommendCoffee.Customers.Domain.Aggregates.CustomerAggregate;
+global using RecommendCoffee.Customers.Domain.Common;
+global using RecommendCoffee.Customers.Infrastructure.IntegrationEvents;
+global using RecommendCoffee.Customers.Infrastructure.Persistence;
