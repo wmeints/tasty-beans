@@ -2,39 +2,38 @@
 using RecommendCoffee.Catalog.Application.Persistence;
 using RecommendCoffee.Catalog.Domain.Common;
 
-namespace RecommendCoffee.Catalog.Api
+namespace RecommendCoffee.Catalog.Api;
+
+public static class ProblemDetailsMappings
 {
-    public static class ProblemDetailsMappings
+    public static ProblemDetails BusinessRulesViolation(BusinessRulesViolationException ex)
     {
-        public static ProblemDetails BusinessRulesViolation(BusinessRulesViolationException ex)
+        var details = new ValidationProblemDetails
         {
-            var details = new ValidationProblemDetails
-            {
-                Type = "https://recommend.coffee/problems/business-rules-violation",
-                Title = ex.Message
-            };
+            Type = "https://recommend.coffee/problems/business-rules-violation",
+            Title = ex.Message
+        };
 
-            var violations = ex.Errors.GroupBy(
-                x => x.Property,
-                (key, values) => (key, values.Select(x => x.Message).ToArray())
-            );
+        var violations = ex.Errors.GroupBy(
+            x => x.Property,
+            (key, values) => (key, values.Select(x => x.Message).ToArray())
+        );
 
-            foreach (var (propertyName, errorMessages) in violations)
-            {
-                details.Errors.Add(propertyName, errorMessages);
-            }
-
-            return details;
+        foreach (var (propertyName, errorMessages) in violations)
+        {
+            details.Errors.Add(propertyName, errorMessages);
         }
 
-        public static ProblemDetails AggregateNotFound(AggregateNotFoundException ex)
+        return details;
+    }
+
+    public static ProblemDetails AggregateNotFound(AggregateNotFoundException ex)
+    {
+        return new ProblemDetails
         {
-            return new ProblemDetails
-            {
-                Status = 404,
-                Type = "https://httpstatuses.com/404",
-                Title = ex.Message
-            };
-        }
+            Status = 404,
+            Type = "https://httpstatuses.com/404",
+            Title = ex.Message
+        };
     }
 }
