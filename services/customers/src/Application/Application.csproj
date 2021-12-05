@@ -8,4 +8,8 @@
     <AssemblyName>RecommendCoffee.Customers.Application</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\domain\Domain.csproj" />
+  </ItemGroup>
+
 </Project>
