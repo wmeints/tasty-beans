@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 namespace RecommendCoffee.Customers.Domain.Aggregates.CustomerAggregate.Events
 {
     [Topic("customers.fct.customer-registered.v1")]
-    public record CustomerRegistered(Guid Id, string FirstName, string LastName, Address InvoiceAddress, Address ShippingAddress) : Event;
+    public record CustomerRegistered(Guid CustomerId, string FirstName, string LastName, Address InvoiceAddress, Address ShippingAddress) : Event;
 }
