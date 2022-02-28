@@ -1,0 +1,130 @@
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
+using NodaTime;
+using NodaTime.Extensions;
+using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
+using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Events;
+using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Validators;
+using RecommendCoffee.Subscriptions.Domain.Common;
+
+namespace RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+
+public class Subscription
+{
+    private Subscription()
+    {
+    }
+
+    public Subscription(
+        Guid id,
+        DateTime startDate,
+        ShippingFrequency shippingFrequency,
+        SubscriptionKind kind)
+    {
+        Id = id;
+        StartDate = startDate;
+        ShippingFrequency = shippingFrequency;
+        Kind = kind;
+    }
+
+    public Guid Id { get; private set; }
+    public DateTime StartDate { get; private set; }
+    public DateTime? EndDate { get; private set; }
+    public ShippingFrequency ShippingFrequency { get; private set; }
+    public SubscriptionKind Kind { get; private set; }
+
+    public bool IsActive => EndDate == null || EndDate < DateTime.UtcNow; 
+    
+    public CancelSubscriptionCommandReply Cancel(CancelSubscriptionCommand command)
+    {
+        var validator = new CancelSubscriptionCommandValidator();
+        var validationResult = validator.Validate(command);
+        
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors
+                .Select(x => new ValidationError(x.PropertyName, x.ErrorMessage))
+                .ToList();
+
+            return new CancelSubscriptionCommandReply(
+                errors, Enumerable.Empty<IDomainEvent>());
+        }
+
+        // Subscriptions can only be cancelled at the end of the month.
+        // If you payed for the current month you'll receive a final shipment before the subscription is cancelled.
+        var currentDate = DateTime.UtcNow.Date.ToLocalDateTime().Date;
+        var endDate = DateAdjusters.EndOfMonth(currentDate).ToDateTimeUnspecified();
+
+        EndDate = endDate;
+        
+        var evt = new SubscriptionCancelledEvent(Id, endDate);
+
+        return new CancelSubscriptionCommandReply(
+            Enumerable.Empty<ValidationError>(), 
+            new IDomainEvent[] { evt });
+    }
+
+    public ChangeShippingFrequencyCommandReply ChangeShippingFrequency(ChangeShippingFrequencyCommand command)
+    {
+        if (command.ShippingFrequency != ShippingFrequency)
+        {
+            ShippingFrequency = command.ShippingFrequency;
+            var evt = new ShippingFrequencyChangedEvent(Id, ShippingFrequency);
+
+            return new ChangeShippingFrequencyCommandReply(
+                Enumerable.Empty<ValidationError>(),
+                new IDomainEvent[] { evt });
+        }
+
+        return new ChangeShippingFrequencyCommandReply(
+            Enumerable.Empty<ValidationError>(),
+            Enumerable.Empty<IDomainEvent>());
+    }
+
+    public StartSubscriptionCommandReply Resubscribe(StartSubscriptionCommand command)
+    {
+        Kind = command.Kind;
+        ShippingFrequency = command.ShippingFrequency;
+        StartDate = DateTime.UtcNow;
+        EndDate = null;
+        
+        var evt = new SubscriptionStartedEvent(
+            Id, StartDate, ShippingFrequency, Kind);
+
+        return new StartSubscriptionCommandReply(
+            this,
+            Enumerable.Empty<ValidationError>(),
+            new IDomainEvent[] { evt });
+    }
+    
+    public static StartSubscriptionCommandReply Start(StartSubscriptionCommand command)
+    {
+        var validator = new StartSubscriptionCommandValidator();
+        var validationResult = validator.Validate(command);
+
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors
+                .Select(x => new ValidationError(x.PropertyName, x.ErrorMessage))
+                .ToList();
+
+            return new StartSubscriptionCommandReply(
+                null, errors, Enumerable.Empty<IDomainEvent>());
+        }
+
+        var instance = new Subscription(
+            command.CustomerId,
+            DateTime.UtcNow,
+            command.ShippingFrequency,
+            command.Kind);
+
+        var evt = new SubscriptionStartedEvent(
+            instance.Id, instance.StartDate,
+            instance.ShippingFrequency, instance.Kind);
+
+        return new StartSubscriptionCommandReply(
+            instance,
+            Enumerable.Empty<ValidationError>(),
+            new IDomainEvent[] { evt });
+    }
+}
