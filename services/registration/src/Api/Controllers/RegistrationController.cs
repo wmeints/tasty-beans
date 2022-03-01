@@ -8,7 +8,7 @@ using RecommendCoffee.Registration.Domain.Subscriptions;
 namespace RecommendCoffee.Registration.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/registration")]
 public class RegistrationController : ControllerBase
 {
     private readonly StartRegistrationCommandHandler _startRegistrationCommandHandler;

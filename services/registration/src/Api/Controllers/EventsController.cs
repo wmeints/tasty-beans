@@ -6,7 +6,7 @@ using RecommendCoffee.Registration.Application.IntegrationEvents;
 namespace RecommendCoffee.Registration.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/events")]
 public class EventsController: ControllerBase
 {
     private readonly CustomerRegisteredEventHandler _customerRegisteredEventHandler;

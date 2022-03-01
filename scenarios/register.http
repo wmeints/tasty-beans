@@ -1,0 +1,30 @@
+POST http://localhost:5003/registration
+Content-Type: application/json
+
+{
+    "customerDetails": {
+        "firstName": "Willem",
+        "lastName": "Meints",
+        "telephoneNumber": "000-0000000",
+        "emailAddress": "test@domain.org",
+        "invoiceAddress": {
+            "street": "Sample street",
+            "houseNumber": "1",
+            "postalCode": "0000 AA",
+            "city": "Test city",
+            "countryCode": "NL"
+        },
+        "shippingAddress": {
+            "street": "Sample street",
+            "houseNumber": "1",
+            "postalCode": "0000 AA",
+            "city": "Test city",
+            "countryCode": "NL"
+        }
+    },
+    "subscription": {
+        "shippingFrequency": "Monthly",
+        "kind": "OneYear"
+    },
+    "paymentMethod": {} 
+}

@@ -10,7 +10,7 @@ using RecommendCoffee.CustomerManagement.Domain.Common;
 namespace RecommendCoffee.CustomerManagement.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/customers")]
     public class CustomersController : ControllerBase
     {
         private readonly FindAllCustomersQueryHandler _findAllCustomersQueryHandler;

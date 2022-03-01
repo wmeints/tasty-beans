@@ -10,7 +10,7 @@ using RecommendCoffee.Catalog.Domain.Common;
 namespace RecommendCoffee.Catalog.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/products")]
 public class ProductsController : ControllerBase
 {
     private readonly RegisterProductCommandHandler _registerProductCommandHandler;

@@ -18,7 +18,7 @@ COPY . .
 
 RUN dotnet publish src/Api/Api.csproj -o /dist
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 
 WORKDIR /app
 COPY --from=build /dist/ .
