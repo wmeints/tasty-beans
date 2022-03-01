@@ -1,11 +1,11 @@
-using Infrastructure.DomainEvents;
+using Azure.Messaging.ServiceBus;
+using Infrastructure.EventBus;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using RecommendCoffee.Catalog.Application.CommandHandlers;
 using RecommendCoffee.Catalog.Application.Common;
 using RecommendCoffee.Catalog.Application.QueryHandlers;
 using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +14,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"));
 });
 
-builder.Services.AddDaprClient();
-builder.Services.AddControllers().AddDapr();
+builder.Services.AddControllers();
 
-builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
+builder.Services.AddSingleton(serviceProvider =>
+    new ServiceBusClient(builder.Configuration.GetConnectionString("DefaultServiceBus")));
+
+builder.Services.AddSingleton<IEventPublisher, AzureEventBusPublisher>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddScoped<RegisterProductCommandHandler>();
