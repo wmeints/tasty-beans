@@ -1,0 +1,43 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: azure-vl-recommendcoffee-dev-system-csi
+spec:
+  provider: azure
+  secretObjects:
+    - secretName: recommendcoffee-secrets
+      type: Opaque
+      data:
+        - objectName: catalog-connection-string
+          key: catalog-connection-string
+        - objectName: eventbus-connection-string
+          key: eventbus-connection-string
+        - objectName: statestore-account-name
+          key: statestore-account-name
+        - objectName: statestore-account-name
+          key: statestore-account-name   
+  parameters:
+    usePodIdentity: "false"
+    useVMManagedIdentity: "true"
+    userAssignedIdentityID: ""
+    keyvaultName: "vlt-recommendcoffee-dev"
+    cloudName: ""
+    objects: |
+      array:
+        - |
+          objectName: "catalog-connection-string"
+          objectType: secret
+          objectVersion: ""
+        - |
+          objectName: "eventbus-connection-string"
+          objectType: secret
+          objectVersion: ""
+        - |
+          objectName: "statestore-account-key"
+          objectType: secret
+          objectVersion: ""
+        - |
+          objectName: "statestore-account-name"
+          objectType: secret
+          objectVersion: ""
+    tenantId: 336d11a1-bc27-4999-a4e0-3a6ec33675b0
