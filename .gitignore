@@ -1,3 +1,4 @@
 .env
 .vs/
 .vscode/
+infrastructure/secrets.yml
