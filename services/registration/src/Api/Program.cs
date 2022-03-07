@@ -12,13 +12,6 @@ using RecommendCoffee.Registration.Infrastructure.StateManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var serializerSettings = new JsonSerializerOptions()
-{
-    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-};
-
-serializerSettings.Converters.Add(new JsonStringEnumConverter());
-
 builder.Services
     .AddControllers()
     .AddJsonOptions(options =>
