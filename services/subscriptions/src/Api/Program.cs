@@ -41,10 +41,13 @@ builder.Services.AddScoped<FindSubscriptionQueryHandler>();
 
 var app = builder.Build();
 
-await using var scope = app.Services.CreateAsyncScope();
-await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+if (app.Environment.IsDevelopment())
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-await dbContext.Database.MigrateAsync();
+    await dbContext.Database.MigrateAsync();    
+}
 
 app.UseCloudEvents();
 
