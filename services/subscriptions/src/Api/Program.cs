@@ -1,9 +1,11 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using RecommendCoffee.Subscriptions.Application.CommandHandlers;
 using RecommendCoffee.Subscriptions.Application.Common;
 using RecommendCoffee.Subscriptions.Application.QueryHandlers;
 using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
-using RecommendCoffee.Subscriptions.Infrastructure.DomainEvents;
+using RecommendCoffee.Subscriptions.Infrastructure.EventBus;
 using RecommendCoffee.Subscriptions.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,8 +15,23 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"));
 });
 
-builder.Services.AddDaprClient();
-builder.Services.AddControllers().AddDapr();
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    })
+    .AddDapr(daprClientBuilder =>
+    {
+        var serializerOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+    
+        serializerOptions.Converters.Add(new JsonStringEnumConverter());    
+    });
+
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<StartSubscriptionCommandHandler>();
@@ -29,6 +46,9 @@ await using var dbContext = scope.ServiceProvider.GetRequiredService<Application
 
 await dbContext.Database.MigrateAsync();
 
+app.UseCloudEvents();
+
+app.MapSubscribeHandler();
 app.MapControllers();
 
 app.Run();
