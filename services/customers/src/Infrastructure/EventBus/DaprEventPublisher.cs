@@ -1,9 +1,9 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Dapr.Client;
 using RecommendCoffee.CustomerManagement.Application.Common;
 using RecommendCoffee.CustomerManagement.Domain.Common;
 
-namespace RecommendCoffee.CustomerManagement.Infrastructure.DomainEvents;
+namespace RecommendCoffee.CustomerManagement.Infrastructure.EventBus;
 
 public class DaprEventPublisher : IEventPublisher
 {
@@ -19,7 +19,11 @@ public class DaprEventPublisher : IEventPublisher
         foreach (var evt in events)
         {
             var topic = evt.GetType().GetCustomAttribute<TopicAttribute>();
-            await _daprClient.PublishEventAsync("pubsub", topic?.Name ?? "customermanagement.deadletter.v0", evt);
+
+            await _daprClient.PublishEventAsync<object>(
+                "pubsub",
+                topic?.Name ?? "customermanagement.deadletter.v1",
+                evt);
         }
     }
 }
