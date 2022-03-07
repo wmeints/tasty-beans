@@ -2,13 +2,10 @@ apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
   name: pubsub
+  namespace: default
 spec:
-  type: pubsub.kafka
+  type: pubsub.rabbitmq
   version: v1
   metadata:
-    - name: brokers
-      value: "kafka:9092"
-    - name: authType
-      value: "none"
-    - name: disableTls
-      value: "true"
+  - name: host
+    value: amqp://guest:guest@localhost:5672
