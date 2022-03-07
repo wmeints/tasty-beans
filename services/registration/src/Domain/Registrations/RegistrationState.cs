@@ -4,9 +4,7 @@ public enum RegistrationState
 {
     NotStarted,
     WaitingForCustomerRegistration,
-    WaitingForPaymentMethodDetails,
     WaitingForPaymentMethodRegistration,
-    WaitingForSubscriptionDetails,
     WaitingForSubscriptionRegistration,
     Completed
 }

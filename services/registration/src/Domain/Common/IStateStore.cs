@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Registration.Application.Common;
+﻿namespace RecommendCoffee.Registration.Domain.Common;
 
 public interface IStateStore
 {

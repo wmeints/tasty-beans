@@ -1,4 +1,5 @@
-﻿using RecommendCoffee.Registration.Domain.Customers;
+﻿using RecommendCoffee.Registration.Domain.Common;
+using RecommendCoffee.Registration.Domain.Customers;
 using RecommendCoffee.Registration.Domain.Registrations.Commands;
 using RecommendCoffee.Registration.Domain.Subscriptions;
 using Stateless;
@@ -12,30 +13,32 @@ public class Registration
     private readonly ISubscriptions _subscriptions;
     private StateMachine<RegistrationState, RegistrationTrigger> _stateMachine;
 
-    public Registration(ICustomerManagement customerManagement, ISubscriptions subscriptions)
+    public Registration(ICustomerManagement customerManagement, ISubscriptions subscriptions, IStateStore stateStore)
     {
         _data = new RegistrationData { State = RegistrationState.NotStarted };
         _customerManagement = customerManagement;
         _subscriptions = subscriptions;
-        _stateMachine = CreateStateMachine(_data);
+        _stateMachine = CreateStateMachine(_data, stateStore);
     }
     
     public Registration(
         RegistrationData data, 
         ICustomerManagement customerManagement,
-        ISubscriptions subscriptions)
+        ISubscriptions subscriptions,
+        IStateStore stateStore)
     {
         _data = data;
         _customerManagement = customerManagement;
         _subscriptions = subscriptions;
 
-        _stateMachine = CreateStateMachine(data);
+        _stateMachine = CreateStateMachine(data, stateStore);
     }
 
     public RegistrationData Data => _data;
     
     public async Task StartAsync(StartRegistrationCommand command)
     {
+        _data.CustomerId = command.CustomerId;
         _data.CustomerDetails = command.CustomerDetails;
         _data.SubscriptionDetails = command.SubscriptionDetails;
         _data.PaymentMethodDetails = command.PaymentMethodDetails;
@@ -58,30 +61,35 @@ public class Registration
         await _stateMachine.FireAsync(RegistrationTrigger.CompleteSubscriptionRegistration);
     }
 
-    private StateMachine<RegistrationState, RegistrationTrigger> CreateStateMachine(RegistrationData data)
+    private StateMachine<RegistrationState, RegistrationTrigger> CreateStateMachine(
+        RegistrationData data, IStateStore stateStore)
     {
         var stateMachine = new StateMachine<RegistrationState, RegistrationTrigger>(
-            () => data.State, state => _data.State = state);
+            () => data.State, 
+            state =>
+            {
+                _data.State = state;
+                stateStore.Put(_data.CustomerId.ToString(), _data);
+            });
 
         stateMachine
             .Configure(RegistrationState.NotStarted)
-            .OnEntryFromAsync(RegistrationTrigger.RegisterCustomerDetails, RegisterCustomerDetails);
+            .Permit(RegistrationTrigger.RegisterCustomerDetails, RegistrationState.WaitingForCustomerRegistration);
 
         stateMachine.Configure(RegistrationState.WaitingForCustomerRegistration)
-            .Permit(RegistrationTrigger.CompleteCustomerRegistration, RegistrationState.WaitingForPaymentMethodDetails);
-
-        stateMachine.Configure(RegistrationState.WaitingForPaymentMethodDetails)
-            .OnEntryAsync(RegisterPaymentMethod);
+            .OnEntryFromAsync(RegistrationTrigger.RegisterCustomerDetails, RegisterCustomerDetails)
+            .Permit(RegistrationTrigger.CompleteCustomerRegistration, 
+                RegistrationState.WaitingForPaymentMethodRegistration);
 
         stateMachine.Configure(RegistrationState.WaitingForPaymentMethodRegistration)
-            .Permit(RegistrationTrigger.CompletePaymentMethodRegistration,
-                RegistrationState.WaitingForSubscriptionDetails);
-
-        stateMachine.Configure(RegistrationState.WaitingForSubscriptionDetails)
-            .OnEntryAsync(RegisterSubscriptionDetails);
+            .OnEntryFromAsync(RegistrationTrigger.CompleteCustomerRegistration, RegisterPaymentMethod)
+            .Permit(RegistrationTrigger.CompletePaymentMethodRegistration, 
+                RegistrationState.WaitingForSubscriptionRegistration);
 
         stateMachine.Configure(RegistrationState.WaitingForSubscriptionRegistration)
-            .Permit(RegistrationTrigger.CompleteSubscriptionRegistration, RegistrationState.Completed);
+            .OnEntryAsync(RegisterSubscriptionDetails)
+            .Permit(RegistrationTrigger.CompleteSubscriptionRegistration,
+                RegistrationState.Completed);
 
         return stateMachine;
     }
@@ -112,8 +120,7 @@ public class Registration
 
     private async Task RegisterPaymentMethod()
     {
-        //TODO: Implement the actual call to the payments service here.
-        await CompletePaymentMethodRegistration();
+        //TODO: Call the payment service
     }
     
     

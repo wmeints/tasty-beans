@@ -4,7 +4,6 @@ public enum RegistrationTrigger
 {
     RegisterCustomerDetails,
     CompleteCustomerRegistration,
-    SubmitPaymentMethodDetails,
     CompletePaymentMethodRegistration,
     CompleteSubscriptionRegistration
 }

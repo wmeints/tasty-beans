@@ -1,4 +1,4 @@
-﻿using RecommendCoffee.Registration.Application.Common;
+﻿using RecommendCoffee.Registration.Domain.Common;
 using RecommendCoffee.Registration.Domain.Customers;
 using RecommendCoffee.Registration.Domain.Registrations.Commands;
 using RecommendCoffee.Registration.Domain.Subscriptions;
@@ -23,7 +23,9 @@ public class StartRegistrationCommandHandler
 
     public async Task ExecuteAsync(StartRegistrationCommand command)
     {
-        var registration = new Domain.Registrations.Registration(_customerManagement, _subscriptions);
+        var registration = new Domain.Registrations.Registration(
+            _customerManagement, _subscriptions, _stateStore);
+        
         await registration.StartAsync(command);
         
         await _stateStore.Put(registration.Data.CustomerId.ToString(), registration.Data);
