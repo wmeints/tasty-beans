@@ -16,7 +16,15 @@ public class CustomerTests
     public void CanRegisterCustomer()
     {
         var address = new Address("Sample street", "19b", "1234 AC", "Building city", "NL");
-        var command = new RegisterCustomerCommand("Bob","The Builder", address,address,"test@domain.org","+310000000"); 
+        var command = new RegisterCustomerCommand(
+            Guid.NewGuid(),
+            "Bob",
+            "The Builder", 
+            address,
+            address,
+            "test@domain.org",
+            "+310000000"); 
+            
         var response = Customer.Register(command);
 
         response.Should().NotBeNull();

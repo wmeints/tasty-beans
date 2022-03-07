@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FakeItEasy;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using RecommendCoffee.Subscriptions.Application.CommandHandlers;
 using RecommendCoffee.Subscriptions.Application.Common;
 using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
@@ -19,13 +20,15 @@ public class StartSubscriptionCommandHandlerTests
     {
         var subscriptionRepository = A.Fake<ISubscriptionRepository>();
         var eventPublisher = A.Fake<IEventPublisher>();
-        var commandHandler = new StartSubscriptionCommandHandler(eventPublisher, subscriptionRepository);
+        var logger = A.Fake<ILogger<StartSubscriptionCommandHandler>>();
+
+        var commandHandler = new StartSubscriptionCommandHandler(eventPublisher, subscriptionRepository, logger);
 
         A.CallTo(() => subscriptionRepository.FindByCustomerIdAsync(A<Guid>.Ignored)).Returns((Subscription?)null);
-        
+
         var command = new StartSubscriptionCommand(
-            Guid.NewGuid(), 
-            SubscriptionKind.OneYear, 
+            Guid.NewGuid(),
+            SubscriptionKind.OneYear,
             ShippingFrequency.Monthly);
 
         var response = await commandHandler.ExecuteAsync(command);
