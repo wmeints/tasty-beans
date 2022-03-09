@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>RecommendCoffee.Payments.Api</AssemblyName>
+    <RootNamespace>RecommendCoffee.Payments.Api</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapr.AspNetCore" Version="1.6.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

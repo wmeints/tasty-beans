@@ -1,0 +1,123 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "FluentValidation/10.3.6": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/FluentValidation.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/FluentValidation.dll": {}
+        }
+      },
+      "RecommendCoffee.Payments.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "FluentValidation": "10.3.6"
+        },
+        "compile": {
+          "bin/placeholder/RecommendCoffee.Payments.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/RecommendCoffee.Payments.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FluentValidation/10.3.6": {
+      "sha512": "iMd370ZDx6ydm8t7bIFdRbSKX0e42lpvCtifUSbTSXOk5iKjmgl7HU0PXBhIWQAyIRi3gCwfMI9luj8H6K+byw==",
+      "type": "package",
+      "path": "fluentvalidation/10.3.6",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "fluent-validation-icon.png",
+        "fluentvalidation.10.3.6.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net5.0/FluentValidation.dll",
+        "lib/net5.0/FluentValidation.xml",
+        "lib/net6.0/FluentValidation.dll",
+        "lib/net6.0/FluentValidation.xml",
+        "lib/netstandard2.0/FluentValidation.dll",
+        "lib/netstandard2.0/FluentValidation.xml",
+        "lib/netstandard2.1/FluentValidation.dll",
+        "lib/netstandard2.1/FluentValidation.xml"
+      ]
+    },
+    "RecommendCoffee.Payments.Domain/1.0.0": {
+      "type": "project",
+      "path": "../Domain/Domain.csproj",
+      "msbuildProject": "../Domain/Domain.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "RecommendCoffee.Payments.Domain >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\willemm\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\code\\recommend-coffee\\services\\payments\\src\\Application\\Application.csproj",
+      "projectName": "RecommendCoffee.Payments.Application",
+      "projectPath": "D:\\code\\recommend-coffee\\services\\payments\\src\\Application\\Application.csproj",
+      "packagesPath": "C:\\Users\\willemm\\.nuget\\packages\\",
+      "outputPath": "D:\\code\\recommend-coffee\\services\\payments\\src\\Application\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\willemm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "D:\\code\\recommend-coffee\\services\\payments\\src\\Domain\\Domain.csproj": {
+              "projectPath": "D:\\code\\recommend-coffee\\services\\payments\\src\\Domain\\Domain.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

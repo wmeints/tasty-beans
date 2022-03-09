@@ -1,0 +1,12 @@
+D:\code\recommend-coffee\services\payments\src\Domain\bin\Debug\net6.0\RecommendCoffee.Payments.Domain.deps.json
+D:\code\recommend-coffee\services\payments\src\Domain\bin\Debug\net6.0\RecommendCoffee.Payments.Domain.dll
+D:\code\recommend-coffee\services\payments\src\Domain\bin\Debug\net6.0\ref\RecommendCoffee.Payments.Domain.dll
+D:\code\recommend-coffee\services\payments\src\Domain\bin\Debug\net6.0\RecommendCoffee.Payments.Domain.pdb
+D:\code\recommend-coffee\services\payments\src\Domain\obj\Debug\net6.0\Domain.csproj.AssemblyReference.cache
+D:\code\recommend-coffee\services\payments\src\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\code\recommend-coffee\services\payments\src\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+D:\code\recommend-coffee\services\payments\src\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+D:\code\recommend-coffee\services\payments\src\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+D:\code\recommend-coffee\services\payments\src\Domain\obj\Debug\net6.0\RecommendCoffee.Payments.Domain.dll
+D:\code\recommend-coffee\services\payments\src\Domain\obj\Debug\net6.0\ref\RecommendCoffee.Payments.Domain.dll
+D:\code\recommend-coffee\services\payments\src\Domain\obj\Debug\net6.0\RecommendCoffee.Payments.Domain.pdb

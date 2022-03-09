@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>RecommendCoffee.Payments.Application</AssemblyName>
+    <RootNamespace>RecommendCoffee.Payments.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CommandHandlers" />
+  </ItemGroup>
+
+</Project>

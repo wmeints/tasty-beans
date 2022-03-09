@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "CnmMI3XqUE2eDIE4rI5L4PTg/9b+usr2IY/JpG0fzA+ZkbHNJpjHWaQs5WWPfy03xjqTMwYjTFdiUONneHLAWw==",
+  "success": true,
+  "projectFilePath": "D:\\code\\recommend-coffee\\services\\payments\\src\\Domain\\Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\willemm\\.nuget\\packages\\fluentvalidation\\10.3.6\\fluentvalidation.10.3.6.nupkg.sha512"
+  ],
+  "logs": []
+}
