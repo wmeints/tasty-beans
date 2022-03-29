@@ -1,29 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: subscriptions
+  name: database
 spec:
   selector:
     matchLabels:
-      app: subscriptions
+      app: database
   template:
     metadata:
       labels:
-        app: subscriptions
+        app: database
     spec:
       containers:
-      - name: subscriptions
-        image: recommendcoffee.azurecr.io/subscriptions:latest
-        imagePullPolicy: IfNotPresent
+      - name: database
+        image: mcr.microsoft.com/mssql/server:2019-latest
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
         ports:
-        - containerPort: 80
+        - containerPort: 1433
         env:
-          - name: CONNECTIONSTRINGS__DEFAULTDATABASE
+          - name: SA_PASSWORD
             valueFrom:
               secretKeyRef:
-                key: subscriptionsConnectionString
+                key: databasePassword
                 name: recommend-coffee-secrets
+          - name: ACCEPT_EULA
+            value: "Y"

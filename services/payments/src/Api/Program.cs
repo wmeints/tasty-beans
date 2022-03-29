@@ -6,7 +6,6 @@ using RecommendCoffee.Payments.Infrastructure.EventBus;
 using RecommendCoffee.Payments.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -31,6 +30,8 @@ builder.Services
     });
 
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
+
+var app = builder.Build();
 
 if(app.Environment.IsDevelopment())
 {

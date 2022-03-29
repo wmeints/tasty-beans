@@ -13,10 +13,17 @@ spec:
     spec:
       containers:
       - name: registration
-        image: registration
+        image: recommendcoffee.azurecr.io/registration
+        imagePullPolicy: IfNotPresent
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
         ports:
         - containerPort: 80
+        env:
+          - name: CONNECTIONSTRINGS__DEFAULTDATABASE
+            valueFrom:
+              secretKeyRef:
+                key: registrationConnectionString
+                name: recommend-coffee-secrets

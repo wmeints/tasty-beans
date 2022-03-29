@@ -1,0 +1,43 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: recommend-coffee
+build:
+  artifacts:
+  - image: recommendcoffee.azurecr.io/catalog
+    context: services/catalog
+  - image: recommendcoffee.azurecr.io/customers
+    context: services/customers
+  - image: recommendcoffee.azurecr.io/registration
+    context: services/registration
+  - image: recommendcoffee.azurecr.io/subscriptions
+    context: services/subscriptions
+  - image: recommendcoffee.azurecr.io/payments
+    context: services/payments
+deploy:
+  helm:
+    releases:
+      - name: dapr
+        chartPath: charts/dapr
+  kubectl:
+    manifests:
+    - secrets/recommend-coffee-secrets.yml
+    - dapr/components/pubsub.yaml
+    - dapr/components/statestore.yaml
+    - dapr/configuration/config.yaml
+    - services/catalog/manifests/deployment.yml
+    - services/catalog/manifests/service.yml
+    - services/customers/manifests/deployment.yml
+    - services/customers/manifests/service.yml
+    - services/payments/manifests/deployment.yml
+    - services/payments/manifests/service.yml
+    - services/registration/manifests/deployment.yml
+    - services/registration/manifests/service.yml
+    - services/subscriptions/manifests/deployment.yml
+    - services/subscriptions/manifests/service.yml
+    - shared/database/manifests/deployment.yml
+    - shared/database/manifests/service.yml
+    - shared/rabbitmq/manifests/deployment.yml
+    - shared/rabbitmq/manifests/service.yml
+    - shared/redis/manifests/deployment.yml
+    - shared/redis/manifests/service.yml

@@ -13,14 +13,14 @@ spec:
     spec:
       containers:
       - name: catalog
-        image: recommendcoffee.azurecr.io/catalog:latest
-        imagePullPolicy: Always
+        image: recommendcoffee.azurecr.io/catalog
+        imagePullPolicy: IfNotPresent
         env:
           - name: CONNECTIONSTRINGS__DEFAULTDATABASE
             valueFrom:
               secretKeyRef:
                 name: recommend-coffee-secrets
-                key: catalog-database-connection-string
+                key: catalogConnectionString
         resources:
           limits:
             memory: "128Mi"

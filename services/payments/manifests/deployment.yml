@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: customers
+  name: payments
 spec:
   selector:
     matchLabels:
-      app: customers
+      app: payments
   template:
     metadata:
       labels:
-        app: customers
+        app: payments
     spec:
       containers:
-      - name: customers
-        image: recommendcoffee.azurecr.io/customers:latest
+      - name: payments
+        image: recommendcoffee.azurecr.io/payments
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -25,5 +25,5 @@ spec:
           - name: CONNECTIONSTRINGS__DEFAULTDATABASE
             valueFrom:
               secretKeyRef:
-                key: customersConnectionString
+                key: paymentsConnectionString
                 name: recommend-coffee-secrets
