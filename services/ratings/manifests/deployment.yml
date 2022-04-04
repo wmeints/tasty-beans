@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ratings
+spec:
+  selector:
+    matchLabels:
+      app: ratings
+  template:
+    metadata:
+      labels:
+        app: ratings
+    spec:
+      containers:
+      - name: ratings
+        image: recommendcoffee.azurecr.io/ratings
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: CONNECTIONSTRINGS__DEFAULTDATABASE
+            valueFrom:
+              secretKeyRef:
+                name: recommend-coffee-secrets
+                key: ratingsConnectionString
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80

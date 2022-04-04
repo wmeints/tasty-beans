@@ -139,4 +139,47 @@ public class ProductTests
             _response.Events.Should().ContainSingle(x => x is ProductDiscontinuedEvent);
         }
     }
+
+    public class WhenTasteTesting
+    {
+        private Product _product;
+        private readonly TasteTestProductCommandResponse _response;
+        private readonly TasteTestProductCommand _productCommand;
+
+        public WhenTasteTesting()
+        {
+            var result = Product.Register(new RegisterProductCommand(
+                Name: "Diesel",
+                Description:
+                "Dark, rich and energizing, here’s fuel for your morning (or afternoon, or evening). A bit of earthy smokiness gives it extra oomph.",
+                Variants: new[] { new ProductVariant(310, 17.40m), new ProductVariant(1000, 41.20m) }));
+
+            _product = result.Product;
+
+            _productCommand = new TasteTestProductCommand(_product.Id, 8, "Comforting & Rich",
+                new[] { "Roastiness", "Ripe Fruit", "Milk Chocolate" });
+            
+            _response = _product.TasteTest(_productCommand);
+        }
+
+        [Fact]
+        public void PublishesTasteTestedEvent()
+        {
+            _response.Events.Should().ContainSingle(x => x is ProductTasteTestedEvent);
+        }
+
+        [Fact]
+        public void RaisesNoErrors()
+        {
+            _response.IsValid.Should().BeTrue();
+        }
+
+        [Fact]
+        public void UpdatesTasteInformation()
+        {
+            _product.Taste.Should().BeSameAs(_productCommand.Taste);
+            _product.FlavorNotes.Should().BeEquivalentTo(_productCommand.FlavorNotes);
+            _product.RoastLevel.Should().Be(_productCommand.RoastLevel);
+        }
+    }
 }
