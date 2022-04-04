@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>RecommendCoffee.Payments.Api</AssemblyName>
     <RootNamespace>RecommendCoffee.Payments.Api</RootNamespace>
+    <UserSecretsId>6d1544ba-29d7-45e3-8fff-83566bac30d9</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
