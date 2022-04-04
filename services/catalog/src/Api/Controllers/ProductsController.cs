@@ -18,18 +18,21 @@ public class ProductsController : ControllerBase
     private readonly DiscontinueProductCommandHandler _discontinueProductCommandHandler;
     private readonly FindProductByIdQueryHandler _findProductByIdQueryHandler;
     private readonly FindAllProductsQueryHandler _findAllProductsQueryHandler;
+    private readonly TasteTestProductCommandHandler _tasteTestProductCommandHandler;
 
     public ProductsController(RegisterProductCommandHandler registerProductCommandHandler,
         UpdateProductCommandHandler updateProductCommandHandler,
         DiscontinueProductCommandHandler discontinueProductCommandHandler,
         FindProductByIdQueryHandler findProductByIdQueryHandler,
-        FindAllProductsQueryHandler findAllProductsQueryHandler)
+        FindAllProductsQueryHandler findAllProductsQueryHandler, 
+        TasteTestProductCommandHandler tasteTestProductCommandHandler)
     {
         _registerProductCommandHandler = registerProductCommandHandler;
         _updateProductCommandHandler = updateProductCommandHandler;
         _discontinueProductCommandHandler = discontinueProductCommandHandler;
         _findProductByIdQueryHandler = findProductByIdQueryHandler;
         _findAllProductsQueryHandler = findAllProductsQueryHandler;
+        _tasteTestProductCommandHandler = tasteTestProductCommandHandler;
     }
 
     [HttpGet]
@@ -84,6 +87,29 @@ public class ProductsController : ControllerBase
             }
 
             return Accepted();
+        }
+        catch (AggregateNotFoundException)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpPost("{id}/taste")]
+    public async Task<IActionResult> TasteTest(Guid id, TasteTestForm form)
+    {
+        try
+        {
+            var command = new TasteTestProductCommand(id, form.RoastLevel, form.Taste, form.FlavorNotes);
+            var response = await _tasteTestProductCommandHandler.ExecuteAsync(command);
+            
+            ModelState.AddValidationErrors(response.Errors);
+            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            return AcceptedAtAction("Details", new { id = id });
         }
         catch (AggregateNotFoundException)
         {

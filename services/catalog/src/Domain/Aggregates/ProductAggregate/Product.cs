@@ -2,6 +2,7 @@
 using Domain.Aggregates.ProductAggregate.Validators;
 using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Commands;
 using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Events;
+using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Validators;
 using RecommendCoffee.Catalog.Domain.Common;
 
 namespace RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
@@ -27,6 +28,9 @@ public class Product
     public string Name { get; private set; }
     public string Description { get; private set; }
     public bool Discontinued { get; private set; }
+    public List<string>? FlavorNotes { get; private set; }
+    public string? Taste { get; private set; }
+    public int? RoastLevel { get; private set; }
     public IEnumerable<ProductVariant> Variants { get; private set; }
 
     public UpdateProductCommandResponse Update(UpdateProductCommand cmd)
@@ -71,6 +75,29 @@ public class Product
         return new DiscontinueProductCommandResponse(
             Enumerable.Empty<ValidationError>(), 
             new IDomainEvent[] { evt });
+    }
+
+    public TasteTestProductCommandResponse TasteTest(TasteTestProductCommand cmd)
+    {
+        var validator = new TasteTestCommandValidator();
+        var validationResult = validator.Validate(cmd);
+
+        if (!validationResult.IsValid)
+        {
+            return new TasteTestProductCommandResponse(
+                validationResult.GetValidationErrors(),
+                Enumerable.Empty<IDomainEvent>());
+        }
+
+        RoastLevel = cmd.RoastLevel;
+        Taste = cmd.Taste;
+        FlavorNotes = cmd.FlavorNotes.ToList();
+
+        var tasteTestedEvt = new ProductTasteTestedEvent(Id, RoastLevel.Value, Taste, FlavorNotes);
+        
+        return new TasteTestProductCommandResponse(
+            Enumerable.Empty<ValidationError>(),
+            new IDomainEvent[] { tasteTestedEvt });
     }
     
     public static RegisterProductCommandResponse Register(RegisterProductCommand cmd)
