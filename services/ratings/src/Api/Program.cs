@@ -1,9 +1,14 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Catalog.Infrastructure.EventBus;
-using RecommendCoffee.Catalog.Infrastructure.Persistence;
+using RecommendCoffee.Ratings.Application.CommandHandlers;
 using RecommendCoffee.Ratings.Application.Common;
+using RecommendCoffee.Ratings.Application.EventHandlers;
+using RecommendCoffee.Ratings.Domain.Aggregates.CustomerAggregate;
+using RecommendCoffee.Ratings.Domain.Aggregates.ProductAggregate;
+using RecommendCoffee.Ratings.Domain.Aggregates.RatingAggregate;
+using RecommendCoffee.Ratings.Infrastructure.EventBus;
+using RecommendCoffee.Ratings.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +35,13 @@ builder.Services
     });
 
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
+builder.Services.AddScoped<ProductRegisteredEventHandler>();
+builder.Services.AddScoped<ProductUpdatedEventHandler>();
+builder.Services.AddScoped<ProductDiscontinuedEventHandler>();
+builder.Services.AddScoped<RegisterRatingCommandHandler>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 
 var app = builder.Build();
 

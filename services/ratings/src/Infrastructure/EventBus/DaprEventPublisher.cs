@@ -3,7 +3,7 @@ using Dapr.Client;
 using RecommendCoffee.Ratings.Application.Common;
 using RecommendCoffee.Ratings.Domain.Common;
 
-namespace RecommendCoffee.Catalog.Infrastructure.EventBus;
+namespace RecommendCoffee.Ratings.Infrastructure.EventBus;
 
 public class DaprEventPublisher : IEventPublisher
 {
