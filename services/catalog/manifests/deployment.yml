@@ -2,6 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: catalog
+  annotations:
+    dapr.io/app-id: catalog
+    dapr.io/config: recommend-coffee-config
+    dapr.io/app-port: "80"
+    dapr.io/enabled: "true"
 spec:
   selector:
     matchLabels:
