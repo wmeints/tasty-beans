@@ -1,0 +1,6 @@
+apiVersion: v2
+name: shared
+description: Deploys the shared resources for the recommend-coffee application.
+type: application
+version: 0.1.0-alpha.1
+appVersion: 1.16.0

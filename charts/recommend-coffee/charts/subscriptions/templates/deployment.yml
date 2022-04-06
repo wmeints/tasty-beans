@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subscriptions
+spec:
+  selector:
+    matchLabels:
+      app: subscriptions
+  template:
+    metadata:
+      labels:
+        app: subscriptions
+      annotations:
+        dapr.io/app-id: "subscriptions"
+        dapr.io/config: "recommendcoffee-dapr-config"
+        dapr.io/app-port: "80"
+        dapr.io/enabled: "true"
+    spec:
+      containers:
+      - name: subscriptions
+        image: recommendcoffee.azurecr.io/subscriptions:{{ .Values.global.releaseVersion }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+          - name: CONNECTIONSTRINGS__DEFAULTDATABASE
+            valueFrom:
+              secretKeyRef:
+                key: subscriptionsConnectionString
+                name: recommend-coffee-secrets
+      initContainers:
+      - name: database-migrations
+        image: recommendcoffee.azurecr.io/subscriptions-migrations:{{ .Values.global.releaseVersion }}
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: recommend-coffee-secrets
+              key: databasePassword
+        - name: DB_USER
+          value: sa
+        - name: DB_NAME
+          value: subscriptions
+        - name: DB_SERVER
+          value: database

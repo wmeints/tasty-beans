@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      volumes:
+      - name: database-volume
+        persistentVolumeClaim:
+          claimName: database-volume-claim
+      containers:
+      - name: database
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        ports:
+        - containerPort: 1433
+        env:
+          - name: SA_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: databasePassword
+                name: recommend-coffee-secrets
+          - name: ACCEPT_EULA
+            value: "Y"
+        volumeMounts:
+          - name: database-volume
+            mountPath: /var/opt/mssql

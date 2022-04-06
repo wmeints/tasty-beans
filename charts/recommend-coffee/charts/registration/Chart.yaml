@@ -1,0 +1,6 @@
+apiVersion: v2
+name: registration
+description: Deploys the registration microservice
+type: application
+version: 0.1.0-alpha.1
+appVersion: 1.16.0

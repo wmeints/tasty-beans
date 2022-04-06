@@ -20,10 +20,6 @@ spec:
       - name: registration
         image: recommendcoffee.azurecr.io/registration
         imagePullPolicy: IfNotPresent
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
         ports:
         - containerPort: 80
         env:

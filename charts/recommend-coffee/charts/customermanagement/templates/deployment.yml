@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customermanagement
+spec:
+  selector:
+    matchLabels:
+      app: customermanagement
+  template:
+    metadata:
+      labels:
+        app: customermanagement
+      annotations:
+        dapr.io/app-id: "customermanagement"
+        dapr.io/config: "recommendcoffee-dapr-config"
+        dapr.io/app-port: "80"
+        dapr.io/enabled: "true"
+    spec:
+      containers:
+        - name: customermanagement
+          image: recommendcoffee.azurecr.io/customermanagement:{{ .Values.global.releaseVersion }}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          env:
+            - name: CONNECTIONSTRINGS__DEFAULTDATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: customermanagementConnectionString
+                  name: recommend-coffee-secrets
+      initContainers:
+        - name: database-migrations
+          image: recommendcoffee.azurecr.io/customermanagement-migrations:{{ .Values.global.releaseVersion }}
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: recommend-coffee-secrets
+                  key: databasePassword
+            - name: DB_USER
+              value: sa
+            - name: DB_NAME
+              value: customermanagement
+            - name: DB_SERVER
+              value: database

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registration
+spec:
+  selector:
+    matchLabels:
+      app: registration
+  template:
+    metadata:
+      labels:
+        app: registration
+      annotations:
+        dapr.io/app-id: "registration"
+        dapr.io/config: "recommendcoffee-dapr-config"
+        dapr.io/app-port: "80"
+        dapr.io/enabled: "true"
+    spec:
+      containers:
+      - name: registration
+        image: recommendcoffee.azurecr.io/registration:{{ .Values.global.releaseVersion }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ratings
+spec:
+  selector:
+    matchLabels:
+      app: ratings
+  template:
+    metadata:
+      labels:
+        app: ratings
+      annotations:
+        dapr.io/app-id: "ratings"
+        dapr.io/config: "recommendcoffee-dapr-config"
+        dapr.io/app-port: "80"
+        dapr.io/enabled: "true"
+    spec:
+      containers:
+      - name: ratings
+        image: recommendcoffee.azurecr.io/ratings:{{ .Values.global.releaseVersion }}
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: CONNECTIONSTRINGS__DEFAULTDATABASE
+            valueFrom:
+              secretKeyRef:
+                name: recommend-coffee-secrets
+                key: ratingsConnectionString
+        ports:
+        - containerPort: 80
+      initContainers:
+      - name: database-migrations
+        image: recommendcoffee.azurecr.io/ratings-migrations:{{ .Values.global.releaseVersion }}
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: recommend-coffee-secrets
+              key: databasePassword
+        - name: DB_USER
+          value: sa
+        - name: DB_NAME
+          value: ratings
+        - name: DB_SERVER
+          value: database
