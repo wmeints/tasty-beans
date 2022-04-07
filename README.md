@@ -4,9 +4,15 @@ This solution implements microservices with related analytics capabilities.
 
 ## System requirements
 
-* Helm 3
-* Docker for Desktop
-* Minikube
+Please make sure you have the following tools available:
+
+* [Helm 3](https://helm.sh/docs/intro/quickstart/)
+* [Docker](https://www.docker.com/get-started/)
+* [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+* [Powershell](https://github.com/PowerShell/PowerShell)
+
+You'll need 2 CPU cores available and 16GB of memory for all the containers in
+the solution.
 
 ## Getting started
 
@@ -32,3 +38,4 @@ Kubernetes cluster. Use the following command to deploy the helm chart:
 ```
 
 When asked, enter a password for the database server.
+The password is stored as a secret in the Kubernetes cluster.
