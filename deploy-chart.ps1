@@ -62,4 +62,3 @@ Write-Host "Installing helm chart"
 helm install --generate-name ./charts/recommend-coffee `
     --set global.releaseVersion=$ReleaseVersion `
     --set shared.databasePassword=$DatabasePassword `
-    --wait
