@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: recommendcoffee-envoy-config
-data:
-  envoy.yaml: |-
-{{ .Files.Get "envoy.yml" | indent 4 }}
