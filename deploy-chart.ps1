@@ -1,3 +1,18 @@
+<#
+    .SYNOPSIS
+        Deploys the Helm chart for the demo solution.
+
+    .DESCRIPTION
+        This script is used to deploy the Helm chart for the demo solution. 
+
+    .PARAMETER ReleaseVersion
+        The docker image tag to deploy. You can find this when invoking
+        build-images.ps1 in the same folder as this script.
+    
+    .PARAMETER DatabasePassword
+        The password to use for the database access.
+#>
+
 [CmdletBinding()]
 param (
     [System.String]
@@ -35,6 +50,11 @@ if($ReleaseVersion -eq "") {
     $latestVersion = $existingImages | sort-object | select-object -last 1
 
     $ReleaseVersion = $latestVersion
+}
+
+if($ReleaseVersion -eq "") {
+    Write-Host "No release version could be determined. Exiting."
+    exit 1
 }
 
 Write-Host "Installing helm chart"

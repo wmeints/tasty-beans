@@ -1,5 +1,11 @@
-# Find existing installations and remove them.
-# We need to get a clean install every time we run this script.
+<#
+    .SYNOPSIS
+        Removes the Helm chart from the Kubernetes cluster.
+
+    .DESCRIPTION
+        This script is used to clean up your Kubernetes cluster when you're done
+        working with the demo solution.
+#>
 
 $existingInstallations = (helm list -o json | ConvertFrom-Json)
 

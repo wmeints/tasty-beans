@@ -20,6 +20,15 @@ This section covers building and deploying the sample solution on your local
 machine. Ensure you meet the system requirements, or the solution will likely
 not deploy correctly.
 
+### Start the Kubernetes cluster
+
+Run the following commands to set up the Minikube Kubernetes cluster:
+
+```console
+minikube start --memory=16G --cpus=2
+minikube addons enable ingress
+```
+
 ### Building images
 
 Please follow these steps to build the docker images for the solution:
@@ -38,4 +47,4 @@ Kubernetes cluster. Use the following command to deploy the helm chart:
 ```
 
 When asked, enter a password for the database server.
-The password is stored as a secret in the Kubernetes cluster.
+We're storing the secret in the Kubernetes cluster.

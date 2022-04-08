@@ -1,3 +1,18 @@
+<#
+    .SYNOPSIS
+        Builds the docker images.
+
+    .DESCRIPTION
+        This script is used to build the dockeri mages. You need to call 
+        the following command:
+
+        minikube docker-env --shell powershell | invoke-expression
+
+        This will set the environment variables for the docker images so they
+        work with minikube. You can ignore this when you're using another
+        solution to run Kubernetes.
+#>
+
 # This table determines which components to build and how to build them.
 # Set migrate = $true for components that need the database migration init container.
 $ImagesToBuild = @(
