@@ -51,6 +51,9 @@ We're storing the secret in the Kubernetes cluster.
 
 ## Documentation
 
+This section covers some of the common patterns used in the demo solution.
+Please review the wiki for more details.
+
 ### Useful scripts
 
 This solution includes several useful scripts:
