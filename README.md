@@ -53,7 +53,7 @@ We're storing the secret in the Kubernetes cluster.
 
 ### Useful scripts
 
-This solution includes several valuable scripts:
+This solution includes several useful scripts:
 
 * `build-images.ps1`  
   This script builds the docker images for the solution.
