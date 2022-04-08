@@ -16,6 +16,7 @@ spec:
         dapr.io/app-port: "80"
         dapr.io/enabled: "true"
     spec:
+      serviceAccountName: customermanagement
       containers:
         - name: customermanagement
           image: recommendcoffee.azurecr.io/customermanagement:{{ .Values.global.releaseVersion }}

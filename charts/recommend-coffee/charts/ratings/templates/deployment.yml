@@ -16,6 +16,7 @@ spec:
         dapr.io/app-port: "80"
         dapr.io/enabled: "true"
     spec:
+      serviceAccountName: ratings
       containers:
       - name: ratings
         image: recommendcoffee.azurecr.io/ratings:{{ .Values.global.releaseVersion }}

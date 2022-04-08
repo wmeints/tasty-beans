@@ -16,6 +16,7 @@ spec:
         dapr.io/app-port: "80"
         dapr.io/enabled: "true"
     spec:
+      serviceAccountName: payments
       containers:
       - name: payments
         image: recommendcoffee.azurecr.io/payments:{{ .Values.global.releaseVersion }}
