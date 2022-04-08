@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: catalog-virtual-service
+spec:
+  hosts:
+  - "recommend.coffee"
+  gateways:
+  - recommendcoffee-gateway
+  http:
+  - name: catalog-route
+    match:
+      - uri:
+          prefix: /catalog/
+    route:
+    - destination:
+        host: catalog
+        port:
+          number: 80
