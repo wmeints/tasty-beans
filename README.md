@@ -48,3 +48,30 @@ Kubernetes cluster. Use the following command to deploy the helm chart:
 
 When asked, enter a password for the database server.
 We're storing the secret in the Kubernetes cluster.
+
+## Documentation
+
+### Useful scripts
+
+This solution includes several valuable scripts:
+
+* `build-images.ps1`  
+  This script builds the docker images for the solution.
+* `remove-chart.ps1`  
+  This script removes the deployed Helm chart from your Kubernetes cluster. You
+  can use this script as a cleanup if you're using your Kubernetes installation
+  for more than the demo solution.
+* `remove-images.ps1`  
+  This script removes any docker images related to the demo solution. This
+  script is beneficial if you find that you're not getting the right
+  images deployed on your Kubernetes cluster.
+* `deploy-dapr.ps1`  
+  This script deploys the Dapr operator on your Kubernetes cluster without
+  high-availability.
+* `deploy-chart.ps1`  
+  This script deploys the application chart to your Kubernetes cluster. You can
+  choose to deploy the latest version of a specific version by providing the
+  `-ReleaseName` parameter.
+* `clean-resources.ps1`  
+  This script cleans up resources that remain behind when deploying the
+  application chart fails.
