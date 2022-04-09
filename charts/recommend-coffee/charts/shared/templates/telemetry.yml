@@ -9,5 +9,5 @@ spec:
   accessLogging:
   - disabled: true
   metrics:
-    overrides:
-    - disabled: true
+    - overrides:
+        - disabled: true
