@@ -10,4 +10,7 @@
     Using this enables automatic ingress and a ton of other features.
 #>
 
-istioctl install --set profile=demo -y
+istioctl install `
+    --set profile=demo `
+    --set meshConfig.outboundTrafficPolicy.mode=REGISTRY_ONLY `
+    -y
