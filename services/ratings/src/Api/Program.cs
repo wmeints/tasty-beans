@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using RecommendCoffee.Ratings.Application.CommandHandlers;
 using RecommendCoffee.Ratings.Application.Common;
@@ -14,7 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultDatabase"),
+        opts => opts.EnableRetryOnFailure());
 });
 
 builder.Services
@@ -33,6 +36,10 @@ builder.Services
     
         serializerOptions.Converters.Add(new JsonStringEnumConverter());    
     });
+
+builder.Services.AddHealthChecks()
+    .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
+    .AddDbContextCheck<ApplicationDbContext>();
 
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
 builder.Services.AddScoped<ProductRegisteredEventHandler>();
@@ -54,6 +61,11 @@ if(app.Environment.IsDevelopment())
 }
 
 app.UseCloudEvents();
+
+app.MapHealthChecks("/healthz", new HealthCheckOptions 
+{
+    AllowCachingResponses = false
+});
 
 app.MapSubscribeHandler();
 app.MapControllers();

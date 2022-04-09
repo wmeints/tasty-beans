@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Infrastructure.Persistence;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using RecommendCoffee.Catalog.Application.CommandHandlers;
 using RecommendCoffee.Catalog.Application.Common;
@@ -12,7 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultDatabase"),
+        opts => opts.EnableRetryOnFailure());
 });
 
 builder.Services
@@ -28,9 +31,13 @@ builder.Services
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
-    
-        serializerOptions.Converters.Add(new JsonStringEnumConverter());    
+
+        serializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
+
+builder.Services.AddHealthChecks()
+    .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
+    .AddDbContextCheck<ApplicationDbContext>();
 
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -43,7 +50,7 @@ builder.Services.AddScoped<FindAllProductsQueryHandler>();
 
 var app = builder.Build();
 
-if(app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     await using var scope = app.Services.CreateAsyncScope();
     await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -52,6 +59,11 @@ if(app.Environment.IsDevelopment())
 }
 
 app.UseCloudEvents();
+
+app.MapHealthChecks("/healthz", new HealthCheckOptions
+{
+    AllowCachingResponses = false
+});
 
 app.MapSubscribeHandler();
 app.MapControllers();

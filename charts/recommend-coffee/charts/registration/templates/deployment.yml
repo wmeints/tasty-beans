@@ -2,7 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: registration
-  version: {{ .Chart.Version }}
+  labels:
+    app: registration
+    version: {{ .Chart.Version }}
 spec:
   selector:
     matchLabels:
@@ -21,8 +23,14 @@ spec:
     spec:
       serviceAccountName: registration
       containers:
-      - name: registration
-        image: recommendcoffee.azurecr.io/registration:{{ .Values.global.releaseVersion }}
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 80
+        - name: registration
+          image: recommendcoffee.azurecr.io/registration:{{ .Values.global.releaseVersion }}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3

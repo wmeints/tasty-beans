@@ -2,6 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: subscriptions
+  labels:
+    app: subscriptions
+    version: {{ .Chart.Version }}
 spec:
   type: ClusterIP
   selector:

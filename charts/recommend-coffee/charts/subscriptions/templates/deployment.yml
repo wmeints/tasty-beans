@@ -2,7 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: subscriptions
-  version: {{ .Chart.Version }}
+  labels:
+    app: subscriptions
+    version: {{ .Chart.Version }}
 spec:
   selector:
     matchLabels:
@@ -21,29 +23,35 @@ spec:
     spec:
       serviceAccountName: subscriptions
       containers:
-      - name: subscriptions
-        image: recommendcoffee.azurecr.io/subscriptions:{{ .Values.global.releaseVersion }}
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 80
-        env:
-          - name: CONNECTIONSTRINGS__DEFAULTDATABASE
-            valueFrom:
-              secretKeyRef:
-                key: subscriptionsConnectionString
-                name: recommend-coffee-secrets
+        - name: subscriptions
+          image: recommendcoffee.azurecr.io/subscriptions:{{ .Values.global.releaseVersion }}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          env:
+            - name: CONNECTIONSTRINGS__DEFAULTDATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: subscriptionsConnectionString
+                  name: recommend-coffee-secrets
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3
       initContainers:
-      - name: database-migrations
-        image: recommendcoffee.azurecr.io/subscriptions-migrations:{{ .Values.global.releaseVersion }}
-        env:
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: recommend-coffee-secrets
-              key: databasePassword
-        - name: DB_USER
-          value: sa
-        - name: DB_NAME
-          value: subscriptions
-        - name: DB_SERVER
-          value: database
+        - name: database-migrations
+          image: recommendcoffee.azurecr.io/subscriptions-migrations:{{ .Values.global.releaseVersion }}
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: recommend-coffee-secrets
+                  key: databasePassword
+            - name: DB_USER
+              value: sa
+            - name: DB_NAME
+              value: subscriptions
+            - name: DB_SERVER
+              value: database

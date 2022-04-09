@@ -7859,7 +7859,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\willemm\\.nuget\\packages\\": {}
+    "C:\\Users\\wme\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -7867,11 +7867,11 @@
       "projectUniqueName": "D:\\code\\recommend-coffee\\services\\payments\\tests\\Infrastructure.Tests\\Infrastructure.Tests.csproj",
       "projectName": "RecommendCoffee.Payments.Infrastructure.Tests",
       "projectPath": "D:\\code\\recommend-coffee\\services\\payments\\tests\\Infrastructure.Tests\\Infrastructure.Tests.csproj",
-      "packagesPath": "C:\\Users\\willemm\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\wme\\.nuget\\packages\\",
       "outputPath": "D:\\code\\recommend-coffee\\services\\payments\\tests\\Infrastructure.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\willemm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\wme\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7879,6 +7879,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -7937,7 +7938,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -2,7 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ratings
-  version: {{ .Chart.Version }}
+  labels:
+    app: ratings
+    version: {{ .Chart.Version }}
 spec:
   selector:
     matchLabels:
@@ -21,29 +23,35 @@ spec:
     spec:
       serviceAccountName: ratings
       containers:
-      - name: ratings
-        image: recommendcoffee.azurecr.io/ratings:{{ .Values.global.releaseVersion }}
-        imagePullPolicy: IfNotPresent
-        env:
-          - name: CONNECTIONSTRINGS__DEFAULTDATABASE
-            valueFrom:
-              secretKeyRef:
-                name: recommend-coffee-secrets
-                key: ratingsConnectionString
-        ports:
-        - containerPort: 80
+        - name: ratings
+          image: recommendcoffee.azurecr.io/ratings:{{ .Values.global.releaseVersion }}
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: CONNECTIONSTRINGS__DEFAULTDATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: recommend-coffee-secrets
+                  key: ratingsConnectionString
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3
       initContainers:
-      - name: database-migrations
-        image: recommendcoffee.azurecr.io/ratings-migrations:{{ .Values.global.releaseVersion }}
-        env:
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: recommend-coffee-secrets
-              key: databasePassword
-        - name: DB_USER
-          value: sa
-        - name: DB_NAME
-          value: ratings
-        - name: DB_SERVER
-          value: database
+        - name: database-migrations
+          image: recommendcoffee.azurecr.io/ratings-migrations:{{ .Values.global.releaseVersion }}
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: recommend-coffee-secrets
+                  key: databasePassword
+            - name: DB_USER
+              value: sa
+            - name: DB_NAME
+              value: ratings
+            - name: DB_SERVER
+              value: database

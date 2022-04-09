@@ -2,7 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: customermanagement
-  version: {{ .Chart.Version }}
+  labels:
+    app: customermanagement
+    version: {{ .Chart.Version }}
 spec:
   selector:
     matchLabels:
@@ -32,6 +34,12 @@ spec:
                 secretKeyRef:
                   key: customermanagementConnectionString
                   name: recommend-coffee-secrets
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3
       initContainers:
         - name: database-migrations
           image: recommendcoffee.azurecr.io/customermanagement-migrations:{{ .Values.global.releaseVersion }}

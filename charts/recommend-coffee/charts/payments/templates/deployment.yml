@@ -2,7 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: payments
-  version: {{ .Chart.Version }}
+  labels:
+    app: payments
+    version: {{ .Chart.Version }}
 spec:
   selector:
     matchLabels:
@@ -21,29 +23,35 @@ spec:
     spec:
       serviceAccountName: payments
       containers:
-      - name: payments
-        image: recommendcoffee.azurecr.io/payments:{{ .Values.global.releaseVersion }}
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 80
-        env:
-          - name: CONNECTIONSTRINGS__DEFAULTDATABASE
-            valueFrom:
-              secretKeyRef:
-                key: paymentsConnectionString
-                name: recommend-coffee-secrets
+        - name: payments
+          image: recommendcoffee.azurecr.io/payments:{{ .Values.global.releaseVersion }}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          env:
+            - name: CONNECTIONSTRINGS__DEFAULTDATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: paymentsConnectionString
+                  name: recommend-coffee-secrets
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3
       initContainers:
-      - name: database-migrations
-        image: recommendcoffee.azurecr.io/payments-migrations:{{ .Values.global.releaseVersion }}
-        env:
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: recommend-coffee-secrets
-              key: databasePassword
-        - name: DB_USER
-          value: sa
-        - name: DB_NAME
-          value: payments
-        - name: DB_SERVER
-          value: database
+        - name: database-migrations
+          image: recommendcoffee.azurecr.io/payments-migrations:{{ .Values.global.releaseVersion }}
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: recommend-coffee-secrets
+                  key: databasePassword
+            - name: DB_USER
+              value: sa
+            - name: DB_NAME
+              value: payments
+            - name: DB_SERVER
+              value: database

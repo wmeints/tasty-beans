@@ -10,11 +10,11 @@
         "projectUniqueName": "D:\\code\\recommend-coffee\\services\\payments\\src\\Application\\Application.csproj",
         "projectName": "RecommendCoffee.Payments.Application",
         "projectPath": "D:\\code\\recommend-coffee\\services\\payments\\src\\Application\\Application.csproj",
-        "packagesPath": "C:\\Users\\willemm\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\wme\\.nuget\\packages\\",
         "outputPath": "D:\\code\\recommend-coffee\\services\\payments\\src\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\willemm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\wme\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -58,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -68,11 +69,11 @@
         "projectUniqueName": "D:\\code\\recommend-coffee\\services\\payments\\src\\Domain\\Domain.csproj",
         "projectName": "RecommendCoffee.Payments.Domain",
         "projectPath": "D:\\code\\recommend-coffee\\services\\payments\\src\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\willemm\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\wme\\.nuget\\packages\\",
         "outputPath": "D:\\code\\recommend-coffee\\services\\payments\\src\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\willemm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\wme\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -80,6 +81,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -118,7 +120,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -128,11 +130,11 @@
         "projectUniqueName": "D:\\code\\recommend-coffee\\services\\payments\\tests\\Application.Tests\\Application.Tests.csproj",
         "projectName": "RecommendCoffee.Payments.Application.Tests",
         "projectPath": "D:\\code\\recommend-coffee\\services\\payments\\tests\\Application.Tests\\Application.Tests.csproj",
-        "packagesPath": "C:\\Users\\willemm\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\wme\\.nuget\\packages\\",
         "outputPath": "D:\\code\\recommend-coffee\\services\\payments\\tests\\Application.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\willemm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\wme\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -140,6 +142,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -198,7 +201,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

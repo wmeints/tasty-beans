@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Dapr.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpLogging;
 using RecommendCoffee.Registration.Application.CommandHandlers;
 using RecommendCoffee.Registration.Application.EventHandlers;
@@ -29,6 +30,25 @@ builder.Services
         serializerOptions.Converters.Add(new JsonStringEnumConverter());    
     });
 
+builder.Services.AddHealthChecks()
+    .AddUrlGroup(options =>
+    {
+        options.AddUri(
+            new Uri("http://subscriptions/healthz"), 
+            uo => uo.UseGet().UseTimeout(TimeSpan.FromSeconds(3))
+        );
+        
+        options.AddUri(
+            new Uri("http://customermanagement/healthz"), 
+            uo => uo.UseGet().UseTimeout(TimeSpan.FromSeconds(3))
+        );
+        
+        options.AddUri(
+            new Uri("http://payments/healthz"), 
+            uo => uo.UseGet().UseTimeout(TimeSpan.FromSeconds(3))
+        );
+    });
+
 builder.Services.AddScoped<StartRegistrationCommandHandler>();
 
 builder.Services.AddScoped<CustomerRegisteredEventHandler>();
@@ -41,6 +61,11 @@ builder.Services.AddSingleton<IStateStore, StateStore>();
 var app = builder.Build();
 
 app.UseCloudEvents();
+
+app.MapHealthChecks("/healthz", new HealthCheckOptions 
+{
+    AllowCachingResponses = false
+});
 
 app.MapSubscribeHandler();
 app.MapControllers();
