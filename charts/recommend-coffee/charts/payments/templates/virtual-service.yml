@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: payments-virtual-service
+spec:
+  hosts:
+  - "recommend.coffee"
+  gateways:
+  - recommendcoffee-gateway
+  http:
+  - name: payments-route
+    match:
+      - uri:
+          prefix: /payments/
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: payments.default.svc.cluster.local
+        port:
+          number: 80
