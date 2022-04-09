@@ -2,14 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: customermanagement
+  version: {{ .Chart.Version }}
 spec:
   selector:
     matchLabels:
       app: customermanagement
+      version: {{ .Chart.Version }}
   template:
     metadata:
       labels:
         app: customermanagement
+        version: {{ .Chart.Version }}
       annotations:
         dapr.io/app-id: "customermanagement"
         dapr.io/config: "recommendcoffee-dapr-config"

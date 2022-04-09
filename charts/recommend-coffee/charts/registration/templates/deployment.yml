@@ -2,14 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: registration
+  version: {{ .Chart.Version }}
 spec:
   selector:
     matchLabels:
       app: registration
+      version: {{ .Chart.Version }}
   template:
     metadata:
       labels:
         app: registration
+        version: {{ .Chart.Version }}
       annotations:
         dapr.io/app-id: "registration"
         dapr.io/config: "recommendcoffee-dapr-config"

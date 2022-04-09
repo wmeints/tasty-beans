@@ -6,6 +6,7 @@ spec:
   type: ClusterIP
   selector:
     app: subscriptions
+    version: {{ .Chart.Version }}
   ports:
   - port: 80
     targetPort: 80

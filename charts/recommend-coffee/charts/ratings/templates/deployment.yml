@@ -2,14 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ratings
+  version: {{ .Chart.Version }}
 spec:
   selector:
     matchLabels:
       app: ratings
+      version: {{ .Chart.Version }}
   template:
     metadata:
       labels:
         app: ratings
+        version: {{ .Chart.Version }}
       annotations:
         dapr.io/app-id: "ratings"
         dapr.io/config: "recommendcoffee-dapr-config"
