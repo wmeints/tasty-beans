@@ -1,8 +1,7 @@
-﻿using Domain.Aggregates.ProductAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
 
-namespace Infrastructure.Persistence;
+namespace RecommendCoffee.Catalog.Infrastructure.Persistence;
 
 public class ApplicationDbContext: DbContext
 {

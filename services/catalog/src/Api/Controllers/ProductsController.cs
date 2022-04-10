@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Azure;
 using RecommendCoffee.Catalog.Api.Common;
 using RecommendCoffee.Catalog.Api.Forms;
 using RecommendCoffee.Catalog.Application.CommandHandlers;
@@ -67,7 +68,7 @@ public class ProductsController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-
+        
         return Ok(response.Product);
     }
 

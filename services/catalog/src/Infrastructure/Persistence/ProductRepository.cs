@@ -1,32 +1,55 @@
-﻿using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
+﻿using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
 using RecommendCoffee.Catalog.Domain.Common;
 
-namespace Infrastructure.Persistence;
+namespace RecommendCoffee.Catalog.Infrastructure.Persistence;
 
 public class ProductRepository: IProductRepository
 {
-    public Task<PagedResult<Product>> FindAllAsync(int pageIndex, int pageSize)
+    private readonly ApplicationDbContext _applicationDbContext;
+
+    public ProductRepository(ApplicationDbContext applicationDbContext)
     {
-        throw new NotImplementedException();
+        _applicationDbContext = applicationDbContext;
     }
 
-    public Task<Product?> FindByIdAsync(Guid id)
+    public async Task<PagedResult<Product>> FindAllAsync(int pageIndex, int pageSize)
     {
-        throw new NotImplementedException();
+        var items = await _applicationDbContext.Products
+            .Include(x => x.Variants)
+            .OrderBy(x => x.Name)
+            .Skip(pageIndex * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        
+        var totalItems = await _applicationDbContext.Products.LongCountAsync();
+
+        return new PagedResult<Product>(items, pageIndex, pageSize, totalItems);
     }
 
-    public Task<int> InsertAsync(Product product)
+    public async Task<Product?> FindByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _applicationDbContext.Products
+            .Include(x => x.Variants)
+            .SingleOrDefaultAsync(x => x.Id == id);
     }
 
-    public Task<int> UpdateAsync(Product product)
+    public async Task<int> InsertAsync(Product product)
     {
-        throw new NotImplementedException();
+        await _applicationDbContext.Products.AddAsync(product);
+        return await _applicationDbContext.SaveChangesAsync();
     }
 
-    public Task<int> DeleteAsync(Product product)
+    public async Task<int> UpdateAsync(Product product)
     {
-        throw new NotImplementedException();
+        _applicationDbContext.Update(product);
+        return await _applicationDbContext.SaveChangesAsync();
+    }
+
+    public async Task<int> DeleteAsync(Product product)
+    {
+        _applicationDbContext.Remove(product);
+        return await _applicationDbContext.SaveChangesAsync();
     }
 }

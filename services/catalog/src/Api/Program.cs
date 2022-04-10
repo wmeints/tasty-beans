@@ -3,11 +3,13 @@ using System.Text.Json.Serialization;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using RecommendCoffee.Catalog.Api;
 using RecommendCoffee.Catalog.Application.CommandHandlers;
 using RecommendCoffee.Catalog.Application.Common;
 using RecommendCoffee.Catalog.Application.QueryHandlers;
 using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
 using RecommendCoffee.Catalog.Infrastructure.EventBus;
+using RecommendCoffee.Catalog.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,11 +41,14 @@ builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
     .AddDbContextCheck<ApplicationDbContext>();
 
+builder.AddTelemetry();
+
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddScoped<RegisterProductCommandHandler>();
 builder.Services.AddScoped<UpdateProductCommandHandler>();
+builder.Services.AddScoped<TasteTestProductCommandHandler>();
 builder.Services.AddScoped<DiscontinueProductCommandHandler>();
 builder.Services.AddScoped<FindProductByIdQueryHandler>();
 builder.Services.AddScoped<FindAllProductsQueryHandler>();
