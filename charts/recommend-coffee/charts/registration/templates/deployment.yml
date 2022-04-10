@@ -28,6 +28,11 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
+          env:
+            - name: IMAGE_TAG
+              value: "{{ .Chart.Version }}"
+            - name: OTLP__ENDPOINT
+              value: "http://otel-collector:4317"
           livenessProbe:
             httpGet:
               path: /healthz

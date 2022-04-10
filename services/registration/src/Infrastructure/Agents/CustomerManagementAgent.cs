@@ -18,6 +18,6 @@ public class CustomerManagementAgent: ICustomerManagement
     public async Task RegisterCustomerAsync(RegisterCustomerRequest request)
     {
         _logger.LogInformation("Registering new customer");
-        await _daprClient.InvokeMethodAsync("customers", "customers", request);
+        await _daprClient.InvokeMethodAsync("customermanagement", "customers", request);
     }
 }

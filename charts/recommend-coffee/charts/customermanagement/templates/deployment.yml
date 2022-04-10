@@ -34,6 +34,10 @@ spec:
                 secretKeyRef:
                   key: customermanagementConnectionString
                   name: recommend-coffee-secrets
+            - name: OTLP__ENDPOINT
+              value: "http://otel-collector:4317"
+            - name: IMAGE_TAG
+              value: "{{ .Chart.Version }}"
           livenessProbe:
             httpGet:
               path: /healthz

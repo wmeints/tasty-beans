@@ -1,0 +1,33 @@
+POST http://recommend.coffee/registration/
+Content-Type: application/json
+Acccept: application/json
+
+{
+    "customerDetails": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "emailAddress": "john.doe@somedomain.com",
+        "telephoneNumber": "000-0000000",
+        "invoiceAddress": {
+            "street": "Main Street",
+            "houseNumber": "123",
+            "postalCode": "12345",
+            "city": "Some City",
+            "countryCode": "NL"
+        },
+        "shippingAddress": {
+            "street": "Main Street",
+            "houseNumber": "123",
+            "postalCode": "12345",
+            "city": "Some City",
+            "countryCode": "NL"
+        }
+    },
+    "subscription": {
+        "shippingFrequency": "Monthly",
+        "kind": "Monthly"
+    },
+    "paymentMethod": {
+
+    }
+}

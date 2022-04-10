@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using Dapr.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpLogging;
+using RecommendCoffee.Registration.Api;
 using RecommendCoffee.Registration.Application.CommandHandlers;
 using RecommendCoffee.Registration.Application.EventHandlers;
 using RecommendCoffee.Registration.Domain.Common;
@@ -47,7 +48,9 @@ builder.Services.AddHealthChecks()
             new Uri("http://payments/healthz"), 
             uo => uo.UseGet().UseTimeout(TimeSpan.FromSeconds(3))
         );
-    });
+    }); 
+
+builder.AddTelemetry();
 
 builder.Services.AddScoped<StartRegistrationCommandHandler>();
 

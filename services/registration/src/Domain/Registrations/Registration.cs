@@ -1,4 +1,5 @@
-﻿using RecommendCoffee.Registration.Domain.Common;
+﻿using System.Diagnostics;
+using RecommendCoffee.Registration.Domain.Common;
 using RecommendCoffee.Registration.Domain.Customers;
 using RecommendCoffee.Registration.Domain.Registrations.Commands;
 using RecommendCoffee.Registration.Domain.Subscriptions;
@@ -8,6 +9,8 @@ namespace RecommendCoffee.Registration.Domain.Registrations;
 
 public class Registration
 {
+    private ActivitySource _activitySource = new ActivitySource("Registration");
+
     private readonly RegistrationData _data;
     private readonly ICustomerManagement _customerManagement;
     private readonly ISubscriptions _subscriptions;
@@ -20,9 +23,9 @@ public class Registration
         _subscriptions = subscriptions;
         _stateMachine = CreateStateMachine(_data, stateStore);
     }
-    
+
     public Registration(
-        RegistrationData data, 
+        RegistrationData data,
         ICustomerManagement customerManagement,
         ISubscriptions subscriptions,
         IStateStore stateStore)
@@ -35,29 +38,49 @@ public class Registration
     }
 
     public RegistrationData Data => _data;
-    
+
     public async Task StartAsync(StartRegistrationCommand command)
     {
+        using var activity = _activitySource.StartActivity(
+            "Start", ActivityKind.Server);
+
+        activity.AddTag("statemachine.state", _data.State.ToString());
+        
         _data.CustomerId = command.CustomerId;
         _data.CustomerDetails = command.CustomerDetails;
         _data.SubscriptionDetails = command.SubscriptionDetails;
         _data.PaymentMethodDetails = command.PaymentMethodDetails;
-        
+
         await _stateMachine.FireAsync(RegistrationTrigger.RegisterCustomerDetails);
     }
 
     public async Task CompleteCustomerRegistrationAsync()
     {
+        using var activity = _activitySource.StartActivity(
+            "CompleteCustomerRegistration", ActivityKind.Server);
+
+        activity.AddTag("statemachine.state", _data.State.ToString());
+        
         await _stateMachine.FireAsync(RegistrationTrigger.CompleteCustomerRegistration);
     }
 
-    public async Task CompletePaymentMethodRegistration()
+    public async Task CompletePaymentMethodRegistrationAsync()
     {
+        using var activity = _activitySource.StartActivity(
+            "CompletePaymentMethodRegistration", ActivityKind.Server);
+
+        activity.AddTag("statemachine.state", _data.State.ToString());
+        
         await _stateMachine.FireAsync(RegistrationTrigger.CompletePaymentMethodRegistration);
     }
 
-    public async Task CompleteSubscriptionRegistration()
+    public async Task CompleteSubscriptionRegistrationAsync()
     {
+        using var activity = _activitySource.StartActivity(
+            "CompleteSubscriptionRegistration", ActivityKind.Server);
+
+        activity.AddTag("statemachine.state", _data.State.ToString());
+        
         await _stateMachine.FireAsync(RegistrationTrigger.CompleteSubscriptionRegistration);
     }
 
@@ -65,9 +88,13 @@ public class Registration
         RegistrationData data, IStateStore stateStore)
     {
         var stateMachine = new StateMachine<RegistrationState, RegistrationTrigger>(
-            () => data.State, 
+            () => data.State,
             state =>
             {
+                using var activity = _activitySource.StartActivity("SaveState", ActivityKind.Server);
+
+                activity.AddTag("statemachine.state", state.ToString());
+                
                 _data.State = state;
                 stateStore.Put(_data.CustomerId.ToString(), _data);
             });
@@ -78,12 +105,12 @@ public class Registration
 
         stateMachine.Configure(RegistrationState.WaitingForCustomerRegistration)
             .OnEntryFromAsync(RegistrationTrigger.RegisterCustomerDetails, RegisterCustomerDetails)
-            .Permit(RegistrationTrigger.CompleteCustomerRegistration, 
+            .Permit(RegistrationTrigger.CompleteCustomerRegistration,
                 RegistrationState.WaitingForPaymentMethodRegistration);
 
         stateMachine.Configure(RegistrationState.WaitingForPaymentMethodRegistration)
             .OnEntryFromAsync(RegistrationTrigger.CompleteCustomerRegistration, RegisterPaymentMethod)
-            .Permit(RegistrationTrigger.CompletePaymentMethodRegistration, 
+            .Permit(RegistrationTrigger.CompletePaymentMethodRegistration,
                 RegistrationState.WaitingForSubscriptionRegistration);
 
         stateMachine.Configure(RegistrationState.WaitingForSubscriptionRegistration)
@@ -93,9 +120,14 @@ public class Registration
 
         return stateMachine;
     }
-    
+
     private async Task RegisterSubscriptionDetails()
     {
+        using var activity = _activitySource.StartActivity(
+            "RegisterSubscriptionDetails", ActivityKind.Server);
+
+        activity.AddTag("statemachine.state", _data.State.ToString());
+
         var request = new RegisterSubscriptionRequest(
             _data.CustomerId,
             _data.SubscriptionDetails.ShippingFrequency,
@@ -106,6 +138,11 @@ public class Registration
 
     private async Task RegisterCustomerDetails()
     {
+        using var activity = _activitySource.StartActivity(
+            "RegisterCustomerDetails", ActivityKind.Server);
+
+        activity.AddTag("statemachine.state", _data.State.ToString());
+        
         var request = new RegisterCustomerRequest(
             _data.CustomerId,
             _data.CustomerDetails.FirstName,
@@ -120,8 +157,11 @@ public class Registration
 
     private async Task RegisterPaymentMethod()
     {
+        using var activity = _activitySource.StartActivity(
+            "RegisterPaymentMethod", ActivityKind.Server);
+
+        activity.AddBaggage("CurrentState", _data.State.ToString());
+        
         //TODO: Call the payment service
     }
-    
-    
 }

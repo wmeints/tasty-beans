@@ -92,7 +92,7 @@ public class RegistrationTests
         var registration = new Domain.Registrations.Registration(
             registrationData, _customerManagement, _subscriptions, _stateStore);
 
-        await registration.CompletePaymentMethodRegistration();
+        await registration.CompletePaymentMethodRegistrationAsync();
 
         registrationData.State.Should().Be(RegistrationState.WaitingForSubscriptionRegistration);
     }
@@ -112,7 +112,7 @@ public class RegistrationTests
         var registration = new Domain.Registrations.Registration(
             registrationData, _customerManagement, _subscriptions, _stateStore);
 
-        await registration.CompleteSubscriptionRegistration();
+        await registration.CompleteSubscriptionRegistrationAsync();
 
         registrationData.State.Should().Be(RegistrationState.Completed);
     }

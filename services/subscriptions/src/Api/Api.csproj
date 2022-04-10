@@ -1,29 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\Application\Application.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Domain\Domain.csproj"/>
+        <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
+        <ProjectReference Include="..\Application\Application.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.2" />
-    <PackageReference Include="Dapr.AspNetCore" Version="1.6.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.3" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.2"/>
+        <PackageReference Include="Dapr.AspNetCore" Version="1.6.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.3"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.3"/>
+        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.2.0-rc4"/>
+        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol.Logs" Version="1.0.0-rc9.1"/>
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc9.1"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.1"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.1"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.0.0-rc9.1"/>
+    </ItemGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyName>RecommendCoffee.Subscriptions.Api</AssemblyName>
-    <RootNamespace>RecommendCoffee.Subscriptions.Api</RootNamespace>
-    <UserSecretsId>b3a0a5ef-4c02-449b-892a-605707bd08c6</UserSecretsId>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <AssemblyName>RecommendCoffee.Subscriptions.Api</AssemblyName>
+        <RootNamespace>RecommendCoffee.Subscriptions.Api</RootNamespace>
+        <UserSecretsId>b3a0a5ef-4c02-449b-892a-605707bd08c6</UserSecretsId>
+    </PropertyGroup>
 
 </Project>
