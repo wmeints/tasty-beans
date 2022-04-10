@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using RecommendCoffee.Ratings.Api;
 using RecommendCoffee.Ratings.Application.CommandHandlers;
 using RecommendCoffee.Ratings.Application.Common;
 using RecommendCoffee.Ratings.Application.EventHandlers;
@@ -40,6 +41,8 @@ builder.Services
 builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
     .AddDbContextCheck<ApplicationDbContext>();
+
+builder.AddTelemetry();
 
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
 builder.Services.AddScoped<ProductRegisteredEventHandler>();
