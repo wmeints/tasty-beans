@@ -8,6 +8,7 @@ public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer
 {
     public void Configure(EntityTypeBuilder<Customer> builder)
     {
+        builder.Property<byte[]>("Version").IsRowVersion();
         builder.Property(x => x.FirstName).HasMaxLength(100).IsRequired();
         builder.Property(x => x.LastName).HasMaxLength(100).IsRequired();
         builder.Property(x => x.TelephoneNumber).HasMaxLength(13).IsRequired();
