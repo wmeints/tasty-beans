@@ -10,6 +10,7 @@ public class RatingEntityTypeConfiguration : IEntityTypeConfiguration<Rating>
 {
     public void Configure(EntityTypeBuilder<Rating> builder)
     {
+        builder.Property<byte[]>("Version").IsRowVersion();
         builder.HasOne<Customer>().WithMany().HasForeignKey(x => x.CustomerId);
         builder.HasOne<Product>().WithMany().HasForeignKey(x => x.ProductId);
     }

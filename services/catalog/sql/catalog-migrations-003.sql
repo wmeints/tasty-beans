@@ -83,3 +83,22 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220410054646_AddRowVersionProperty')
+BEGIN
+    ALTER TABLE [Products] ADD [Version] rowversion NULL;
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220410054646_AddRowVersionProperty')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20220410054646_AddRowVersionProperty', N'6.0.3');
+END;
+GO
+
+COMMIT;
+GO
+

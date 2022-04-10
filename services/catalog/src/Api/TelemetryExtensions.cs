@@ -1,4 +1,5 @@
-﻿using OpenTelemetry.Logs;
+﻿using OpenTelemetry.Instrumentation.AspNetCore;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -27,7 +28,10 @@ public static class TelemetryExtensions
                     exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
                 })
                 .AddHttpClientInstrumentation()
-                .AddAspNetCoreInstrumentation()
+                .AddAspNetCoreInstrumentation(options =>
+                {
+                    options.Filter = (httpContext) => httpContext.Request.Path != "/healthz";
+                })
                 .AddSqlClientInstrumentation();
         });
 

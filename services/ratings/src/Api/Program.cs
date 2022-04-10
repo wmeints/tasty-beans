@@ -48,6 +48,7 @@ builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
 builder.Services.AddScoped<ProductRegisteredEventHandler>();
 builder.Services.AddScoped<ProductUpdatedEventHandler>();
 builder.Services.AddScoped<ProductDiscontinuedEventHandler>();
+builder.Services.AddScoped<CustomerRegisteredEventHandler>();
 builder.Services.AddScoped<RegisterRatingCommandHandler>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();

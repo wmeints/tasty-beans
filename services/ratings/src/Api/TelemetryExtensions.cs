@@ -9,25 +9,29 @@ public static class TelemetryExtensions
 {
     public static void AddTelemetry(this WebApplicationBuilder builder)
     {
+        var serviceName = "Ratings";
         var serviceVersion = Environment.GetEnvironmentVariable("IMAGE_TAG") ?? "0.0.0.0";
         var machineName = Environment.MachineName;
 
         var resourceBuilder = ResourceBuilder.CreateDefault().AddService(
-            serviceName: "Catalog",
+            serviceName,
             serviceVersion: serviceVersion,
             serviceInstanceId: machineName);
         
         builder.Services.AddOpenTelemetryTracing(options =>
         {
             options
-                .AddSource("RecommendCoffee.Catalog")
+                .AddSource(serviceName)
                 .SetResourceBuilder(resourceBuilder)
                 .AddOtlpExporter(exporterOptions =>
                 {
                     exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
                 })
                 .AddHttpClientInstrumentation()
-                .AddAspNetCoreInstrumentation()
+                .AddAspNetCoreInstrumentation(options =>
+                {
+                    options.Filter = (httpContext) => httpContext.Request.Path != "/healthz";
+                })
                 .AddSqlClientInstrumentation();
         });
 
