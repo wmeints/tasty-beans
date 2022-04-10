@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using RecommendCoffee.CustomerManagement.Api;
 using RecommendCoffee.CustomerManagement.Application.CommandHandlers;
 using RecommendCoffee.CustomerManagement.Application.Common;
 using RecommendCoffee.CustomerManagement.Application.QueryHandlers;
@@ -31,6 +32,8 @@ builder.Services
 builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
     .AddDbContextCheck<ApplicationDbContext>();
+
+builder.AddTelemetry();
 
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
