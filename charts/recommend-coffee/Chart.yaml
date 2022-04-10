@@ -17,6 +17,8 @@ dependencies:
     version: 0.1.0-alpha.1
   - name: catalog
     version: 0.1.0-alpha.1
+  - name: otel-collector
+    version: 0.1.0-alpha.1
   - name: customermanagement
     version: 0.1.0-alpha.1
   - name: payments

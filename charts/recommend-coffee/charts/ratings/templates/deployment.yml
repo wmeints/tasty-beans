@@ -32,6 +32,10 @@ spec:
                 secretKeyRef:
                   name: recommend-coffee-secrets
                   key: ratingsConnectionString
+            - name: IMAGE_TAG
+              value: "{{ .Chart.Version }}"
+            - name: OTLP__ENDPOINT
+              value: "http://otel-collector:4317"
           ports:
             - containerPort: 80
           livenessProbe:

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: otel-collector
+description: Deploys the open telemetry collector in the cluster
+type: application
+version: 0.1.0-alpha.1
+appVersion: 1.0.0

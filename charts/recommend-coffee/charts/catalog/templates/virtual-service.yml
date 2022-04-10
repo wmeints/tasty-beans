@@ -12,6 +12,8 @@ spec:
     match:
       - uri:
           prefix: /catalog/
+    rewrite:
+      uri: /
     route:
     - destination:
         host: catalog

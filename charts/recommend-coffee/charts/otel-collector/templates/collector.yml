@@ -1,0 +1,9 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: otel
+spec:
+  podAnnotations:
+    sidecar.istio.io/inject: "false"
+  config: |-
+{{ .Files.Get "otel-config.yml" | indent 4 }}
