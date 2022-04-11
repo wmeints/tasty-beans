@@ -2,32 +2,44 @@
 
 This solution implements microservices with related analytics capabilities.
 
+## Goals
+
+This demo solution is meant for me as a sample project to show off various pieces
+of technology. Currently, I'm using this to:
+
+* Demonstrate how to implement observability in ASP.NET Core 6
+* Demonstrate how to integrate your microservices with a data mesh/data platform
+* Demonstrate how to implement end-to-end ML solutions with MLOps
+
+## Status
+
+This is a work in progress and by no means complete. Currently, only the microservices
+are available in the solution. Also, not all planned functionality is in the microservices
+yet.
+
+All features are subject to change. But that's part of the fun :laugh:
+
 ## System requirements
 
 Please make sure you have the following tools available:
 
 * [Helm 3](https://helm.sh/docs/intro/quickstart/)
 * [Docker](https://www.docker.com/get-started/)
-* [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+* [Minikube](https://minikube.sigs.k8s.io/docs/start/) or other Kubernetes cluster.
 * [Powershell](https://github.com/PowerShell/PowerShell)
+* [Istio](https://istio.io/latest/docs/setup/getting-started/)
 
 You'll need 2 CPU cores available and 16GB of memory for all the containers in
-the solution.
+the solution. You can deploy with less, but it's untested, so you've been warned.
+
+Make sure you have `istio`, `helm`, and `kubectl` in your `PATH` variable. The
+utility scripts expect you to have these tools available.
 
 ## Getting started
 
 This section covers building and deploying the sample solution on your local
 machine. Ensure you meet the system requirements, or the solution will likely
 not deploy correctly.
-
-### Start the Kubernetes cluster
-
-Run the following commands to set up the Minikube Kubernetes cluster:
-
-```console
-minikube start --memory=16G --cpus=2
-minikube addons enable ingress
-```
 
 ### Building images
 
@@ -37,22 +49,59 @@ Please follow these steps to build the docker images for the solution:
 ./build-images.ps1
 ```
 
+### Deploying the service mesh
+
+The solution uses the Istio service mesh to expose API endpoints to your local machine.
+We'll also use Istio for communication between service and A/B tests at a later stage.
+
+You can install Istio using the following command:
+
+```console
+./deploy-istio.ps1
+```
+
+It will take a few minutes for the script to complete. After you've installed
+Istio you can install dapr.
+
+### Installing dapr
+
+We use Dapr in the solution to provide a layer of abstraction on top of common
+application components such as state storage, and pub/sub. You can install Dapr
+using the following command:
+
+```console
+./deploy-dapr.ps1
+```
+
 ### Deploying the Helm chart
 
-After building the images, you can deploy the helm chart to your local
-Kubernetes cluster. Use the following command to deploy the helm chart:
+After building the images, and deploying the cluster infrastructure, you can
+deploy the helm chart to your Kubernetes cluster. Use the following command to
+deploy the helm chart:
 
 ```console
 ./deploy-chart.ps1
 ```
 
 When asked, enter a password for the database server.
-We're storing the secret in the Kubernetes cluster.
+We're storing the database password as a secret in the Kubernetes cluster.
 
 ## Documentation
 
 This section covers some of the common patterns used in the demo solution.
 Please review the wiki for more details.
+
+### Solution structure
+
+TODO: Solution structure
+
+### Networking
+
+TODO: Networking configuration with the service mesh.
+
+### Observability
+
+TODO: Observability setup.
 
 ### Useful scripts
 
@@ -68,6 +117,9 @@ This solution includes several useful scripts:
   This script removes any docker images related to the demo solution. This
   script is beneficial if you find that you're not getting the right
   images deployed on your Kubernetes cluster.
+* `deploy-istio.ps1`  
+  This script deploys Istio with the demo profile to provide a light-weight
+  service mesh on top of Kubernetes.
 * `deploy-dapr.ps1`  
   This script deploys the Dapr operator on your Kubernetes cluster without
   high-availability.
@@ -75,6 +127,9 @@ This solution includes several useful scripts:
   This script deploys the application chart to your Kubernetes cluster. You can
   choose to deploy the latest version of a specific version by providing the
   `-ReleaseName` parameter.
+* `restart-deployments.ps1`  
+  This script restarts all deployments. Use this if you've forgotten to deploy
+  Istio or Dapr before deploying the Helm chart.
 * `clean-resources.ps1`  
   This script cleans up resources that remain behind when deploying the
   application chart fails.
