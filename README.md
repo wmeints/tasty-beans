@@ -17,7 +17,7 @@ This is a work in progress and by no means complete. Currently, only the microse
 are available in the solution. Also, not all planned functionality is in the microservices
 yet.
 
-All features are subject to change. But that's part of the fun :laugh:
+All features are subject to change. But that's part of the fun :grin:
 
 ## System requirements
 
