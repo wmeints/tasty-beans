@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using RecommendCoffee.Registration.Domain.Common;
 using RecommendCoffee.Registration.Domain.Customers;
+using RecommendCoffee.Registration.Domain.Payments;
 using RecommendCoffee.Registration.Domain.Registrations.Commands;
 using RecommendCoffee.Registration.Domain.Subscriptions;
 using Stateless;
@@ -14,13 +15,19 @@ public class Registration
     private readonly RegistrationData _data;
     private readonly ICustomerManagement _customerManagement;
     private readonly ISubscriptions _subscriptions;
+    private readonly IPayments _payments;
     private StateMachine<RegistrationState, RegistrationTrigger> _stateMachine;
 
-    public Registration(ICustomerManagement customerManagement, ISubscriptions subscriptions, IStateStore stateStore)
+    public Registration(
+        ICustomerManagement customerManagement, 
+        ISubscriptions subscriptions,
+        IStateStore stateStore,
+        IPayments payments)
     {
         _data = new RegistrationData { State = RegistrationState.NotStarted };
         _customerManagement = customerManagement;
         _subscriptions = subscriptions;
+        _payments = payments;
         _stateMachine = CreateStateMachine(_data, stateStore);
     }
 
@@ -28,11 +35,12 @@ public class Registration
         RegistrationData data,
         ICustomerManagement customerManagement,
         ISubscriptions subscriptions,
-        IStateStore stateStore)
+        IStateStore stateStore, IPayments payments)
     {
         _data = data;
         _customerManagement = customerManagement;
         _subscriptions = subscriptions;
+        _payments = payments;
 
         _stateMachine = CreateStateMachine(data, stateStore);
     }
@@ -160,8 +168,14 @@ public class Registration
         using var activity = _activitySource.StartActivity(
             "RegisterPaymentMethod", ActivityKind.Server);
 
-        activity.AddBaggage("CurrentState", _data.State.ToString());
-        
-        //TODO: Call the payment service
+        activity.AddTag("statemachine.state", _data.State.ToString());
+
+        await _payments.RegisterPaymentMethodAsync(new RegisterPaymentMethodRequest(
+            _data.PaymentMethodDetails.CustomerId,
+            _data.PaymentMethodDetails.CardType,
+            _data.PaymentMethodDetails.CardNumber,
+            _data.PaymentMethodDetails.ExpirationDate,
+            _data.PaymentMethodDetails.SecurityCode,
+            _data.PaymentMethodDetails.CardHolderName));
     }
 }

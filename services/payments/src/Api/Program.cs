@@ -2,7 +2,10 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using RecommendCoffee.Payments.Api;
+using RecommendCoffee.Payments.Application.CommandHandlers;
 using RecommendCoffee.Payments.Application.Common;
+using RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate;
 using RecommendCoffee.Payments.Infrastructure.EventBus;
 using RecommendCoffee.Payments.Infrastructure.Persistence;
 
@@ -36,7 +39,11 @@ builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
     .AddDbContextCheck<ApplicationDbContext>();
 
+builder.AddTelemetry();
+
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
+builder.Services.AddScoped<RegisterPaymentMethodCommandHandler>();
+builder.Services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
 
 var app = builder.Build();
 

@@ -1,6 +1,7 @@
 ﻿using RecommendCoffee.Registration.Application.IntegrationEvents;
 using RecommendCoffee.Registration.Domain.Common;
 using RecommendCoffee.Registration.Domain.Customers;
+using RecommendCoffee.Registration.Domain.Payments;
 using RecommendCoffee.Registration.Domain.Registrations;
 using RecommendCoffee.Registration.Domain.Subscriptions;
 
@@ -11,15 +12,17 @@ public class CustomerRegisteredEventHandler
     private readonly IStateStore _stateStore;
     private readonly ICustomerManagement _customerManagement;
     private readonly ISubscriptions _subscriptions;
+    private readonly IPayments _payments;
 
     public CustomerRegisteredEventHandler(
         IStateStore stateStore, 
         ICustomerManagement customerManagement,
-        ISubscriptions subscriptions)
+        ISubscriptions subscriptions, IPayments payments)
     {
         _stateStore = stateStore;
         _customerManagement = customerManagement;
         _subscriptions = subscriptions;
+        _payments = payments;
     }
 
     public async Task HandleAsync(CustomerRegisteredEvent evt)
@@ -27,7 +30,7 @@ public class CustomerRegisteredEventHandler
         var stateData = await _stateStore.Get<RegistrationData>(evt.CustomerId.ToString());
         
         var registration = new Domain.Registrations.Registration(
-            stateData, _customerManagement, _subscriptions, _stateStore);
+            stateData, _customerManagement, _subscriptions, _stateStore, _payments);
 
         await registration.CompleteCustomerRegistrationAsync();
         await registration.CompletePaymentMethodRegistrationAsync();

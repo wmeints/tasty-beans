@@ -20,13 +20,14 @@ public class RegistrationTests
     private readonly ISubscriptions _subscriptions;
     private readonly SubscriptionDetails _subscriptionDetails;
     private readonly PaymentMethodDetails _paymentMethodDetails;
-    
+    private readonly IPayments _payments;
     
     public RegistrationTests()
     {
         _stateStore = A.Fake<IStateStore>();
         _customerManagement = A.Fake<ICustomerManagement>();
         _subscriptions = A.Fake<ISubscriptions>();
+        _payments = A.Fake<IPayments>();
         
         _customerDetails = new CustomerDetails(
             "Willem",
@@ -38,14 +39,20 @@ public class RegistrationTests
         );
 
         _subscriptionDetails = new SubscriptionDetails(ShippingFrequency.Monthly, SubscriptionKind.OneYear);
-        _paymentMethodDetails = new PaymentMethodDetails();
+        _paymentMethodDetails = new PaymentMethodDetails(
+            Guid.NewGuid(),
+            CardType.Mastercard,
+            "5413675197898462",
+            "01/22",
+            "679", 
+            "Test User");
     }
     
     [Fact]
     public async Task CanRegisterCustomerDetails()
     {
         var registration = new Domain.Registrations.Registration(
-            _customerManagement, _subscriptions, _stateStore);
+            _customerManagement, _subscriptions, _stateStore, _payments);
 
         await registration.StartAsync(new StartRegistrationCommand(
             Guid.NewGuid(),
@@ -70,7 +77,7 @@ public class RegistrationTests
         };
         
         var registration = new Domain.Registrations.Registration(
-            registrationData, _customerManagement, _subscriptions, _stateStore);
+            registrationData, _customerManagement, _subscriptions, _stateStore, _payments);
         
         await registration.CompleteCustomerRegistrationAsync();
 
@@ -90,7 +97,7 @@ public class RegistrationTests
         };
         
         var registration = new Domain.Registrations.Registration(
-            registrationData, _customerManagement, _subscriptions, _stateStore);
+            registrationData, _customerManagement, _subscriptions, _stateStore, _payments);
 
         await registration.CompletePaymentMethodRegistrationAsync();
 
@@ -110,7 +117,7 @@ public class RegistrationTests
         };
         
         var registration = new Domain.Registrations.Registration(
-            registrationData, _customerManagement, _subscriptions, _stateStore);
+            registrationData, _customerManagement, _subscriptions, _stateStore, _payments);
 
         await registration.CompleteSubscriptionRegistrationAsync();
 

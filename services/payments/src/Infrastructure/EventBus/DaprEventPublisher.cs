@@ -22,7 +22,7 @@ public class DaprEventPublisher : IEventPublisher
             
             await _daprClient.PublishEventAsync<object>(
                 "pubsub",
-                topic?.Name ?? "catalog.deadletter.v1",
+                topic?.Name ?? "payments.deadletter.v1",
                 evt);
         }
     }

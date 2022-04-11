@@ -8,6 +8,7 @@ public class PaymentMethodEntityTypeConfiguration: IEntityTypeConfiguration<Paym
 {
     public void Configure(EntityTypeBuilder<PaymentMethod> builder)
     {
+        builder.Property<byte[]>("Version").IsRowVersion();
         builder.Property(x => x.CardNumber).IsRequired().HasMaxLength(16);
         builder.Property(x => x.ExpirationDate).IsRequired().HasMaxLength(5);
         builder.Property(x => x.SecurityCode).IsRequired().HasMaxLength(3);
