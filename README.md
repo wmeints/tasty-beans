@@ -73,6 +73,12 @@ using the following command:
 ./deploy-dapr.ps1
 ```
 
+### Installing OpenTelemetry Collector
+
+The OpenTelemetry collector centralizes the shipping of metrics and traces
+to a single processor that ships the information to the appropriate backend tools.
+We're using zipkin to store traces. Metrics aren't stored yet.
+
 ### Deploying the Helm chart
 
 After building the images, and deploying the cluster infrastructure, you can
@@ -123,6 +129,8 @@ This solution includes several useful scripts:
 * `deploy-dapr.ps1`  
   This script deploys the Dapr operator on your Kubernetes cluster without
   high-availability.
+* `deploy-otel.ps1`  
+  This script deploys the OpenTelemetry operator to the Kubernetes cluster.
 * `deploy-chart.ps1`  
   This script deploys the application chart to your Kubernetes cluster. You can
   choose to deploy the latest version of a specific version by providing the
