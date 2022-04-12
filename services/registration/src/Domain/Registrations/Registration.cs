@@ -171,7 +171,7 @@ public class Registration
         activity.AddTag("statemachine.state", _data.State.ToString());
 
         await _payments.RegisterPaymentMethodAsync(new RegisterPaymentMethodRequest(
-            _data.PaymentMethodDetails.CustomerId,
+            _data.CustomerId,
             _data.PaymentMethodDetails.CardType,
             _data.PaymentMethodDetails.CardNumber,
             _data.PaymentMethodDetails.ExpirationDate,

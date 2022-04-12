@@ -33,6 +33,5 @@ public class CustomerRegisteredEventHandler
             stateData, _customerManagement, _subscriptions, _stateStore, _payments);
 
         await registration.CompleteCustomerRegistrationAsync();
-        await registration.CompletePaymentMethodRegistrationAsync();
     }
 }

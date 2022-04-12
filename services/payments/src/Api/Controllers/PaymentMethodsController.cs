@@ -10,11 +10,13 @@ namespace RecommendCoffee.Payments.Api.Controllers;
 [Route("/paymentmethods")]
 public class PaymentMethodsController : ControllerBase
 {
+    private readonly ILogger<PaymentMethodsController> _logger;
     private readonly RegisterPaymentMethodCommandHandler _registerPaymentMethodCommandHandler;
 
-    public PaymentMethodsController(RegisterPaymentMethodCommandHandler registerPaymentMethodCommandHandler)
+    public PaymentMethodsController(RegisterPaymentMethodCommandHandler registerPaymentMethodCommandHandler, ILogger<PaymentMethodsController> logger)
     {
         _registerPaymentMethodCommandHandler = registerPaymentMethodCommandHandler;
+        _logger = logger;
     }
 
     public async Task<IActionResult> RegisterPaymentMethod(RegisterPaymentMethodForm form)
