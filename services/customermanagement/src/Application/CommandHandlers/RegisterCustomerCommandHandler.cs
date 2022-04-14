@@ -23,6 +23,8 @@ public class RegisterCustomerCommandHandler
         {
             await _customerRepository.InsertAsync(response.Customer);
             await _eventPublisher.PublishEventsAsync(response.Events);
+            
+            Metrics.CustomerRegistered.Add(1);
         }
 
         return response;

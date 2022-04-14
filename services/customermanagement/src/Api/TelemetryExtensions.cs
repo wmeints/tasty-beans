@@ -28,9 +28,9 @@ public static class TelemetryExtensions
                     exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
                 })
                 .AddHttpClientInstrumentation()
-                .AddAspNetCoreInstrumentation(options =>
+                .AddAspNetCoreInstrumentation(instrumentationOptions =>
                 {
-                    options.Filter = (httpContext) => httpContext.Request.Path != "/healthz";
+                    instrumentationOptions.Filter = (httpContext) => httpContext.Request.Path != "/healthz";
                 })
                 .AddSqlClientInstrumentation();
         });
@@ -39,8 +39,17 @@ public static class TelemetryExtensions
         {
             options
                 .SetResourceBuilder(resourceBuilder)
+                .AddAspNetCoreInstrumentation()
                 .AddHttpClientInstrumentation()
-                .AddAspNetCoreInstrumentation();
+                .AddAspNetCoreInstrumentation()
+                .AddMeter("RecommendCoffee.CustomerManagement.Api")
+                .AddMeter("RecommendCoffee.CustomerManagement.Application")
+                .AddMeter("RecommendCoffee.CustomerManagement.Domain")
+                .AddMeter("RecommendCoffee.CustomerManagement.Infrastructure")
+                .AddOtlpExporter(exporterOptions =>
+                {
+                    exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
+                });
         });
 
         builder.Logging.AddOpenTelemetry(options =>

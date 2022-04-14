@@ -1,3 +1,4 @@
+using System.Diagnostics.Metrics;
 using System.Reflection;
 using Dapr.Client;
 using RecommendCoffee.Catalog.Application.Common;
@@ -8,7 +9,7 @@ namespace RecommendCoffee.Catalog.Infrastructure.EventBus;
 public class DaprEventPublisher : IEventPublisher
 {
     private readonly DaprClient _daprClient;
-
+    
     public DaprEventPublisher(DaprClient daprClient)
     {
         _daprClient = daprClient;
@@ -24,6 +25,8 @@ public class DaprEventPublisher : IEventPublisher
                 "pubsub",
                 topic?.Name ?? "catalog.deadletter.v1",
                 evt);
+            
+            Metrics.EventsPublished.Add(1);
         }
     }
 }

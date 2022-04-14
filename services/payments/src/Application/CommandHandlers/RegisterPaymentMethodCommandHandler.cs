@@ -29,6 +29,8 @@ public class RegisterPaymentMethodCommandHandler
         {
             await _paymentMethodRepository.InsertAsync(response.PaymentMethod);
             await _eventPublisher.PublishEventsAsync(response.Events);
+            
+            Metrics.PaymentMethodRegistered.Add(1);
         }
 
         return response;

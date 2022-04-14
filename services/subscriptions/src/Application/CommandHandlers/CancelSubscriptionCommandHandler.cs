@@ -31,6 +31,8 @@ public class CancelSubscriptionCommandHandler
         {
             await _subscriptionRepository.UpdateAsync(subscription);
             await _eventPublisher.PublishEventsAsync(response.Events);
+
+            Metrics.SubscriptionsCancelled.Add(1);
         }
 
         return response;

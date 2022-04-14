@@ -33,6 +33,8 @@ public class RegisterRatingCommandHandler
         {
             await _ratingRepository.InsertAsync(response.Rating);
             await _eventPublisher.PublishEventsAsync(response.Events);
+            
+            Metrics.RatingsRegistered.Add(1);
         }
 
         return response;

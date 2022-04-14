@@ -20,6 +20,7 @@ spec:
         dapr.io/config: "recommendcoffee-dapr-config"
         dapr.io/app-port: "80"
         dapr.io/enabled: "true"
+        sidecar.opentelemetry.io/inject: "true"
     spec:
       serviceAccountName: payments
       containers:
@@ -37,7 +38,7 @@ spec:
             - name: IMAGE_TAG
               value: "{{ .Chart.Version }}"
             - name: OTLP__ENDPOINT
-              value: "http://otel-collector:4317"
+              value: "http://localhost:4317"
           livenessProbe:
             httpGet:
               path: /healthz

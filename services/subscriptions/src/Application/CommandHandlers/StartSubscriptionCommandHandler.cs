@@ -35,16 +35,8 @@ public class StartSubscriptionCommandHandler
             {
                 await _subscriptionRepository.UpdateAsync(subscription);
                 await _eventPublisher.PublishEventsAsync(response.Events);
-            }
-            else
-            {
-                _logger.LogWarning("The request is invalid");
                 
-                foreach (var error in response.Errors)
-                {
-                    _logger.LogWarning("Validation of property {PropertyName} failed: {ErrorMessage}",
-                        error.PropertyPath,error.ErrorMessage);
-                }
+                Metrics.SubscriptionsStarted.Add(1);
             }
         }
         else
@@ -52,22 +44,13 @@ public class StartSubscriptionCommandHandler
             _logger.LogInformation("Starting new subscription");
             
             response = Subscription.Start(cmd);
-            subscription = response.Subscription;
 
             if (response.IsValid)
             {
                 await _subscriptionRepository.InsertAsync(response.Subscription);
                 await _eventPublisher.PublishEventsAsync(response.Events);
-            }
-            else
-            {
-                _logger.LogWarning("The request is invalid");
 
-                foreach (var error in response.Errors)
-                {
-                    _logger.LogWarning("Validation of property {PropertyName} failed: {ErrorMessage}",
-                        error.PropertyPath,error.ErrorMessage);
-                }
+                Metrics.SubscriptionsStarted.Add(1);
             }
         }
 

@@ -23,6 +23,8 @@ public class RegisterProductCommandHandler
         {
             await _productRepository.InsertAsync(response.Product);
             await _eventPublisher.PublishEventsAsync(response.Events);
+            
+            Metrics.ProductsRegistered.Add(1);
         }
 
         return response;

@@ -5,5 +5,8 @@ metadata:
 spec:
   podAnnotations:
     sidecar.istio.io/inject: "false"
+  ports:
+   - port: 8889
+     name: metrics
   config: |-
-{{ .Files.Get "otel-config.yml" | indent 4 }}
+{{ .Files.Get "collector-config.yml" | indent 4 }}

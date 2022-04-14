@@ -1,4 +1,6 @@
-﻿using OpenTelemetry.Instrumentation.AspNetCore;
+﻿using System.Diagnostics.Metrics;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -10,11 +12,12 @@ public static class TelemetryExtensions
 {
     public static void AddTelemetry(this WebApplicationBuilder builder)
     {
+        var serviceName = "Catalog";
         var serviceVersion = Environment.GetEnvironmentVariable("IMAGE_TAG") ?? "0.0.0.0";
         var machineName = Environment.MachineName;
 
         var resourceBuilder = ResourceBuilder.CreateDefault().AddService(
-            serviceName: "Catalog",
+            serviceName,
             serviceVersion: serviceVersion,
             serviceInstanceId: machineName);
         
@@ -28,9 +31,9 @@ public static class TelemetryExtensions
                     exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
                 })
                 .AddHttpClientInstrumentation()
-                .AddAspNetCoreInstrumentation(options =>
+                .AddAspNetCoreInstrumentation(instrumentationOptions =>
                 {
-                    options.Filter = (httpContext) => httpContext.Request.Path != "/healthz";
+                    instrumentationOptions.Filter = (httpContext) => httpContext.Request.Path != "/healthz";
                 })
                 .AddSqlClientInstrumentation();
         });
@@ -39,8 +42,17 @@ public static class TelemetryExtensions
         {
             options
                 .SetResourceBuilder(resourceBuilder)
+                .AddAspNetCoreInstrumentation()
                 .AddHttpClientInstrumentation()
-                .AddAspNetCoreInstrumentation();
+                .AddAspNetCoreInstrumentation()
+                .AddMeter("RecommendCoffee.Catalog.Api")
+                .AddMeter("RecommendCoffee.Catalog.Application")
+                .AddMeter("RecommendCoffee.Catalog.Domain")
+                .AddMeter("RecommendCoffee.Catalog.Infrastructure")
+                .AddOtlpExporter(exporterOptions =>
+                {
+                    exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
+                });
         });
 
         builder.Logging.AddOpenTelemetry(options =>

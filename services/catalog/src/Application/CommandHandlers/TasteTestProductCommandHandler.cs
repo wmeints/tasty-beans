@@ -31,6 +31,8 @@ public class TasteTestProductCommandHandler
         {
             await _productRepository.UpdateAsync(product);
             await _eventPublisher.PublishEventsAsync(response.Events);
+            
+            Metrics.ProductsTasteTested.Add(1);
         }
 
         return response;

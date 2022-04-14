@@ -30,5 +30,7 @@ public class StartRegistrationCommandHandler
             _customerManagement, _subscriptions, _stateStore, _payments);
         
         await registration.StartAsync(command);
+        
+        Metrics.RegistrationsStarted.Add(1);
     }
 }

@@ -1,0 +1,8 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata: 
+  name: otel-agent
+spec:
+  mode: sidecar
+  config: |-
+{{ .Files.Get "agent-config.yml" | indent 4 }}

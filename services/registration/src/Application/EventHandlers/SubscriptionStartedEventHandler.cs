@@ -39,5 +39,7 @@ public class SubscriptionStartedEventHandler
             stateData, _customerManagement, _subscriptions, _stateStore, _payments);
 
         await registration.CompleteSubscriptionRegistrationAsync();
+        
+        Metrics.RegistrationsCompleted.Add(1);
     }
 }

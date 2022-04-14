@@ -1,8 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Dapr.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.HttpLogging;
 using RecommendCoffee.Registration.Api;
 using RecommendCoffee.Registration.Application.CommandHandlers;
 using RecommendCoffee.Registration.Application.EventHandlers;

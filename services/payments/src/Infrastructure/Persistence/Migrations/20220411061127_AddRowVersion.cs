@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace RecommendCoffee.Payments.Infrastructure.Migrations
+namespace RecommendCoffee.Payments.Infrastructure.Persistence.Migrations
 {
     public partial class AddRowVersion : Migration
     {

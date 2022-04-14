@@ -24,6 +24,8 @@ public class DaprEventPublisher : IEventPublisher
                 "pubsub",
                 topic?.Name ?? "ratings.deadletter.v1",
                 evt);
+            
+            Metrics.EventsPublished.Add(1);
         }
     }
 }

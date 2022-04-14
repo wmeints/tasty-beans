@@ -20,6 +20,7 @@ spec:
         dapr.io/config: "recommendcoffee-dapr-config"
         dapr.io/app-port: "80"
         dapr.io/enabled: "true"
+        sidecar.opentelemetry.io/inject: "true"
     spec:
       serviceAccountName: customermanagement
       containers:
@@ -35,7 +36,7 @@ spec:
                   key: customermanagementConnectionString
                   name: recommend-coffee-secrets
             - name: OTLP__ENDPOINT
-              value: "http://otel-collector:4317"
+              value: "http://localhost:4317"
             - name: IMAGE_TAG
               value: "{{ .Chart.Version }}"
           livenessProbe:

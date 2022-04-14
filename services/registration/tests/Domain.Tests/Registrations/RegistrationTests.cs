@@ -40,7 +40,6 @@ public class RegistrationTests
 
         _subscriptionDetails = new SubscriptionDetails(ShippingFrequency.Monthly, SubscriptionKind.OneYear);
         _paymentMethodDetails = new PaymentMethodDetails(
-            Guid.NewGuid(),
             CardType.Mastercard,
             "5413675197898462",
             "01/22",

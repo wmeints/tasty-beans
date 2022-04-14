@@ -31,6 +31,8 @@ public class DiscontinueProductCommandHandler
         {
             await _productRepository.UpdateAsync(product);
             await _eventPublisher.PublishEventsAsync(response.Events);
+            
+            Metrics.ProductsDiscontinued.Add(1);
         }
 
         return response;
