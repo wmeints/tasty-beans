@@ -83,7 +83,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
-    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | 
+                       ForwardedHeaders.XForwardedProto | 
+                       ForwardedHeaders.XForwardedHost
 });
 
 app.UseStaticFiles();
