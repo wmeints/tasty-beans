@@ -4,16 +4,14 @@ metadata:
   name: identity-virtual-service
 spec:
   hosts:
-  - "recommend.coffee"
+  - "identity.recommend.coffee"
   gateways:
-  - recommendcoffee-gateway
+  - identity-gateway
   http:
   - name: identity-route
     match:
       - uri:
-          prefix: /identity/
-    rewrite:
-      uri: /
+          prefix: /
     route:
     - destination:
         host: identity

@@ -7,8 +7,11 @@ spec:
     istio: ingressgateway
   servers:
   - port:
-      number: 80
-      name: http
-      protocol: HTTP
+      number: 443
+      name: https
+      protocol: HTTPS
     hosts:
     - "recommend.coffee"
+    tls:
+      mode: SIMPLE
+      credentialName: recommend-coffee-tls-secret
