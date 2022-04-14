@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emailserver
+spec:
+  selector:
+    matchLabels:
+      app: emailserver
+  template:
+    metadata:
+      labels:
+        app: emailserver
+      annotations:
+        sidecar.istio.io/inject: "false"
+    spec:
+      containers:
+      - name: emailserver
+        image: maildev/maildev
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 25
+          name: smtp

@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+    name: emailserver
+spec:
+    hosts:
+    - emailserver
+    ports:
+    - number: 80
+      name: http
+      protocol: TCP
+    - number: 25
+      name: smtp
+      protocol: TCP
+    resolution: DNS
+    location: MESH_EXTERNAL

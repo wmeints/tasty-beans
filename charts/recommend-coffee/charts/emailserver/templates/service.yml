@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: emailserver
+spec:
+  selector:
+    app: emailserver
+  ports:
+  - port: 25
+    targetPort: 25
+    name: smtp
+  - port: 80
+    targetPort: 80
+    name: http
