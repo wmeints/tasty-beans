@@ -19,7 +19,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         opts=>opts.EnableRetryOnFailure());
 });
 
-builder.Services.AddDaprClient();
 builder.Services
     .AddControllers()
     .AddJsonOptions(options =>
@@ -27,7 +26,17 @@ builder.Services
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     })
-    .AddDapr();
+    .AddDapr(daprClientBuilder =>
+    {
+        var serializerOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+    
+        serializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+        daprClientBuilder.UseJsonSerializationOptions(serializerOptions);
+    });
 
 builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))

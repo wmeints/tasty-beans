@@ -21,7 +21,8 @@ $ImagesToBuild = @(
     @{ name = "payments"; migrate = $true },
     @{ name = "ratings"; migrate = $true },
     @{ name = "registration"; migrate = $false },
-    @{ name = "subscriptions"; migrate = $true }
+    @{ name = "subscriptions"; migrate = $true },
+    @{ name = "identity"; migrate = $true }
 )
 
 # We generate a timestamp for the image tag.

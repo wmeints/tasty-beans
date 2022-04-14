@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity
+  labels:
+    app: identity
+    version: {{ .Chart.Version }}
+spec:
+  selector:
+    matchLabels:
+      app: identity
+      version: {{ .Chart.Version }}
+  template:
+    metadata:
+      labels:
+        app: identity
+        version: {{ .Chart.Version }}
+      annotations:
+        dapr.io/app-id: "identity"
+        dapr.io/config: "recommendcoffee-dapr-config"
+        dapr.io/app-port: "80"
+        dapr.io/enabled: "true"
+        sidecar.opentelemetry.io/inject: "true"
+    spec:
+      serviceAccountName: identity
+      containers:
+        - name: identity
+          image: recommendcoffee.azurecr.io/identity:{{ .Values.global.releaseVersion }}
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: CONNECTIONSTRINGS__DEFAULTDATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: recommend-coffee-secrets
+                  key: identityConnectionString
+            - name: IMAGE_TAG
+              value: "{{ .Chart.Version }}"
+            - name: OTLP__ENDPOINT
+              value: "http://localhost:4317"
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3
+      initContainers:
+        - name: database-migrations
+          image: recommendcoffee.azurecr.io/identity-migrations:{{ .Values.global.releaseVersion }}
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: recommend-coffee-secrets
+                  key: databasePassword
+            - name: DB_USER
+              value: sa
+            - name: DB_NAME
+              value: identity
+            - name: DB_SERVER
+              value: database
