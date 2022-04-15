@@ -47,21 +47,19 @@ public static class Configuration
             AllowedGrantTypes = GrantTypes.Code,
             RedirectUris =
             {
-                "https://localhost:6001/signin-callback-oidc",
-                "https://recommend.coffee/signin-callback-oidc"
+                "https://localhost:7036/authentication/login-callback",
+                "https://recommend.coffee/authentication/login-callback"
             },
             PostLogoutRedirectUris =
             {
-                "https://localhost:6001/signout-callback-oidc",
-                "https://recommend.coffee/signout-callback-oidc"
+                "https://localhost:7036/authentication/logout-callback",
+                "https://recommend.coffee/authentication/logout-callback"
             },
             AllowAccessTokensViaBrowser = true,
             RequirePkce = false,
             AllowedScopes =
             {
                 "catalog",
-                "customermanagement",
-                "payments",
                 "ratings",
                 "registration",
                 "subscriptions",
