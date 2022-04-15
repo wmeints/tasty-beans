@@ -94,6 +94,11 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions()
 {
     AllowCachingResponses = false
 });
+
+// This is bad for your health, but we need this to make the demo work properly.
+// Might change this later to the correct host headers, etc.
+app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseIdentityServer();
