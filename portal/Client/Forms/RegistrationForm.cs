@@ -1,6 +1,3 @@
 ﻿namespace RecommendCoffee.Portal.Client.Forms;
 
-public class RegistrationForm
-{
-    
-}
+public record StartRegistrationForm(CustomerDetails CustomerDetails, SubscriptionDetails Subscription, PaymentMethodDetails PaymentMethod);
