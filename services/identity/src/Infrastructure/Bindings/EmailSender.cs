@@ -1,4 +1,5 @@
-﻿using Dapr.Client;
+﻿using System.Net.Mail;
+using Dapr.Client;
 using RecommendCoffee.Identity.Application.Common;
 
 namespace RecommendCoffee.Identity.Infrastructure.Bindings;
@@ -21,6 +22,14 @@ public class EmailSender : IEmailSender
             { "emailFrom", "noreply@recommend.coffee" }
         };
 
-        await _daprClient.InvokeBindingAsync("email", "create", bodyHtml, metadata);
+        // await _daprClient.InvokeBindingAsync("smtp", "create", bodyHtml, metadata);
+
+        var client = new SmtpClient("emailserver", 25);
+        var message = new MailMessage("noreply@recommend.coffee", emailAddress, subject, bodyHtml)
+        {
+            IsBodyHtml = true
+        };
+
+        await client.SendMailAsync(message);
     }
 }

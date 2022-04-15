@@ -9,6 +9,10 @@ spec:
   metadata:
   - name: host
     value: "emailserver"
+  - name: user
+    value: ""
+  - name: password
+    value: ""
   - name: port
     value: "25"
   - name: skipTLSVerify

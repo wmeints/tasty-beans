@@ -1,4 +1,4 @@
-﻿@page "/Identity/Account/Login";
+﻿@page "/Account/Login";
 @model RecommendCoffee.Identity.Api.Pages.LoginPageModel;
 
 @{
@@ -17,11 +17,11 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-8">
-            <form>
+            <form method="post">
                 <div class="mb-3">
                     <label asp-for="Input.Email"></label>
                     <input type="email" class="form-control" asp-for="Input.Email"/>
-                </div>
+                </div> 
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>

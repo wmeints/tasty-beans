@@ -7,8 +7,9 @@ spec:
     app: emailserver
   ports:
   - port: 25
-    targetPort: 25
+    targetPort: 1025
     name: smtp
-  - port: 80
-    targetPort: 80
+    appProtocol: tcp
+  - port: 1080
+    targetPort: 1080
     name: http

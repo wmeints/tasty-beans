@@ -11,6 +11,11 @@ public class EventsController: ControllerBase
 {
     private readonly CustomerRegisteredEventHandler _customerRegisteredEventHandler;
 
+    public EventsController(CustomerRegisteredEventHandler customerRegisteredEventHandler)
+    {
+        _customerRegisteredEventHandler = customerRegisteredEventHandler;
+    }
+
     [HttpPost("CustomerRegistered")]
     [Topic("pubsub", "customermanagement.customer.registered.v1")]
     public async Task<IActionResult> OnCustomerRegistered(CustomerRegisteredEvent evt)

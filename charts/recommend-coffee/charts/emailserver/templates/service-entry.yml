@@ -6,10 +6,10 @@ spec:
     hosts:
     - emailserver
     ports:
-    - number: 80
+    - number: 1080
       name: http
       protocol: TCP
-    - number: 25
+    - number: 1025
       name: smtp
       protocol: TCP
     resolution: DNS

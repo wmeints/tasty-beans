@@ -20,6 +20,16 @@ public static class Configuration
         yield return new ApiResource("subscriptions", "Subscriptions");
     }
 
+    public static IEnumerable<ApiScope> GetApiScopes()
+    {
+        yield return new ApiScope("catalog", "Catalog");
+        yield return new ApiScope("customermanagement", "Customer Management");
+        yield return new ApiScope("payments", "Payments");
+        yield return new ApiScope("ratings", "Ratings");
+        yield return new ApiScope("registration", "Registration");
+        yield return new ApiScope("subscriptions", "Subscriptions");
+    }
+
     public static IEnumerable<Client> GetClients()
     {
         yield return new Client
@@ -41,9 +51,7 @@ public static class Configuration
         yield return new Client
         {
             ClientId = "8766ded8-f31e-48c2-bc5c-03a500f2e491",
-            ClientSecrets = new[] {
-                new Secret("e398d7b1-ab8a-4a31-89ef-3a3febdc8afd".Sha256())
-            },
+            RequireClientSecret = false,
             AllowedGrantTypes = GrantTypes.Code,
             RedirectUris =
             {
@@ -54,6 +62,11 @@ public static class Configuration
             {
                 "https://localhost:7036/authentication/logout-callback",
                 "https://recommend.coffee/authentication/logout-callback"
+            },
+            AllowedCorsOrigins =
+            {
+                "https://localhost:7036",
+                "https://recommend.coffee"
             },
             AllowAccessTokensViaBrowser = true,
             RequirePkce = false,

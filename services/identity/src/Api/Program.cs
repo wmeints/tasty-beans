@@ -59,6 +59,7 @@ builder.Services.AddIdentityServer()
     .AddDeveloperSigningCredential()
     .AddInMemoryClients(Configuration.GetClients())
     .AddInMemoryApiResources(Configuration.GetApiResources())
+    .AddInMemoryApiScopes(Configuration.GetApiScopes())
     .AddInMemoryIdentityResources(Configuration.GetIdentityResources())
     .AddAspNetIdentity<ApplicationUser>();
 

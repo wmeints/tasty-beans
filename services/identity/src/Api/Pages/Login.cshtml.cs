@@ -19,6 +19,7 @@ public class LoginPageModel: PageModel
         _emailSender = emailSender;
     }
 
+    [BindProperty]
     public LoginPageModelInput Input { get; set; } = new LoginPageModelInput();
 
     public class LoginPageModelInput
@@ -28,6 +29,8 @@ public class LoginPageModel: PageModel
         public string Email { get; set; } = "";
     }
 
+    
+    
     public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
     {
         returnUrl ??= Url.Content("~/");
@@ -46,13 +49,13 @@ public class LoginPageModel: PageModel
                 var token = await _userManager.GenerateUserTokenAsync(
                     user, "PasswordlessLoginTokenProvider", "PasswordlessLogin");
 
-                var pageUrl = Url.Page("/Identity/Account/ConfirmLogin", new { token, userId = user.Id, returnUrl });
+                var pageUrl = Url.Page("/ConfirmLogin", new { token, userId = user.Id, returnUrl });
                 var loginUrl = $"{Request.Scheme}://{Request.Host}{pageUrl}";
 
                 await _emailSender.SendEmailAsync(Input.Email, "Complete your login",
                     $"Please login using this <a href='{HtmlEncoder.Default.Encode(loginUrl)}'>magic link</a>.");
 
-                return RedirectToPage("/Identity/Account/LoginStarted");
+                return RedirectToPage("/LoginStarted");
             }
         }
         else

@@ -17,7 +17,7 @@ spec:
       - name: emailserver
         image: maildev/maildev
         ports:
-        - containerPort: 80
+        - containerPort: 1080
           name: http
-        - containerPort: 25
+        - containerPort: 1025
           name: smtp

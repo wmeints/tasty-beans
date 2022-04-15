@@ -1,4 +1,4 @@
-POST http://recommend.coffee/registration/
+POST https://recommend.coffee/registration/
 Content-Type: application/json
 Acccept: application/json
 
