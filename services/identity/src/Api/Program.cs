@@ -61,6 +61,7 @@ builder.Services.AddIdentityServer()
     .AddInMemoryApiResources(Configuration.GetApiResources())
     .AddInMemoryApiScopes(Configuration.GetApiScopes())
     .AddInMemoryIdentityResources(Configuration.GetIdentityResources())
+    .AddProfileService<ApplicationProfileService>()
     .AddAspNetIdentity<ApplicationUser>();
 
 builder.Services.AddHealthChecks()
