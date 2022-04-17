@@ -10,10 +10,4 @@
         istio service mesh.
 #>
 
-helm upgrade --install dapr dapr/dapr `
-    --version=1.6 `
-    --namespace dapr-system `
-    --create-namespace `
-    --set global.ha.enabled=false `
-    --set global.mtls.enabled=false `
-    --wait
+dapr install -k

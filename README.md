@@ -28,6 +28,7 @@ Please make sure you have the following tools available:
 * [Minikube](https://minikube.sigs.k8s.io/docs/start/) or other Kubernetes cluster.
 * [Powershell](https://github.com/PowerShell/PowerShell)
 * [Istio](https://istio.io/latest/docs/setup/getting-started/)
+* [Dapr](https://docs.dapr.io/getting-started/install-dapr-cli/)
 
 You'll need 2 CPU cores available and 16GB of memory for all the containers in
 the solution. You can deploy with less, but it's untested, so you've been warned.
