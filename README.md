@@ -42,6 +42,11 @@ This section covers building and deploying the sample solution on your local
 machine. Ensure you meet the system requirements, or the solution will likely
 not deploy correctly.
 
+On Linux, you can still use the scripts but you'll have to install Powershell.
+This can be done using [the Powershell installation guide](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux?view=powershell-7.2).
+Make sure you prefix the commands in this guide with pwsh to invoke the scripts
+in Powershell.
+
 ### Building images
 
 Please follow these steps to build the docker images for the solution:
