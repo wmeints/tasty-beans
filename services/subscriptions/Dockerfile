@@ -15,7 +15,7 @@ RUN dotnet publish src/Api/Api.csproj -o /dist
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 
-RUN apt-get update && apt-get -y install procps
+RUN apt-get update && apt-get -y install procps curl
 RUN curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l ~/vsdbg
 
 COPY --from=build /dist /app

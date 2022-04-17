@@ -28,6 +28,7 @@ Please make sure you have the following tools available:
 * [Minikube](https://minikube.sigs.k8s.io/docs/start/) or other Kubernetes cluster.
 * [Powershell](https://github.com/PowerShell/PowerShell)
 * [Istio](https://istio.io/latest/docs/setup/getting-started/)
+* [Dapr](https://docs.dapr.io/getting-started/install-dapr-cli/)
 
 You'll need 2 CPU cores available and 16GB of memory for all the containers in
 the solution. You can deploy with less, but it's untested, so you've been warned.
@@ -40,6 +41,11 @@ utility scripts expect you to have these tools available.
 This section covers building and deploying the sample solution on your local
 machine. Ensure you meet the system requirements, or the solution will likely
 not deploy correctly.
+
+On Linux, you can still use the scripts but you'll have to install Powershell.
+This can be done using [the Powershell installation guide](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux?view=powershell-7.2).
+Make sure you prefix the commands in this guide with pwsh to invoke the scripts
+in Powershell.
 
 ### Building images
 
