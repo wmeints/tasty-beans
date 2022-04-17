@@ -115,6 +115,11 @@ TODO: Networking configuration with the service mesh.
 
 TODO: Observability setup.
 
+### Identity
+
+TODO: Describe how users log in without using a password.
+TODO: Describe how requests are authenticated/authorized on the infrastructure.
+
 ### Useful scripts
 
 This solution includes several useful scripts:
