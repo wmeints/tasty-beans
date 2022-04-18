@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>438E508F-C731-4B88-8953-372177E1CF8C</UserSecretsId>
     <RootNamespace>RecommendCoffee.Portal.Server</RootNamespace>
+    <AssemblyName>RecommendCoffee.Portal.Server</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

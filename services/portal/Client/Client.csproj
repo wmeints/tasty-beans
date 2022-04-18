@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>RecommendCoffee.Portal.Client</RootNamespace>
+    <AssemblyName>RecommendCoffee.Portal.Client</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
