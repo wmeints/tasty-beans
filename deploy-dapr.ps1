@@ -10,4 +10,4 @@
         istio service mesh.
 #>
 
-dapr install -k
+dapr init -k
