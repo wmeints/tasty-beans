@@ -18,6 +18,7 @@ public class UpdateProductCommandHandler
 
     public async Task<UpdateProductCommandResponse> ExecuteAsync(UpdateProductCommand cmd)
     {
+        using var activity = Activities.ExecuteCommand(nameof(UpdateProductCommand));
         var product = await _productRepository.FindByIdAsync(cmd.ProductId);
 
         if (product == null)

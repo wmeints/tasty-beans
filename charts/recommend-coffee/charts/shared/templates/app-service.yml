@@ -10,66 +10,66 @@ spec:
   http:
     - match:
         - uri:
-            prefix: /catalog
+            prefix: /catalog/
       rewrite:
         uri: /
       route:
         - destination:
-            host: catalog
+            host: catalog.default.svc.cluster.local
             port:
               number: 80
     - match:
         - uri:
-            prefix: /customermanagement
+            prefix: /customermanagement/
       rewrite:
         uri: /
       route:
         - destination:
-            host: customermanagement
+            host: customermanagement.default.svc.cluster.local
             port:
               number: 80
     - match:
         - uri:
-            prefix: /payments
+            prefix: /payments/
       rewrite:
         uri: /
       route:
         - destination:
-            host: payments
+            host: payments.default.svc.cluster.local
             port:
               number: 80
     - match:
         - uri:
-            prefix: /ratings
+            prefix: /ratings/
       rewrite:
         uri: /
       route:
         - destination:
-            host: ratings
+            host: ratings.default.svc.cluster.local
             port:
               number: 80
     - match:
         - uri:
-            prefix: /registration
+            prefix: /registration/
       rewrite:
         uri: /
       route:
         - destination:
-            host: registration
+            host: registration.default.svc.cluster.local
             port:
               number: 80
     - match:
         - uri:
-            prefix: /subscriptions
+            prefix: /subscriptions/
       rewrite:
         uri: /
       route:
         - destination:
-            host: subscriptions
+            host: subscriptions.default.svc.cluster.local
             port:
               number: 80
     - route:
         - destination:
-            host: portal
+            host: portal.default.svc.cluster.local
             port:
               number: 80

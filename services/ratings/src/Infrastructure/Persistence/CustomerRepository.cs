@@ -14,12 +14,14 @@ public class CustomerRepository: ICustomerRepository
 
     public async Task<int> InsertAsync(Customer customer)
     {
+        using var activity = Activities.ExecuteDatabaseCommand();
         await _applicationDbContext.Customers.AddAsync(customer);
         return await _applicationDbContext.SaveChangesAsync();
     }
 
     public async Task<bool> ExistsAsync(Guid id)
     {
+        using var activity = Activities.ExecuteDatabaseCommand();
         return await _applicationDbContext.Customers.AnyAsync(x => x.Id == id);
     }
 }

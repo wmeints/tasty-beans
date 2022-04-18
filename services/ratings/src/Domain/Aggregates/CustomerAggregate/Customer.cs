@@ -20,6 +20,8 @@ public class Customer
 
     public static RegisterCustomerCommandResponse Register(RegisterCustomerCommand cmd)
     {
+        using var activity = Activities.RegisterProduct(cmd.Id);
+
         var validator = new RegisterCustomerCommandValidator();
         var validationResult = validator.Validate(cmd);
 

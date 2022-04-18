@@ -23,16 +23,16 @@ public static class TelemetryExtensions
             options
                 .AddSource(serviceName)
                 .SetResourceBuilder(resourceBuilder)
-                .AddOtlpExporter(exporterOptions =>
-                {
-                    exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
-                })
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation(instrumentationOptions =>
                 {
                     instrumentationOptions.Filter = (httpContext) => httpContext.Request.Path != "/healthz";
                 })
-                .AddSqlClientInstrumentation();
+                .AddSqlClientInstrumentation()
+                .AddJaegerExporter(jaeger =>
+                {
+                    jaeger.Endpoint = new Uri(builder.Configuration["Telemetry:Spans"]);
+                });
         });
 
         builder.Services.AddOpenTelemetryMetrics(options =>
@@ -46,26 +46,14 @@ public static class TelemetryExtensions
                 .AddMeter("RecommendCoffee.Identity.Application")
                 .AddMeter("RecommendCoffee.Identity.Domain")
                 .AddMeter("RecommendCoffee.Identity.Infrastructure")
-                .AddOtlpExporter(exporterOptions =>
+                .AddPrometheusExporter(prom =>
                 {
-                    exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
+                    prom.StartHttpListener = true;
+                    prom.HttpListenerPrefixes = new[]
+                    {
+                        "http://0.0.0.0:8888"
+                    };
                 });
-        });
-
-        builder.Logging.AddOpenTelemetry(options =>
-        {
-            options.SetResourceBuilder(resourceBuilder);
-            options.AddOtlpExporter(exporterOptions =>
-            {
-                exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
-            });
-        });
-
-        builder.Services.Configure<OpenTelemetryLoggerOptions>(options =>
-        {
-            options.IncludeScopes = true;
-            options.ParseStateValues = true;
-            options.IncludeFormattedMessage = true;
         });
     }
 }

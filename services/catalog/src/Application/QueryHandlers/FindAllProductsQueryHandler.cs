@@ -14,6 +14,7 @@ public class FindAllProductsQueryHandler
 
     public async Task<PagedResult<Product>> ExecuteAsync(int pageIndex, int pageSize)
     {
+        using var activity = Activities.ExecuteQuery("FindAllProducts");
         return await _productRepository.FindAllAsync(pageIndex, pageSize);
     }
 }

@@ -12,7 +12,7 @@ public static class TelemetryExtensions
 {
     public static void AddTelemetry(this WebApplicationBuilder builder)
     {
-        var serviceName = "Catalog";
+        var serviceName = "catalog.default";
         var serviceVersion = Environment.GetEnvironmentVariable("IMAGE_TAG") ?? "0.0.0.0";
         var machineName = Environment.MachineName;
 
@@ -24,18 +24,21 @@ public static class TelemetryExtensions
         builder.Services.AddOpenTelemetryTracing(options =>
         {
             options
-                .AddSource("RecommendCoffee.Catalog")
+                .AddSource("RecommendCoffee.Catalog.Domain")
+                .AddSource("RecommendCoffee.Catalog.Application")
+                .AddSource("RecommendCoffee.Catalog.Infrastructure")
                 .SetResourceBuilder(resourceBuilder)
-                .AddOtlpExporter(exporterOptions =>
-                {
-                    exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
-                })
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation(instrumentationOptions =>
                 {
                     instrumentationOptions.Filter = (httpContext) => httpContext.Request.Path != "/healthz";
                 })
-                .AddSqlClientInstrumentation();
+                .AddSqlClientInstrumentation()
+                .AddJaegerExporter(exporterOptions =>
+                {
+                    exporterOptions.Endpoint = new Uri(builder.Configuration["Telemetry:Spans"]);
+                    exporterOptions.Protocol = JaegerExportProtocol.HttpBinaryThrift;
+                });
         });
 
         builder.Services.AddOpenTelemetryMetrics(options =>
@@ -49,26 +52,7 @@ public static class TelemetryExtensions
                 .AddMeter("RecommendCoffee.Catalog.Application")
                 .AddMeter("RecommendCoffee.Catalog.Domain")
                 .AddMeter("RecommendCoffee.Catalog.Infrastructure")
-                .AddOtlpExporter(exporterOptions =>
-                {
-                    exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
-                });
-        });
-
-        builder.Logging.AddOpenTelemetry(options =>
-        {
-            options.SetResourceBuilder(resourceBuilder);
-            options.AddOtlpExporter(exporterOptions =>
-            {
-                exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
-            });
-        });
-
-        builder.Services.Configure<OpenTelemetryLoggerOptions>(options =>
-        {
-            options.IncludeScopes = true;
-            options.ParseStateValues = true;
-            options.IncludeFormattedMessage = true;
+                .AddPrometheusExporter();
         });
     }
 }

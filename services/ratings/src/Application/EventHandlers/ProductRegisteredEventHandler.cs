@@ -16,6 +16,7 @@ public class ProductRegisteredEventHandler
 
     public async Task HandleAsync(ProductRegisteredEvent evt)
     {
+        using var activity = Activities.HandleEvent("catalog.product.registered.v1");
         var response = Product.Register(new RegisterProductCommand(evt.ProductId, evt.Name));
 
         if (!response.IsValid)

@@ -43,6 +43,17 @@ builder.Services.AddHealthChecks()
 
 builder.AddTelemetry();
 
+builder.Services.AddHeaderPropagation(options =>
+{
+    options.Headers.Add("x-request-id");
+    options.Headers.Add("x-b3-traceid");
+    options.Headers.Add("x-b3-spanid");
+    options.Headers.Add("x-b3-parentspanid");
+    options.Headers.Add("x-b3-sampled");
+    options.Headers.Add("x-b3-flags");
+    options.Headers.Add("x-ot-span-context");
+});
+
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
@@ -62,6 +73,8 @@ if (app.Environment.IsDevelopment())
 
     await dbContext.Database.MigrateAsync();
 }
+
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 app.UseCloudEvents();
 

@@ -19,13 +19,16 @@ public class DaprEventPublisher : IEventPublisher
         foreach (var evt in events)
         {
             var topic = evt.GetType().GetCustomAttribute<TopicAttribute>();
-            
-            await _daprClient.PublishEventAsync<object>(
-                "pubsub",
-                topic?.Name ?? "ratings.deadletter.v1",
-                evt);
-            
-            Metrics.EventsPublished.Add(1);
+
+            using (var activity = Activities.PublishEvent(topic!.Name))
+            {
+                await _daprClient.PublishEventAsync<object>(
+                    "pubsub",
+                    topic?.Name ?? "ratings.deadletter.v1",
+                    evt);
+
+                Metrics.EventsPublished.Add(1);
+            }
         }
     }
 }

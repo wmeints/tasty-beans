@@ -13,6 +13,7 @@ public class FindProductByIdQueryHandler
 
     public async Task<Product?> ExecuteAsync(Guid productId)
     {
+        using var activity = Activities.ExecuteQuery("FindProductById");
         return await _productRepository.FindByIdAsync(productId);
     }
 }

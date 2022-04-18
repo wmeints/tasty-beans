@@ -17,6 +17,7 @@ public class ProductUpdatedEventHandler
 
     public async Task HandleAsync(ProductUpdatedEvent evt)
     {
+        using var activity = Activities.HandleEvent("catalog.product.updated.v1");
         var product = await _productRepository.FindByIdAsync(evt.ProductId);
 
         if (product == null)

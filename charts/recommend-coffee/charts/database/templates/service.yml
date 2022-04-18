@@ -7,5 +7,5 @@ spec:
     app: database
   ports:
   - port: 1433
-    name: sqlserver
-    protocol: TCP
+    name: database
+    appProtocol: tcp

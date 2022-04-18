@@ -9,7 +9,7 @@ namespace RecommendCoffee.Catalog.Infrastructure.EventBus;
 public class DaprEventPublisher : IEventPublisher
 {
     private readonly DaprClient _daprClient;
-    
+
     public DaprEventPublisher(DaprClient daprClient)
     {
         _daprClient = daprClient;
@@ -21,12 +21,15 @@ public class DaprEventPublisher : IEventPublisher
         {
             var topic = evt.GetType().GetCustomAttribute<TopicAttribute>();
             
-            await _daprClient.PublishEventAsync<object>(
-                "pubsub",
-                topic?.Name ?? "catalog.deadletter.v1",
-                evt);
-            
-            Metrics.EventsPublished.Add(1);
+            using (var activity = Activities.PublishEvent(topic!.Name))
+            {
+                await _daprClient.PublishEventAsync<object>(
+                    "pubsub",
+                    topic?.Name ?? "catalog.deadletter.v1",
+                    evt);
+
+                Metrics.EventsPublished.Add(1);
+            }
         }
     }
 }

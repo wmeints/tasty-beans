@@ -29,6 +29,7 @@ public class Rating
         IProductRepository productRepository, 
         ICustomerRepository customerRepository)
     {
+        using var activity = Activities.RegisterRating(cmd.CustomerId,cmd.ProductId);
         var validator = new RegisterRatingCommandValidator(productRepository, customerRepository);
         var validationResult = await validator.ValidateAsync(cmd);
 

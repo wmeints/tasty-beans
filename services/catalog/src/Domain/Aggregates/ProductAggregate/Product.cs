@@ -1,4 +1,5 @@
-﻿using Domain.Aggregates.ProductAggregate;
+﻿using System.Collections.ObjectModel;
+using Domain.Aggregates.ProductAggregate;
 using Domain.Aggregates.ProductAggregate.Validators;
 using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Commands;
 using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Events;
@@ -13,15 +14,15 @@ public class Product
     {
         Name = "";
         Description = "";
-        Variants = Enumerable.Empty<ProductVariant>();
+        Variants = new Collection<ProductVariant>();
     }
     
-    public Product(Guid id, string name, string description, IEnumerable<ProductVariant> variants)
+    public Product(Guid id, string name, string description, ICollection<ProductVariant> variants)
     {
         Id = id;
         Name = name;
         Description = description;
-        Variants = variants;
+        Variants = new Collection<ProductVariant>();
     }
 
     public Guid Id { get; private set; }
@@ -31,10 +32,12 @@ public class Product
     public List<string>? FlavorNotes { get; private set; }
     public string? Taste { get; private set; }
     public int? RoastLevel { get; private set; }
-    public IEnumerable<ProductVariant> Variants { get; private set; }
+    public ICollection<ProductVariant> Variants { get; private set; }
 
     public UpdateProductCommandResponse Update(UpdateProductCommand cmd)
     {
+        using var activity = Activities.Update(cmd.ProductId);
+        
         var validator = new UpdateProductCommandValidator();
         var validationResult = validator.Validate(cmd);
 
@@ -60,6 +63,8 @@ public class Product
 
     public DiscontinueProductCommandResponse Discontinue(DiscontinueProductCommand cmd)
     {
+        using var activity = Activities.Discontinue(cmd.ProductId);
+        
         if (Discontinued)
         {
             return new DiscontinueProductCommandResponse(new[]
@@ -79,6 +84,8 @@ public class Product
 
     public TasteTestProductCommandResponse TasteTest(TasteTestProductCommand cmd)
     {
+        using var activity = Activities.TasteTest(cmd.ProductId);
+        
         var validator = new TasteTestCommandValidator();
         var validationResult = validator.Validate(cmd);
 
@@ -102,6 +109,8 @@ public class Product
     
     public static RegisterProductCommandResponse Register(RegisterProductCommand cmd)
     {
+        using var activity = Activities.Register();
+        
         var validator = new RegisterProductCommandValidator();
         var validationResult = validator.Validate(cmd);
 
@@ -114,7 +123,7 @@ public class Product
             return new RegisterProductCommandResponse(null, errors, Enumerable.Empty<IDomainEvent>());
         }
 
-        var product = new Product(Guid.NewGuid(), cmd.Name, cmd.Description, cmd.Variants);
+        var product = new Product(Guid.NewGuid(), cmd.Name, cmd.Description, cmd.Variants.ToList());
         var evt = new ProductRegisteredEvent(product.Id, product.Name, product.Description, product.Variants);
 
         return new RegisterProductCommandResponse(

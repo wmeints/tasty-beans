@@ -16,6 +16,7 @@ public class CustomerRegisteredEventHandler
 
     public async Task HandleAsync(CustomerRegisteredEvent evt)
     {
+        using var activity = Activities.HandleEvent("customermanagement.customer.registered.v1");
         var response = Customer.Register(new RegisterCustomerCommand(
             evt.CustomerId, evt.FirstName, evt.LastName));
 

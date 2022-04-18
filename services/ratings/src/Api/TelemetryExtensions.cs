@@ -1,4 +1,5 @@
-﻿using OpenTelemetry.Logs;
+﻿using OpenTelemetry.Exporter;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -9,7 +10,7 @@ public static class TelemetryExtensions
 {
     public static void AddTelemetry(this WebApplicationBuilder builder)
     {
-        var serviceName = "Ratings";
+        var serviceName = "ratings.default";
         var serviceVersion = Environment.GetEnvironmentVariable("IMAGE_TAG") ?? "0.0.0.0";
         var machineName = Environment.MachineName;
 
@@ -21,18 +22,21 @@ public static class TelemetryExtensions
         builder.Services.AddOpenTelemetryTracing(options =>
         {
             options
-                .AddSource(serviceName)
+                .AddSource("RecommendCoffee.Ratings.Domain")
+                .AddSource("RecommendCoffee.Ratings.Application")
+                .AddSource("RecommendCoffee.Ratings.Infrastructure")
                 .SetResourceBuilder(resourceBuilder)
-                .AddOtlpExporter(exporterOptions =>
-                {
-                    exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
-                })
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation(instrumentationOptions =>
                 {
                     instrumentationOptions.Filter = (httpContext) => httpContext.Request.Path != "/healthz";
                 })
-                .AddSqlClientInstrumentation();
+                .AddSqlClientInstrumentation()
+                .AddJaegerExporter(exporterOptions =>
+                {
+                    exporterOptions.Endpoint = new Uri(builder.Configuration["Telemetry:Spans"]);
+                    exporterOptions.Protocol = JaegerExportProtocol.HttpBinaryThrift;
+                });
         });
 
         builder.Services.AddOpenTelemetryMetrics(options =>
@@ -46,26 +50,7 @@ public static class TelemetryExtensions
                 .AddMeter("RecommendCoffee.Ratings.Application")
                 .AddMeter("RecommendCoffee.Ratings.Domain")
                 .AddMeter("RecommendCoffee.Ratings.Infrastructure")
-                .AddOtlpExporter(exporterOptions =>
-                {
-                    exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
-                });
-        });
-
-        builder.Logging.AddOpenTelemetry(options =>
-        {
-            options.SetResourceBuilder(resourceBuilder);
-            options.AddOtlpExporter(exporterOptions =>
-            {
-                exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
-            });
-        });
-
-        builder.Services.Configure<OpenTelemetryLoggerOptions>(options =>
-        {
-            options.IncludeScopes = true;
-            options.ParseStateValues = true;
-            options.IncludeFormattedMessage = true;
+                .AddPrometheusExporter();
         });
     }
 }

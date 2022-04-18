@@ -17,7 +17,6 @@ spec:
         version: {{ .Chart.Version }}
       annotations:
         dapr.io/app-id: "customermanagement"
-        dapr.io/config: "recommendcoffee-dapr-config"
         dapr.io/app-port: "80"
         dapr.io/enabled: "true"
         sidecar.opentelemetry.io/inject: "true"

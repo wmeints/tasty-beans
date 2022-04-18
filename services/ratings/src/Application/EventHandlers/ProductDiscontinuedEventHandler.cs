@@ -16,6 +16,7 @@ public class ProductDiscontinuedEventHandler
 
     public async Task HandleAsync(ProductDiscontinuedEvent evt)
     {
+        using var activity = Activities.HandleEvent("catalog.product.discontinued.v1");
         var product = await _productRepository.FindByIdAsync(evt.ProductId);
 
         if (product == null)

@@ -10,8 +10,8 @@ spec:
     metadata:
       labels:
         app: database
-      annotations:
-        sidecar.istio.io/inject: "false"
+      # annotations:
+      #   sidecar.istio.io/inject: "false"
     spec:
       volumes:
       - name: database-volume
@@ -22,7 +22,7 @@ spec:
         image: mcr.microsoft.com/mssql/server:2019-latest
         ports:
         - containerPort: 1433
-          protocol: TCP
+          name: database
         env:
           - name: SA_PASSWORD
             valueFrom:

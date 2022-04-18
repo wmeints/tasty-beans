@@ -18,6 +18,7 @@ public class DiscontinueProductCommandHandler
 
     public async Task<DiscontinueProductCommandResponse> ExecuteAsync(DiscontinueProductCommand cmd)
     {
+        using var activity = Activities.ExecuteCommand(nameof(DiscontinueProductCommand));
         var product = await _productRepository.FindByIdAsync(cmd.ProductId);
 
         if (product == null)
