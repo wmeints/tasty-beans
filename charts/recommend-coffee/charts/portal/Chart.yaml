@@ -1,6 +1,6 @@
 apiVersion: v2
-name: catalog
-description: Deploys the catalog microservice
+name: portal
+description: Deploys the portal frontend
 type: application
 version: 0.1.0-alpha.1
 appVersion: 1.16.0

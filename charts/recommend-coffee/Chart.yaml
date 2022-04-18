@@ -31,6 +31,8 @@ dependencies:
     version: 0.1.0-alpha.1
   - name: payments
     version: 0.1.0-alpha.1
+  - name: portal
+    version: 0.1.0-alpha.1
   - name: ratings
     version: 0.1.0-alpha.1
   - name: registration
