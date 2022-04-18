@@ -12,4 +12,4 @@ spec:
     version: {{ .Chart.Version }}
   ports:
   - port: 80
-    targetPort: 80
+    name: http

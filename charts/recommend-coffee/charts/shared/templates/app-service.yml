@@ -1,0 +1,75 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: app
+spec:
+  hosts:
+    - "recommend.coffee"
+  gateways:
+    - app-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /catalog
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: catalog
+            port:
+              number: 80
+    - match:
+        - uri:
+            prefix: /customermanagement
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: customermanagement
+            port:
+              number: 80
+    - match:
+        - uri:
+            prefix: /payments
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: payments
+            port:
+              number: 80
+    - match:
+        - uri:
+            prefix: /ratings
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: ratings
+            port:
+              number: 80
+    - match:
+        - uri:
+            prefix: /registration
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: registration
+            port:
+              number: 80
+    - match:
+        - uri:
+            prefix: /subscriptions
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: subscriptions
+            port:
+              number: 80
+    - route:
+        - destination:
+            host: portal
+            port:
+              number: 80
