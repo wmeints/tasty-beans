@@ -1,4 +1,7 @@
-﻿using System.Diagnostics.Metrics;
+﻿using System.Diagnostics;
+using System.Diagnostics.Metrics;
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Logs;
@@ -10,9 +13,12 @@ namespace RecommendCoffee.Catalog.Api;
 
 public static class TelemetryExtensions
 {
-    public static void AddTelemetry(this WebApplicationBuilder builder)
+    public static void AddTelemetry(this WebApplicationBuilder builder, string serviceName, params string[] assemblyNames)
     {
-        var serviceName = "catalog.default";
+        Sdk.SetDefaultTextMapPropagator(new B3Propagator());
+
+        var podNamespace = Environment.GetEnvironmentVariable("POD_NAMESPACE");
+        var serviceIdentity = $"{serviceName.ToLower()}.${podNamespace}";
         var serviceVersion = Environment.GetEnvironmentVariable("IMAGE_TAG") ?? "0.0.0.0";
         var machineName = Environment.MachineName;
 
@@ -23,10 +29,12 @@ public static class TelemetryExtensions
         
         builder.Services.AddOpenTelemetryTracing(options =>
         {
+            foreach (var assemblyName in assemblyNames)
+            {
+                options.AddSource(assemblyName);
+            }
+            
             options
-                .AddSource("RecommendCoffee.Catalog.Domain")
-                .AddSource("RecommendCoffee.Catalog.Application")
-                .AddSource("RecommendCoffee.Catalog.Infrastructure")
                 .SetResourceBuilder(resourceBuilder)
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation(instrumentationOptions =>
@@ -43,15 +51,16 @@ public static class TelemetryExtensions
 
         builder.Services.AddOpenTelemetryMetrics(options =>
         {
+            foreach (var assemblyName in assemblyNames)
+            {
+                options.AddMeter(assemblyName);
+            }
+            
             options
                 .SetResourceBuilder(resourceBuilder)
                 .AddAspNetCoreInstrumentation()
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation()
-                .AddMeter("RecommendCoffee.Catalog.Api")
-                .AddMeter("RecommendCoffee.Catalog.Application")
-                .AddMeter("RecommendCoffee.Catalog.Domain")
-                .AddMeter("RecommendCoffee.Catalog.Infrastructure")
                 .AddPrometheusExporter();
         });
     }

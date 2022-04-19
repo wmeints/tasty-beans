@@ -2,13 +2,13 @@
 
 namespace RecommendCoffee.Catalog.Infrastructure;
 
-public class Activities
+public static class Activities
 {
-    private static ActivitySource _activitySource = new ActivitySource("RecommendCoffee.Catalog.Infrastructure");
+    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Catalog.Infrastructure");
 
     public static Activity? PublishEvent(string eventName)
     {
-        var activity = _activitySource.StartActivity("PublishEvent", ActivityKind.Client);
+        var activity = ActivitySource.StartActivity("PublishEvent", ActivityKind.Client);
 
         if (activity != null)
         {
@@ -20,6 +20,6 @@ public class Activities
 
     public static Activity? ExecuteDatabaseCommand()
     {
-        return _activitySource.StartActivity("ExecuteDbCommand", ActivityKind.Client);
+        return ActivitySource.StartActivity("ExecuteDbCommand", ActivityKind.Client);
     }
 }

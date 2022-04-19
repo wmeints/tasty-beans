@@ -2,14 +2,11 @@
 
 namespace RecommendCoffee.Catalog.Application;
 
-public class Metrics
+public static class Metrics
 {
-    private static Meter _meter = new Meter("RecommendCoffee.Catalog.Application");
-    private static Counter<int> _productsRegistered = _meter.CreateCounter<int>("catalog-products-registered");
-    private static Counter<int> _productsDiscontinued = _meter.CreateCounter<int>("catalog-products-discontinued");
-    private static Counter<int> _productsTasteTested = _meter.CreateCounter<int>("catalog-products-tastetested");
+    private static readonly Meter Meter = new Meter("RecommendCoffee.Catalog.Application");
     
-    public static Counter<int> ProductsRegistered => _productsRegistered;
-    public static Counter<int> ProductsDiscontinued => _productsDiscontinued;
-    public static Counter<int> ProductsTasteTested => _productsTasteTested;
+    public static readonly Counter<int> ProductsRegistered = Meter.CreateCounter<int>("catalog-products-registered");
+    public static readonly Counter<int> ProductsDiscontinued = Meter.CreateCounter<int>("catalog-products-discontinued");
+    public static readonly Counter<int> ProductsTasteTested = Meter.CreateCounter<int>("catalog-products-tastetested");
 }

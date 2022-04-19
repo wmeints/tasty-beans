@@ -41,18 +41,11 @@ builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
     .AddDbContextCheck<ApplicationDbContext>();
 
-builder.AddTelemetry();
-
-builder.Services.AddHeaderPropagation(options =>
-{
-    options.Headers.Add("x-request-id");
-    options.Headers.Add("x-b3-traceid");
-    options.Headers.Add("x-b3-spanid");
-    options.Headers.Add("x-b3-parentspanid");
-    options.Headers.Add("x-b3-sampled");
-    options.Headers.Add("x-b3-flags");
-    options.Headers.Add("x-ot-span-context");
-});
+builder.AddTelemetry("Catalog",
+    "RecommendCoffee.Catalog.Api",
+    "RecommendCoffee.Catalog.Application",
+    "RecommendCoffee.Catalog.Domain",
+    "RecommendCoffee.Catalog.Infrastructure");
 
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
