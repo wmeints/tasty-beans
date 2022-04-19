@@ -8,4 +8,4 @@ spec:
         matchLabels:
             app: emailserver
     mtls:
-        mode: DISABLE
+        mode: STRICT
