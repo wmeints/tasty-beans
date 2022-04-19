@@ -2,10 +2,8 @@
 
 namespace RecommendCoffee.Ratings.Application;
 
-public class Metrics
+public static class Metrics
 {
-    private static Meter _meter = new Meter("RecommendCoffee.Ratings.Application");
-    private static Counter<int> _ratingsRegistered = _meter.CreateCounter<int>("ratings-ratings-registered");
-
-    public static Counter<int> RatingsRegistered => _ratingsRegistered;
+    private static readonly Meter Meter = new Meter("RecommendCoffee.Ratings.Application");
+    public static readonly Counter<int> RatingsRegistered = Meter.CreateCounter<int>("ratings-ratings-registered");
 }

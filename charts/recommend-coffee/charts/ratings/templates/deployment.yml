@@ -20,6 +20,9 @@ spec:
         dapr.io/app-port: "80"
         dapr.io/enabled: "true"
         sidecar.opentelemetry.io/inject: "true"
+        prometheus.io/port: "80"
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
     spec:
       serviceAccountName: ratings
       containers:
@@ -32,10 +35,14 @@ spec:
                 secretKeyRef:
                   name: recommend-coffee-secrets
                   key: ratingsConnectionString
-            - name: IMAGE_TAG
-              value: "{{ .Chart.Version }}"
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
             - name: TELEMETRY__SPANS
               value: "http://jaeger-collector.istio-system:14268/api/traces"
+            - name: IMAGE_TAG
+              value: "{{ .Chart.Version }}"
           ports:
             - containerPort: 80
           livenessProbe:

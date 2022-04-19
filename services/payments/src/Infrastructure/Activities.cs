@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 
-namespace RecommendCoffee.Ratings.Infrastructure;
+namespace RecommendCoffee.Payments.Infrastructure;
 
 public static class Activities
 {
-    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Ratings.Infrastructure");
+    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Payments.Infrastructure");
 
     public static Activity? PublishEvent(string eventName)
     {

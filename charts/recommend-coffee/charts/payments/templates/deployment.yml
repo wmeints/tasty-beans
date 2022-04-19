@@ -20,6 +20,9 @@ spec:
         dapr.io/app-port: "80"
         dapr.io/enabled: "true"
         sidecar.opentelemetry.io/inject: "true"
+        prometheus.io/port: "80"
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
     spec:
       serviceAccountName: payments
       containers:
@@ -36,8 +39,12 @@ spec:
                   name: recommend-coffee-secrets
             - name: IMAGE_TAG
               value: "{{ .Chart.Version }}"
-            - name: OTLP__ENDPOINT
-              value: "http://localhost:4317"
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: TELEMETRY__SPANS
+              value: "http://jaeger-collector.istio-system:14268/api/traces"
           livenessProbe:
             httpGet:
               path: /healthz

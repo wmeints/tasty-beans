@@ -26,30 +26,34 @@ builder.Services
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
-    
-        serializerOptions.Converters.Add(new JsonStringEnumConverter());    
+
+        serializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
 builder.Services.AddHealthChecks()
     .AddUrlGroup(options =>
     {
         options.AddUri(
-            new Uri("http://subscriptions/healthz"), 
+            new Uri("http://subscriptions/healthz"),
             uo => uo.UseGet().UseTimeout(TimeSpan.FromSeconds(3))
         );
-        
-        options.AddUri(
-            new Uri("http://customermanagement/healthz"), 
-            uo => uo.UseGet().UseTimeout(TimeSpan.FromSeconds(3))
-        );
-        
-        options.AddUri(
-            new Uri("http://payments/healthz"), 
-            uo => uo.UseGet().UseTimeout(TimeSpan.FromSeconds(3))
-        );
-    }); 
 
-builder.AddTelemetry();
+        options.AddUri(
+            new Uri("http://customermanagement/healthz"),
+            uo => uo.UseGet().UseTimeout(TimeSpan.FromSeconds(3))
+        );
+
+        options.AddUri(
+            new Uri("http://payments/healthz"),
+            uo => uo.UseGet().UseTimeout(TimeSpan.FromSeconds(3))
+        );
+    });
+
+builder.AddTelemetry("Registration",
+    "RecommendCoffee.Registration.Api",
+    "RecommendCoffee.Registration.Application",
+    "RecommendCoffee.Registration.Domain",
+    "RecommendCoffee.Registration.Infrastructure");
 
 builder.Services.AddScoped<StartRegistrationCommandHandler>();
 
@@ -64,9 +68,11 @@ builder.Services.AddSingleton<IStateStore, StateStore>();
 
 var app = builder.Build();
 
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
+
 app.UseCloudEvents();
 
-app.MapHealthChecks("/healthz", new HealthCheckOptions 
+app.MapHealthChecks("/healthz", new HealthCheckOptions
 {
     AllowCachingResponses = false
 });

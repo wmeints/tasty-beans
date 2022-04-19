@@ -17,7 +17,7 @@ public class RegisterProductCommandHandler
 
     public async Task<RegisterProductCommandResponse> ExecuteAsync(RegisterProductCommand cmd)
     {
-        using var activity = Activities.ExecuteCommand(nameof(RegisterProductCommand));
+        using var activity = Activities.ExecuteCommand("RegisterProduct");
         var response = Product.Register(cmd);
 
         if (response.IsValid)

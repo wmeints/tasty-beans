@@ -22,6 +22,8 @@ public class StartSubscriptionCommandHandler
 
     public async Task<StartSubscriptionCommandReply> ExecuteAsync(StartSubscriptionCommand cmd)
     {
+        using var activity = Activities.ExecuteCommand("StartSubscription");
+        
         StartSubscriptionCommandReply response;
         Subscription? subscription = await _subscriptionRepository.FindByCustomerIdAsync(cmd.CustomerId);
 

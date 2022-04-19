@@ -18,7 +18,7 @@ public class TasteTestProductCommandHandler
 
     public async Task<TasteTestProductCommandResponse> ExecuteAsync(TasteTestProductCommand cmd)
     {
-        using var activity = Activities.ExecuteCommand(nameof(TasteTestProductCommand));
+        using var activity = Activities.ExecuteCommand("TasteTestProduct");
         var product = await _productRepository.FindByIdAsync(cmd.ProductId);
 
         if (product == null)

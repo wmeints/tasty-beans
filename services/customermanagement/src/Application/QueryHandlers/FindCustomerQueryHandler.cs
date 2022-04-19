@@ -13,6 +13,7 @@ public class FindCustomerQueryHandler
 
     public async Task<Customer?> ExecuteAsync(Guid customerId)
     {
+        using var activity = Activities.ExecuteQuery("FindCustomerById");
         return await _customerRepository.FindById(customerId);
     }
 }

@@ -15,11 +15,15 @@ public class SubscriptionRepository: ISubscriptionRepository
 
     public async Task<Subscription?> FindByCustomerIdAsync(Guid customerId)
     {
+        using var activity = Activities.ExecuteDatabaseCommand();
+        
         return await _applicationDbContext.Subscriptions.SingleOrDefaultAsync(x => x.Id == customerId);
     }
 
     public async Task<PagedResult<Subscription>> FindAll(int pageIndex, int pageSize)
     {
+        using var activity = Activities.ExecuteDatabaseCommand();
+        
         var totalItemCount = await _applicationDbContext.Subscriptions.LongCountAsync();
         var items = await _applicationDbContext.Subscriptions.OrderBy(x => x.Id)
             .Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
@@ -29,12 +33,16 @@ public class SubscriptionRepository: ISubscriptionRepository
 
     public async Task<int> InsertAsync(Subscription subscription)
     {
+        using var activity = Activities.ExecuteDatabaseCommand();
+        
         await _applicationDbContext.AddAsync(subscription);
         return await _applicationDbContext.SaveChangesAsync();
     }
 
     public async Task<int> UpdateAsync(Subscription subscription)
     {
+        using var activity = Activities.ExecuteDatabaseCommand();
+        
         _applicationDbContext.Update(subscription);
         return await _applicationDbContext.SaveChangesAsync();
     }

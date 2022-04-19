@@ -39,7 +39,11 @@ builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
     .AddDbContextCheck<ApplicationDbContext>();
 
-builder.AddTelemetry();
+builder.AddTelemetry("Payments",
+    "RecommendCoffee.Payments.Api",
+    "RecommendCoffee.Payments.Application",
+    "RecommendCoffee.Payments.Domain",
+    "RecommendCoffee.Payments.Infrastructure");
 
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
 builder.Services.AddScoped<RegisterPaymentMethodCommandHandler>();
@@ -54,6 +58,8 @@ if(app.Environment.IsDevelopment())
 
     await dbContext.Database.MigrateAsync();
 }
+
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 app.UseCloudEvents();
 

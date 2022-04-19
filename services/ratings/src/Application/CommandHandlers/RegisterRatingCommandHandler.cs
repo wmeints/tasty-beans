@@ -27,7 +27,7 @@ public class RegisterRatingCommandHandler
 
     public async Task<RegisterRatingCommandResponse> ExecuteAsync(RegisterRatingCommand command)
     {
-        using var activity = Activities.ExecuteCommand(nameof(RegisterRatingCommand));
+        using var activity = Activities.ExecuteCommand("RegisterRating");
         var response = await Rating.Register(command, _productRepository, _customerRepository);
         
         if(response.IsValid)

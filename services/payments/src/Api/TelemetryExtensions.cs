@@ -1,4 +1,6 @@
-﻿using OpenTelemetry.Logs;
+﻿using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -7,65 +9,55 @@ namespace RecommendCoffee.Payments.Api;
 
 public static class TelemetryExtensions
 {
-    public static void AddTelemetry(this WebApplicationBuilder builder)
+    public static void AddTelemetry(this WebApplicationBuilder builder, string serviceName, params string[] assemblyNames)
     {
-        var serviceName = "Payments";
+        Sdk.SetDefaultTextMapPropagator(new B3Propagator());
+
+        var podNamespace = Environment.GetEnvironmentVariable("POD_NAMESPACE");
+        var serviceIdentity = $"{serviceName.ToLower()}.{podNamespace}";
         var serviceVersion = Environment.GetEnvironmentVariable("IMAGE_TAG") ?? "0.0.0.0";
         var machineName = Environment.MachineName;
 
         var resourceBuilder = ResourceBuilder.CreateDefault().AddService(
-            serviceName,
+            serviceIdentity,
             serviceVersion: serviceVersion,
             serviceInstanceId: machineName);
         
         builder.Services.AddOpenTelemetryTracing(options =>
         {
+            foreach (var assemblyName in assemblyNames)
+            {
+                options.AddSource(assemblyName);
+            }
+            
             options
-                .AddSource(serviceName)
                 .SetResourceBuilder(resourceBuilder)
-                .AddOtlpExporter(exporterOptions =>
-                {
-                    exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
-                })
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation(instrumentationOptions =>
                 {
                     instrumentationOptions.Filter = (httpContext) => httpContext.Request.Path != "/healthz";
                 })
-                .AddSqlClientInstrumentation();
+                .AddSqlClientInstrumentation()
+                .AddJaegerExporter(exporterOptions =>
+                {
+                    exporterOptions.Endpoint = new Uri(builder.Configuration["Telemetry:Spans"]);
+                    exporterOptions.Protocol = JaegerExportProtocol.HttpBinaryThrift;
+                });
         });
 
         builder.Services.AddOpenTelemetryMetrics(options =>
         {
+            foreach (var assemblyName in assemblyNames)
+            {
+                options.AddMeter(assemblyName);
+            }
+            
             options
                 .SetResourceBuilder(resourceBuilder)
                 .AddAspNetCoreInstrumentation()
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation()
-                .AddMeter("RecommendCoffee.Payments.Api")
-                .AddMeter("RecommendCoffee.Payments.Application")
-                .AddMeter("RecommendCoffee.Payments.Domain")
-                .AddMeter("RecommendCoffee.Payments.Infrastructure")
-                .AddOtlpExporter(exporterOptions =>
-                {
-                    exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
-                });
-        });
-
-        builder.Logging.AddOpenTelemetry(options =>
-        {
-            options.SetResourceBuilder(resourceBuilder);
-            options.AddOtlpExporter(exporterOptions =>
-            {
-                exporterOptions.Endpoint = new Uri(builder.Configuration["Otlp:Endpoint"]);
-            });
-        });
-
-        builder.Services.Configure<OpenTelemetryLoggerOptions>(options =>
-        {
-            options.IncludeScopes = true;
-            options.ParseStateValues = true;
-            options.IncludeFormattedMessage = true;
+                .AddPrometheusExporter();
         });
     }
 }

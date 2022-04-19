@@ -23,6 +23,8 @@ public class RegisterPaymentMethodCommandHandler
 
     public async Task<RegisterPaymentMethodReply> ExecuteAsync(RegisterPaymentMethodCommand cmd)
     {
+        using var activity = Activities.ExecuteCommand("RegisterPaymentMethod");
+        
         var response = PaymentMethod.Register(cmd);
 
         if (response.IsValid)

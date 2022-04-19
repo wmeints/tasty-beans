@@ -1,4 +1,6 @@
-﻿using OpenTelemetry.Exporter;
+﻿using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -8,23 +10,28 @@ namespace RecommendCoffee.Ratings.Api;
 
 public static class TelemetryExtensions
 {
-    public static void AddTelemetry(this WebApplicationBuilder builder)
+    public static void AddTelemetry(this WebApplicationBuilder builder, string serviceName, params string[] assemblyNames)
     {
-        var serviceName = "ratings.default";
+        Sdk.SetDefaultTextMapPropagator(new B3Propagator());
+
+        var podNamespace = Environment.GetEnvironmentVariable("POD_NAMESPACE");
+        var serviceIdentity = $"{serviceName.ToLower()}.{podNamespace}";
         var serviceVersion = Environment.GetEnvironmentVariable("IMAGE_TAG") ?? "0.0.0.0";
         var machineName = Environment.MachineName;
 
         var resourceBuilder = ResourceBuilder.CreateDefault().AddService(
-            serviceName,
+            serviceIdentity,
             serviceVersion: serviceVersion,
             serviceInstanceId: machineName);
         
         builder.Services.AddOpenTelemetryTracing(options =>
         {
+            foreach (var assemblyName in assemblyNames)
+            {
+                options.AddSource(assemblyName);
+            }
+            
             options
-                .AddSource("RecommendCoffee.Ratings.Domain")
-                .AddSource("RecommendCoffee.Ratings.Application")
-                .AddSource("RecommendCoffee.Ratings.Infrastructure")
                 .SetResourceBuilder(resourceBuilder)
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation(instrumentationOptions =>
@@ -41,15 +48,16 @@ public static class TelemetryExtensions
 
         builder.Services.AddOpenTelemetryMetrics(options =>
         {
+            foreach (var assemblyName in assemblyNames)
+            {
+                options.AddMeter(assemblyName);
+            }
+            
             options
                 .SetResourceBuilder(resourceBuilder)
                 .AddAspNetCoreInstrumentation()
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation()
-                .AddMeter("RecommendCoffee.Ratings.Api")
-                .AddMeter("RecommendCoffee.Ratings.Application")
-                .AddMeter("RecommendCoffee.Ratings.Domain")
-                .AddMeter("RecommendCoffee.Ratings.Infrastructure")
                 .AddPrometheusExporter();
         });
     }

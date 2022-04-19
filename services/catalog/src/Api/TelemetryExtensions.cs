@@ -18,12 +18,12 @@ public static class TelemetryExtensions
         Sdk.SetDefaultTextMapPropagator(new B3Propagator());
 
         var podNamespace = Environment.GetEnvironmentVariable("POD_NAMESPACE");
-        var serviceIdentity = $"{serviceName.ToLower()}.${podNamespace}";
+        var serviceIdentity = $"{serviceName.ToLower()}.{podNamespace}";
         var serviceVersion = Environment.GetEnvironmentVariable("IMAGE_TAG") ?? "0.0.0.0";
         var machineName = Environment.MachineName;
 
         var resourceBuilder = ResourceBuilder.CreateDefault().AddService(
-            serviceName,
+            serviceIdentity,
             serviceVersion: serviceVersion,
             serviceInstanceId: machineName);
         

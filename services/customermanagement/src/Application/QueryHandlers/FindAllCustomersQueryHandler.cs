@@ -14,6 +14,7 @@ public class FindAllCustomersQueryHandler
 
     public async Task<PagedResult<Customer>> ExecuteAsync(int pageIndex, int pageSize)
     {
+        using var activity = Activities.ExecuteQuery("FindAllCustomers");
         return await _customerRepository.FindAllAsync(pageIndex, pageSize);
     }
 }

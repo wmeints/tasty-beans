@@ -17,6 +17,8 @@ public class RegisterCustomerCommandHandler
 
     public async Task<RegisterCustomerCommandReply> ExecuteAsync(RegisterCustomerCommand command)
     {
+        using var activity = Activities.ExecuteCommand("RegisterCustomer");
+        
         var response = Customer.Register(command);
 
         if(response.IsValid)

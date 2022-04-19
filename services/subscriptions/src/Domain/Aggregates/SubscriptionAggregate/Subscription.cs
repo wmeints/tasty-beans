@@ -37,6 +37,8 @@ public class Subscription
     
     public CancelSubscriptionCommandReply Cancel(CancelSubscriptionCommand command)
     {
+        using var activity = Activities.Unsubscribe(command.CustomerId);
+        
         var validator = new CancelSubscriptionCommandValidator();
         var validationResult = validator.Validate(command);
         
@@ -66,6 +68,8 @@ public class Subscription
 
     public ChangeShippingFrequencyCommandReply ChangeShippingFrequency(ChangeShippingFrequencyCommand command)
     {
+        using var activity = Activities.ChangeShippingFrequency(command.CustomerId);
+        
         if (command.ShippingFrequency != ShippingFrequency)
         {
             ShippingFrequency = command.ShippingFrequency;
@@ -83,6 +87,8 @@ public class Subscription
 
     public StartSubscriptionCommandReply Resubscribe(StartSubscriptionCommand command)
     {
+        using var activity = Activities.Subscribe(command.CustomerId);
+        
         Kind = command.Kind;
         ShippingFrequency = command.ShippingFrequency;
         StartDate = DateTime.UtcNow;
@@ -99,6 +105,8 @@ public class Subscription
     
     public static StartSubscriptionCommandReply Start(StartSubscriptionCommand command)
     {
+        using var activity = Activities.Subscribe(command.CustomerId);
+        
         var validator = new StartSubscriptionCommandValidator();
         var validationResult = validator.Validate(command);
 

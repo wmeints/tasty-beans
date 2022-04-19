@@ -18,6 +18,8 @@ public class ChangeShippingFrequencyCommandHandler
 
     public async Task<ChangeShippingFrequencyCommandReply> ExecuteAsync(ChangeShippingFrequencyCommand cmd)
     {
+        using var activity = Activities.ExecuteCommand("ChangeShippingFrequency");
+        
         var subscription = await _subscriptionRepository.FindByCustomerIdAsync(cmd.CustomerId);
 
         if (subscription == null)

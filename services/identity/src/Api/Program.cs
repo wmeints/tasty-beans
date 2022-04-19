@@ -68,7 +68,11 @@ builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
     .AddDbContextCheck<ApplicationDbContext>();
 
-builder.AddTelemetry();
+builder.AddTelemetry("Identity",
+    "RecommendCoffee.Identity.Api",
+    "RecommendCoffee.Identity.Application",
+    "RecommendCoffee.Identity.Domain",
+    "RecommendCoffee.Identity.Infrastructure");
 
 builder.Services.AddScoped<CustomerRegisteredEventHandler>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
@@ -100,6 +104,8 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions()
 // This is bad for your health, but we need this to make the demo work properly.
 // Might change this later to the correct host headers, etc.
 app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 app.UseAuthentication();
 app.UseAuthorization();

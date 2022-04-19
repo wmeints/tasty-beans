@@ -18,6 +18,8 @@ public class CancelSubscriptionCommandHandler
 
     public async Task<CancelSubscriptionCommandReply> ExecuteAsync(CancelSubscriptionCommand cmd)
     {
+        using var activity = Activities.ExecuteCommand("CancelSubscription");
+        
         var subscription = await _subscriptionRepository.FindByCustomerIdAsync(cmd.CustomerId);
 
         if (subscription == null)

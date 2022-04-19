@@ -8,6 +8,8 @@ namespace RecommendCoffee.Catalog.Infrastructure.EventBus;
 
 public class DaprEventPublisher : IEventPublisher
 {
+    private const string DEADLETTER_TOPIC = "catalog.deadletter.v1";
+    
     private readonly DaprClient _daprClient;
 
     public DaprEventPublisher(DaprClient daprClient)
@@ -21,11 +23,11 @@ public class DaprEventPublisher : IEventPublisher
         {
             var topic = evt.GetType().GetCustomAttribute<TopicAttribute>();
             
-            using (var activity = Activities.PublishEvent(topic!.Name))
+            using (var activity = Activities.PublishEvent(topic?.Name ?? DEADLETTER_TOPIC))
             {
                 await _daprClient.PublishEventAsync<object>(
                     "pubsub",
-                    topic?.Name ?? "catalog.deadletter.v1",
+                    topic?.Name ?? DEADLETTER_TOPIC,
                     evt);
 
                 Metrics.EventsPublished.Add(1);

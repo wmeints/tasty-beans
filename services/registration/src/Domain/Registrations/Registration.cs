@@ -10,8 +10,6 @@ namespace RecommendCoffee.Registration.Domain.Registrations;
 
 public class Registration
 {
-    private ActivitySource _activitySource = new ActivitySource("Registration");
-
     private readonly RegistrationData _data;
     private readonly ICustomerManagement _customerManagement;
     private readonly ISubscriptions _subscriptions;
@@ -49,10 +47,7 @@ public class Registration
 
     public async Task StartAsync(StartRegistrationCommand command)
     {
-        using var activity = _activitySource.StartActivity(
-            "Start", ActivityKind.Server);
-
-        activity.AddTag("statemachine.state", _data.State.ToString());
+        using var activity = Activities.StartRegistration(_data.State.ToString());
         
         _data.CustomerId = command.CustomerId;
         _data.CustomerDetails = command.CustomerDetails;
@@ -64,31 +59,19 @@ public class Registration
 
     public async Task CompleteCustomerRegistrationAsync()
     {
-        using var activity = _activitySource.StartActivity(
-            "CompleteCustomerRegistration", ActivityKind.Server);
-
-        activity.AddTag("statemachine.state", _data.State.ToString());
-        
+        using var activity = Activities.CompleteCustomerRegistration(_data.State.ToString());
         await _stateMachine.FireAsync(RegistrationTrigger.CompleteCustomerRegistration);
     }
 
     public async Task CompletePaymentMethodRegistrationAsync()
     {
-        using var activity = _activitySource.StartActivity(
-            "CompletePaymentMethodRegistration", ActivityKind.Server);
-
-        activity.AddTag("statemachine.state", _data.State.ToString());
-        
+        using var activity = Activities.CompletePaymentMethodRegistration(_data.State.ToString());
         await _stateMachine.FireAsync(RegistrationTrigger.CompletePaymentMethodRegistration);
     }
 
     public async Task CompleteSubscriptionRegistrationAsync()
     {
-        using var activity = _activitySource.StartActivity(
-            "CompleteSubscriptionRegistration", ActivityKind.Server);
-
-        activity.AddTag("statemachine.state", _data.State.ToString());
-        
+        using var activity = Activities.CompleteSubscriptionRegistration(_data.State.ToString());
         await _stateMachine.FireAsync(RegistrationTrigger.CompleteSubscriptionRegistration);
     }
 
@@ -99,12 +82,10 @@ public class Registration
             () => data.State,
             state =>
             {
-                using var activity = _activitySource.StartActivity("SaveState", ActivityKind.Server);
-
-                activity.AddTag("statemachine.state", state.ToString());
+                using var activity = Activities.SaveStateMachine(state.ToString());
                 
                 _data.State = state;
-                stateStore.Put(_data.CustomerId.ToString(), _data);
+                stateStore.Set(_data.CustomerId.ToString(), _data);
             });
 
         stateMachine
@@ -131,11 +112,8 @@ public class Registration
 
     private async Task RegisterSubscriptionDetails()
     {
-        using var activity = _activitySource.StartActivity(
-            "RegisterSubscriptionDetails", ActivityKind.Server);
-
-        activity.AddTag("statemachine.state", _data.State.ToString());
-
+        using var activity = Activities.RegisterSubscription(_data.State.ToString());
+        
         var request = new RegisterSubscriptionRequest(
             _data.CustomerId,
             _data.SubscriptionDetails.ShippingFrequency,
@@ -146,10 +124,7 @@ public class Registration
 
     private async Task RegisterCustomerDetails()
     {
-        using var activity = _activitySource.StartActivity(
-            "RegisterCustomerDetails", ActivityKind.Server);
-
-        activity.AddTag("statemachine.state", _data.State.ToString());
+        using var activity = Activities.RegisterCustomer(_data.State.ToString());
         
         var request = new RegisterCustomerRequest(
             _data.CustomerId,
@@ -165,10 +140,7 @@ public class Registration
 
     private async Task RegisterPaymentMethod()
     {
-        using var activity = _activitySource.StartActivity(
-            "RegisterPaymentMethod", ActivityKind.Server);
-
-        activity.AddTag("statemachine.state", _data.State.ToString());
+        using var activity = Activities.RegisterPaymentMethod(_data.State.ToString());
 
         await _payments.RegisterPaymentMethodAsync(new RegisterPaymentMethodRequest(
             _data.CustomerId,

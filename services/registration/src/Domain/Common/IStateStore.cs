@@ -3,5 +3,5 @@
 public interface IStateStore
 {
     Task<T> Get<T>(string key);
-    Task Put(string key, object data);
+    Task Set(string key, object data);
 }

@@ -37,6 +37,10 @@ spec:
                   key: catalogConnectionString
             - name: IMAGE_TAG
               value: "{{ .Chart.Version }}"
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
             - name: TELEMETRY__SPANS
               value: "http://jaeger-collector.istio-system:14268/api/traces"
           ports:

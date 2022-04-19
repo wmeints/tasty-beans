@@ -42,7 +42,11 @@ builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
     .AddDbContextCheck<ApplicationDbContext>();
 
-builder.AddTelemetry();
+builder.AddTelemetry("Ratings",
+    "RecommendCoffee.Ratings.Api",
+    "RecommendCoffee.Ratings.Application",
+    "RecommendCoffee.Ratings.Domain",
+    "RecommendCoffee.Ratings.Infrastructure");
 
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
 builder.Services.AddScoped<ProductRegisteredEventHandler>();
@@ -63,6 +67,8 @@ if(app.Environment.IsDevelopment())
 
     await dbContext.Database.MigrateAsync();
 }
+
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 app.UseCloudEvents();
 

@@ -33,13 +33,17 @@ public class Customer
 
     public static RegisterCustomerCommandReply Register(RegisterCustomerCommand command)
     {
+        using var activity = Activities.Register(command.CustomerId);
+        
         var validator = new RegisterCustomerCommandValidator();
         var validationResult = validator.Validate(command);
 
         if (!validationResult.IsValid)
         {
-            var errors = validationResult.Errors.Select(x => new ValidationError(x.PropertyName, x.ErrorMessage))
+            var errors = validationResult.Errors
+                .Select(x => new ValidationError(x.PropertyName, x.ErrorMessage))
                 .ToList();
+            
             return new RegisterCustomerCommandReply(null, errors, Enumerable.Empty<IDomainEvent>());
         }
 

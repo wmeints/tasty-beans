@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace RecommendCoffee.Ratings.Application;
+namespace RecommendCoffee.CustomerManagement.Application;
 
 public static class Activities
 {

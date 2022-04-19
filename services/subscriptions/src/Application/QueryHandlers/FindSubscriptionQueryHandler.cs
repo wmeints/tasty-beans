@@ -13,6 +13,7 @@ public class FindSubscriptionQueryHandler
 
     public async Task<Subscription?> ExecuteAsync(Guid customerId)
     {
+        using var activity = Activities.ExecuteQuery("FindByCustomerId");
         return await _subscriptionRepository.FindByCustomerIdAsync(customerId);
     }
 }
