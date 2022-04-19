@@ -9,10 +9,10 @@ public class Customer
 {
     private Customer()
     {
-
     }
 
-    public Customer(Guid id, string firstName, string lastName, Address invoiceAddress, Address shippingAddress, string emailAddress, string telephoneNumber)
+    public Customer(Guid id, string firstName, string lastName, Address invoiceAddress, Address shippingAddress,
+        string emailAddress, string telephoneNumber)
     {
         Id = id;
         FirstName = firstName;
@@ -23,13 +23,13 @@ public class Customer
         TelephoneNumber = telephoneNumber;
     }
 
-    public Guid Id { get; private set; }
-    public string FirstName { get; private set; }
-    public string LastName { get; private set; }
-    public Address InvoiceAddress { get; private set; }
-    public Address ShippingAddress { get; private set; }
-    public string EmailAddress { get; private set; }
-    public string TelephoneNumber { get; private set; }
+    public Guid Id { get; private set; } = Guid.Empty;
+    public string FirstName { get; private set; } = "";
+    public string LastName { get; private set; } = "";
+    public Address InvoiceAddress { get; private set; } = new Address("", "", "", "", "");
+    public Address ShippingAddress { get; private set; } = new Address("", "", "", "", "");
+    public string EmailAddress { get; private set; } = "";
+    public string TelephoneNumber { get; private set; } = "";
 
     public static RegisterCustomerCommandReply Register(RegisterCustomerCommand command)
     {
@@ -38,7 +38,8 @@ public class Customer
 
         if (!validationResult.IsValid)
         {
-            var errors = validationResult.Errors.Select(x => new ValidationError(x.PropertyName, x.ErrorMessage)).ToList();
+            var errors = validationResult.Errors.Select(x => new ValidationError(x.PropertyName, x.ErrorMessage))
+                .ToList();
             return new RegisterCustomerCommandReply(null, errors, Enumerable.Empty<IDomainEvent>());
         }
 
@@ -52,14 +53,15 @@ public class Customer
             command.TelephoneNumber);
 
         var evt = new CustomerRegisteredEvent(
-            instance.Id, 
+            instance.Id,
             instance.FirstName,
-            instance.LastName, 
+            instance.LastName,
             instance.InvoiceAddress,
-            instance.ShippingAddress, 
-            instance.EmailAddress, 
+            instance.ShippingAddress,
+            instance.EmailAddress,
             instance.TelephoneNumber);
 
-        return new RegisterCustomerCommandReply(instance, Enumerable.Empty<ValidationError>(), new IDomainEvent[] { evt});
+        return new RegisterCustomerCommandReply(instance, Enumerable.Empty<ValidationError>(),
+            new IDomainEvent[] { evt });
     }
 }
