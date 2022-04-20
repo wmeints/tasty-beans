@@ -35,64 +35,11 @@ the solution. You can deploy with less, but it's untested, so you've been warned
 Make sure you have `istio`, `helm`, and `kubectl` in your `PATH` variable. The
 utility scripts expect you to have these tools available.
 
-## Getting started
+## :rocket: Getting started
 
-This section covers building and deploying the sample solution on your local
-machine. Ensure you meet the system requirements, or the solution will likely
-not deploy correctly.
+Please find [the installation guide](https://github.com/wmeints/recommend-coffee/wiki/Installation-guide) on the Wiki.
 
-On Linux, you can still use the scripts, but you'll have to install Powershell.
-This can be done using [the Powershell installation guide][PWSH_INSTALL].
-Make sure you prefix the commands in this guide with `pwsh` to invoke the
-scripts in Powershell.
-
-### Deploying the service mesh
-
-The solution uses the Istio service mesh to expose API endpoints to your local
-machine. We'll also use Istio for communication between service and A/B tests at
-a later stage.
-
-You can install Istio using the following command:
-
-```console
-./deploy-istio.ps1
-```
-
-It will take a few minutes for the script to complete. After you've installed
-Istio you can install dapr.
-
-### Installing dapr
-
-We use Dapr in the solution to provide a layer of abstraction on top of common
-application components such as state storage, and pub/sub. You can install Dapr
-using the following command:
-
-```console
-./deploy-dapr.ps1
-```
-
-### Building images
-
-Please follow these steps to build the docker images for the solution:
-
-```console
-./build-images.ps1
-```
-
-### Deploying the Helm chart
-
-After building the docker images and deploying the cluster infrastructure, you
-can deploy the helm chart to your Kubernetes cluster. Use the following command
-to deploy the helm chart:
-
-```console
-./deploy-chart.ps1
-```
-
-When asked, enter a password for the database server.
-We're storing the database password as a secret in the Kubernetes cluster.
-
-## Documentation
+## :book: Documentation
 
 This section covers some of the common patterns used in the demo solution.
 Please review [the wiki](https://github.com/wmeints/recommend-coffee/wiki) to
