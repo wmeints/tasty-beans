@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Cronos;
 using Microsoft.Extensions.Hosting;
 using RecommendCoffee.Timer.Application.Common;
 using RecommendCoffee.Timer.Domain.Events;
@@ -19,11 +20,12 @@ public class MonthHasPassedTimer: BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var timer = new CronTimer(_timerExpression);
+        var timer = new CronTimer(CronExpression.Parse(_timerExpression, CronFormat.IncludeSeconds));
 
         while (await timer.WaitForNextTickAsync(stoppingToken))
         {
             await _eventPublisher.PublishEventsAsync(new[] { new MonthHasPassedEvent() });
+            Metrics.MonthsPassed.Add(1);
         }
     }
 }

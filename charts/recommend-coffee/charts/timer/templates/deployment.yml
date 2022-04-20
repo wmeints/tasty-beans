@@ -30,6 +30,8 @@ spec:
           image: recommendcoffee.azurecr.io/timer:{{ .Values.global.releaseVersion }}
           imagePullPolicy: IfNotPresent
           env:
+            - name: TIMERS__MONTHHASPASSED
+              value: "30 * * * * *"
             - name: IMAGE_TAG
               value: "{{ .Chart.Version }}"
             - name: POD_NAMESPACE
@@ -41,8 +43,6 @@ spec:
           ports:
             - containerPort: 80
               name: http
-            - containerPort: 8888
-              name: http-metrics
           livenessProbe:
             httpGet:
               path: /healthz
