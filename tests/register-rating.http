@@ -1,0 +1,9 @@
+POST https://recommend.coffee/ratings/ratings/
+Accept: application/json
+Content-Type: application/json
+
+{
+    "customerId": "f1ae6c80-4bb9-481e-9a6a-95f58f26b710",
+    "productId": "60130a10-e4b6-4f81-98e6-5a93784d0eaa",
+    "value": 5
+}
