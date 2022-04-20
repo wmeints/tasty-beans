@@ -9,7 +9,7 @@ better quality coffee to them.
 
 ## :goal_net: Goals
 
-We're trying to achieve a number of goals in this sample:
+This sample achieves the following goals:
 
 * Demonstrate how to implement 12-factor cloud-native applications in ASP.NET Core 6.
 * Demonstrate how to integrate microservices with a data mesh/data platform.
