@@ -2,7 +2,7 @@
 
 This solution implements microservices with related analytics capabilities.
 
-## Goals
+## :goal_net: Goals
 
 We're trying to achieve a number of goals in this sample:
 
@@ -10,7 +10,7 @@ We're trying to achieve a number of goals in this sample:
 * Demonstrate how to integrate your microservices with a data mesh/data platform
 * Demonstrate how to implement end-to-end ML solutions with MLOps
 
-## Status
+## :triangular_flag_on_post: Status
 
 This sample is a work in progress and by no means complete. Currently, only the
 microservices are available in the solution. Also, not all planned functionality
@@ -18,7 +18,7 @@ is in the microservices yet.
 
 All features are subject to change. But that's part of the fun :grin:
 
-## System requirements
+## :computer: System requirements
 
 Please make sure you have the following tools available:
 
