@@ -1,19 +1,23 @@
 ﻿@inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+<nav class="navbar navbar-dark navbar-expand-lg navbar-light bg-primary fixed-top shadow">
     <div class="container">
         <a class="navbar-brand" href="#">Recommend.Coffee</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <NavLink href="/" ActiveClass="active" class="nav-link">Home</NavLink>
                 </li>
-                <li class="nav-item">
-                    <NavLink href="/Subscription/Manage" ActiveClass="active" class="nav-link">Manage your subscription</NavLink>
-                </li>
+                <AuthorizeView>
+                    <Authorized>
+                        <li class="nav-item">
+                            <NavLink href="/Subscription/Manage" ActiveClass="active" class="nav-link">Manage your subscription</NavLink>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <AuthorizeView>

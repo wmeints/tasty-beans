@@ -7,12 +7,18 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
+var baseUri = new Uri(builder.HostEnvironment.BaseAddress);
+
 builder.Services
-    .AddHttpClient("RecommendCoffee.Portal.Api", client =>
-    {
-        client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
-    })
+    .AddHttpClient("RecommendCoffee.Subscriptions.Api",
+        client => client.BaseAddress = new Uri(baseUri, "/subscriptions")
+    )
     .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+builder.Services
+    .AddHttpClient("RecommendCoffee.Registration.Api",
+        client => client.BaseAddress = new Uri(baseUri, "/registration")
+    );
 
 builder.Services.AddScoped(sp => sp
     .GetRequiredService<IHttpClientFactory>()
@@ -22,7 +28,7 @@ builder.Services.AddScoped(sp => sp
 builder.Services.AddOidcAuthentication(options =>
 {
     builder.Configuration.Bind("Authentication", options.ProviderOptions);
-    
+
     options.ProviderOptions.DefaultScopes.Add("catalog");
     options.ProviderOptions.DefaultScopes.Add("registration");
     options.ProviderOptions.DefaultScopes.Add("subscriptions");

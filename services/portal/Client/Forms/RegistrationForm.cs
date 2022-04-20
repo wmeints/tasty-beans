@@ -1,3 +1,15 @@
-﻿namespace RecommendCoffee.Portal.Client.Forms;
+﻿using System.ComponentModel.DataAnnotations;
 
-public record StartRegistrationForm(CustomerDetails CustomerDetails, SubscriptionDetails Subscription, PaymentMethodDetails PaymentMethod);
+namespace RecommendCoffee.Portal.Client.Forms;
+
+public class StartRegistrationForm
+{
+    [ValidateComplexType]
+    public CustomerDetails CustomerDetails { get; set; } = new CustomerDetails();
+    
+    [ValidateComplexType]
+    public SubscriptionDetails Subscription { get; set; } = new SubscriptionDetails();
+    
+    [ValidateComplexType]
+    public PaymentMethodDetails PaymentMethod { get; set; } = new PaymentMethodDetails();
+}

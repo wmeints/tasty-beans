@@ -1,9 +1,184 @@
 ﻿@page "/Register"
+@inject IHttpClientFactory ClientFactory;
+@inject NavigationManager Navigation;
 
 <div class="container">
     <div class="row">
         <div class="col">
-            <h1>Register</h1>      
+            <h1>Register for a new subscription</h1>
+            <p>Thanks for your interest in our coffee. Choose one of the subscription options, provide your 
+                shipping details, and your payment information to get started.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <EditForm EditContext="@_editContext" OnSubmit="StartRegistration">
+                <ObjectGraphDataAnnotationsValidator/>
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Choose your subscription options</h2>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label>Type of subscription</label>
+                        <InputSelect @bind-Value="_form.Subscription.Kind" class="form-control">
+                            <option>- Make a choice -</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="OneYear">One-year (Save 10%)</option>
+                        </InputSelect>
+                        <CustomValidationMessage For="@(() => _form.Subscription.Kind)"/>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label>I want to receive coffee every</label>
+                        <InputSelect @bind-Value="_form.Subscription.ShippingFrequency" class="form-control">
+                            <option>- Make a choice -</option>
+                            <option value="Weekly">Week</option>
+                            <option value="EveryOtherWeek">Every other week</option>
+                            <option value="Monthly">Every month</option>
+                        </InputSelect>
+                        <CustomValidationMessage For="@(() => _form.Subscription.ShippingFrequency)"/>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <h2>Your Personal information</h2>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label>First Name</label>
+                        <InputText @bind-Value="_form.CustomerDetails.FirstName" class="form-control" DisplayName="First Name"/>
+                        <CustomValidationMessage For="@(() => _form.CustomerDetails.FirstName)"/>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label>Last Name</label>
+                        <InputText @bind-Value="_form.CustomerDetails.LastName" class="form-control" DisplayName="Last Name"/>
+                        <CustomValidationMessage For="@(() => _form.CustomerDetails.LastName)"/>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label>E-mail address</label>
+                        <InputText @bind-Value="_form.CustomerDetails.EmailAddress" class="form-control" DisplayName="E-mail address"/>
+                        <CustomValidationMessage For="@(() => _form.CustomerDetails.EmailAddress)"/>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label>Telephone Number</label>
+                        <InputText @bind-Value="_form.CustomerDetails.TelephoneNumber" class="form-control" DisplayName="Telephone Number"/>
+                        <CustomValidationMessage For="@(() => _form.CustomerDetails.TelephoneNumber)"/>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <h2>Invoice Address</h2>
+                    </div>
+                    <div class="col-8 mb-3">
+                        <label>Street</label>
+                        <InputText @bind-Value="_form.CustomerDetails.InvoiceAddress.Street" class="form-control"/>
+                        <CustomValidationMessage For="@(() => _form.CustomerDetails.InvoiceAddress.Street)"/>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label>Building number</label>
+                        <InputText @bind-Value="_form.CustomerDetails.InvoiceAddress.HouseNumber" class="form-control" DisplayName="Building number"/>
+                        <CustomValidationMessage For="@(() => _form.CustomerDetails.InvoiceAddress.HouseNumber)"/>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label>Zip code</label>
+                        <InputText @bind-Value="_form.CustomerDetails.InvoiceAddress.PostalCode" class="form-control" DisplayName="Zip code"/>
+                        <CustomValidationMessage For="@(() => _form.CustomerDetails.InvoiceAddress.PostalCode)"/>
+                    </div>
+                    <div class="col-8 mb-3">
+                        <label>City</label>
+                        <InputText @bind-Value="_form.CustomerDetails.InvoiceAddress.City" class="form-control"/>
+                        <CustomValidationMessage For="@(() => _form.CustomerDetails.InvoiceAddress.City)"/>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <h2>Shipping Address</h2>
+                    </div>
+                    <div class="col-8 mb-3">
+                        <label>Street</label>
+                        <InputText @bind-Value="_form.CustomerDetails.ShippingAddress.Street" class="form-control"/>
+                        <CustomValidationMessage For="@(() => _form.CustomerDetails.ShippingAddress.Street)"/>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label>Building number</label>
+                        <InputText @bind-Value="_form.CustomerDetails.ShippingAddress.HouseNumber" class="form-control"/>
+                        <CustomValidationMessage For="@(() => _form.CustomerDetails.ShippingAddress.HouseNumber)"/>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label>Zip code</label>
+                        <InputText @bind-Value="_form.CustomerDetails.ShippingAddress.PostalCode" class="form-control"/>
+                        <CustomValidationMessage For="@(() => _form.CustomerDetails.ShippingAddress.PostalCode)"/>
+                    </div>
+                    <div class="col-8 mb-3">
+                        <label>City</label>
+                        <InputText @bind-Value="_form.CustomerDetails.ShippingAddress.City" class="form-control"/>
+                        <CustomValidationMessage For="@(() => _form.CustomerDetails.ShippingAddress.City)"/>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <h2>Payment information</h2>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label>Card type</label>
+                        <InputSelect @bind-Value="_form.PaymentMethod.CardType" class="form-control">
+                            <option>- Make a choice -</option>
+                            <option value="Visa">Visa</option>
+                            <option value="Mastercard">Mastercard</option>
+                            <option value="AmericanExpress">American Express</option>
+                            <option value="Discover">Discover card</option>
+                        </InputSelect>
+                        <CustomValidationMessage For="@(() => _form.PaymentMethod.CardType)"></CustomValidationMessage>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label>Card number</label>
+                        <InputText @bind-Value="_form.PaymentMethod.CardNumber" DisplayName="Card number" class="form-control"/>
+                        <CustomValidationMessage For="@(() => _form.PaymentMethod.CardNumber)"></CustomValidationMessage>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <label>Expires</label>
+                        <InputText @bind-Value="_form.PaymentMethod.ExpirationDate" DisplayName="Expiration date" class="form-control"/>
+                        <CustomValidationMessage For="@(() => _form.PaymentMethod.ExpirationDate)"></CustomValidationMessage>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <label>Security code</label>
+                        <InputText @bind-Value="_form.PaymentMethod.SecurityCode" DisplayName="Security code" class="form-control"/>
+                        <CustomValidationMessage For="@(() => _form.PaymentMethod.SecurityCode)"></CustomValidationMessage>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label>Card Holder Name</label>
+                        <InputText @bind-Value="_form.PaymentMethod.CardHolderName" DisplayName="Card number" class="form-control"/>
+                        <CustomValidationMessage For="@(() => _form.PaymentMethod.CardHolderName)"></CustomValidationMessage>
+                    </div>
+                </div>
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-outline-primary">Register</button>
+                    </div>
+                </div>
+            </EditForm>
         </div>
     </div>
 </div>
+
+@code {
+
+    EditContext? _editContext;
+    StartRegistrationForm? _form;
+
+    protected override void OnInitialized()
+    {
+        _form = new StartRegistrationForm();
+        _editContext = new EditContext(_form);
+        _editContext.SetFieldCssClassProvider(new BootstrapFieldCssClassProvider());
+    }
+
+    private async Task StartRegistration()
+    {
+        if (_editContext != null && _editContext.Validate())
+        {
+            using var client = ClientFactory.CreateClient("RecommendCoffee.Registration.Api");
+            await client.PostAsJsonAsync("/registration", _form);
+            Navigation.NavigateTo("/RegistrationCompleted");
+        }
+    }
+
+}
