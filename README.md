@@ -1,14 +1,19 @@
 # Recommend-coffee sample solution
 
-This solution implements microservices with related analytics capabilities.
+Welcome to the recommend-coffee sample solution! This solution implements a fake
+company that sells coffee subscriptions.
+
+Customers can subscribe to this service to get coffee delivered every month
+or every week. They can rate the coffee which helps recommend-coffee deliver
+better quality coffee to them.
 
 ## :goal_net: Goals
 
 We're trying to achieve a number of goals in this sample:
 
-* Demonstrate how to implement observability in ASP.NET Core 6
-* Demonstrate how to integrate your microservices with a data mesh/data platform
-* Demonstrate how to implement end-to-end ML solutions with MLOps
+* Demonstrate how to implement 12-factor cloud-native applications in ASP.NET Core 6.
+* Demonstrate how to integrate microservices with a data mesh/data platform.
+* Demonstrate how to implement end-to-end ML solutions with MLOps.
 
 ## :triangular_flag_on_post: Status
 
