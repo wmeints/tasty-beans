@@ -2,11 +2,16 @@
 
 ![Tasty Beans logo](./images/tasty-beans.png)
 
-Welcome to Tasty Beans, the subscription-based coffee beans shop that makes it easy to get your hands on the best beans around!
+Welcome to Tasty Beans, the subscription-based coffee beans shop that makes it
+easy to get your hands on the best beans around!
 
-With our recommendations feature, you can easily find the beans that suit your taste, and with our start-up guide, you can get brewing in no-time.
+With our recommendations feature, you can easily find the beans that suit your
+taste, and with our start-up guide, you can get brewing in no time.
 
-Our selection of beans is based on recommendations from coffee aficionados around the world. Whether you like your coffee light and delicate or dark and bold, we have the perfect beans for you. Start your subscription today and enjoy the best coffee beans delivered right to your door.
+Our selection of beans is based on recommendations from coffee aficionados
+around the world. Whether you like your coffee light and delicate or dark and
+bold, we have the perfect beans for you. Start your subscription today and enjoy
+the best coffee beans delivered right to your door.
 
 ## :goal_net: Goals
 
