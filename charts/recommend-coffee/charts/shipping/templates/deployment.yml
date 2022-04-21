@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipping
+  labels:
+    app: shipping
+    version: {{ .Chart.Version }}
+spec:
+  selector:
+    matchLabels:
+      app: shipping
+      version: {{ .Chart.Version }}
+  template:
+    metadata:
+      labels:
+        app: shipping
+        version: {{ .Chart.Version }}
+      annotations:
+        dapr.io/app-id: "shipping"
+        dapr.io/app-port: "80"
+        dapr.io/enabled: "true"
+        sidecar.opentelemetry.io/inject: "true"
+        prometheus.io/port: "80"
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: shipping
+      containers:
+        - name: shipping
+          image: recommendcoffee.azurecr.io/shipping:{{ .Values.global.releaseVersion }}
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: CONNECTIONSTRINGS__DEFAULTDATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: recommend-coffee-secrets
+                  key: shippingConnectionString
+            - name: IMAGE_TAG
+              value: "{{ .Chart.Version }}"
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: TELEMETRY__SPANS
+              value: "http://jaeger-collector.istio-system:14268/api/traces"
+          ports:
+            - containerPort: 80
+              name: http
+            - containerPort: 8888
+              name: http-metrics
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3
+      initContainers:
+        - name: database-migrations
+          image: recommendcoffee.azurecr.io/shipping-migrations:{{ .Values.global.releaseVersion }}
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: recommend-coffee-secrets
+                  key: databasePassword
+            - name: DB_USER
+              value: sa
+            - name: DB_NAME
+              value: shipping
+            - name: DB_SERVER
+              value: database
