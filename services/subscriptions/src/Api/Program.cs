@@ -3,8 +3,10 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using RecommendCoffee.Subscriptions.Api;
+using RecommendCoffee.Subscriptions.Api.Services;
 using RecommendCoffee.Subscriptions.Application.CommandHandlers;
 using RecommendCoffee.Subscriptions.Application.Common;
+using RecommendCoffee.Subscriptions.Application.EventHandlers;
 using RecommendCoffee.Subscriptions.Application.QueryHandlers;
 using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
 using RecommendCoffee.Subscriptions.Infrastructure.EventBus;
@@ -52,6 +54,12 @@ builder.Services.AddScoped<StartSubscriptionCommandHandler>();
 builder.Services.AddScoped<CancelSubscriptionCommandHandler>();
 builder.Services.AddScoped<ChangeShippingFrequencyCommandHandler>();
 builder.Services.AddScoped<FindSubscriptionQueryHandler>();
+builder.Services.AddScoped<MonthHasPassedEventHandler>();
+
+// Use a background task queue to process requests asynchronously from the HTTP interface.
+// We need this since month-has-passed might kick off a long-running process ;-)
+builder.Services.AddSingleton<BackgroundTaskQueue>();
+builder.Services.AddHostedService<BackgroundTaskService>();
 
 var app = builder.Build();
 
