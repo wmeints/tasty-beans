@@ -1,0 +1,4 @@
+manifests/
+bin/
+obj/
+tests/
