@@ -1,5 +1,7 @@
 # Tasty Beans sample solution
 
+[Tasty Beans logo](./images/tasty-beans.png)
+
 Welcome to Tasty Beans, the subscription-based coffee beans shop that makes it easy to get your hands on the best beans around!
 
 With our recommendations feature, you can easily find the beans that suit your taste, and with our start-up guide, you can get brewing in no-time.
