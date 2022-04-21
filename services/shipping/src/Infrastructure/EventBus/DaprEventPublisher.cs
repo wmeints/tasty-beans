@@ -1,14 +1,14 @@
 using System.Reflection;
 using Dapr.Client;
 using Microsoft.Extensions.Logging;
-using RecommendCoffee.Subscriptions.Application.Common;
-using RecommendCoffee.Subscriptions.Domain.Common;
+using RecommendCoffee.Shipping.Application.Common;
+using RecommendCoffee.Shipping.Domain.Common;
 
-namespace RecommendCoffee.Subscriptions.Infrastructure.EventBus;
+namespace RecommendCoffee.Shipping.Infrastructure.EventBus;
 
 public class DaprEventPublisher : IEventPublisher
 {
-    private const string DEADLETTER_TOPIC = "subscriptions.deadletter.v1";
+    private const string DEADLETTER_TOPIC = "shipping.deadletter.v1";
     private readonly ILogger<DaprEventPublisher> _logger;
 
     private readonly DaprClient _daprClient;
