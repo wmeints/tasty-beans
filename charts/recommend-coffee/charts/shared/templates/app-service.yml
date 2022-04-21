@@ -68,6 +68,16 @@ spec:
             host: subscriptions.default.svc.cluster.local
             port:
               number: 80
+    - match:
+        - uri:
+            prefix: /shipping/
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: shipping.default.svc.cluster.local
+            port:
+              number: 80
     - route:
         - destination:
             host: portal.default.svc.cluster.local
