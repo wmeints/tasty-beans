@@ -1,11 +1,10 @@
-# Recommend-coffee sample solution
+# Tasty Beans sample solution
 
-Welcome to the recommend-coffee sample solution! This solution implements a fake
-company that sells coffee subscriptions.
+Welcome to Tasty Beans, the subscription-based coffee beans shop that makes it easy to get your hands on the best beans around!
 
-Customers can subscribe to this service to get coffee delivered every month
-or every week. They can rate the coffee which helps recommend-coffee deliver
-better quality coffee to them.
+With our recommendations feature, you can easily find the beans that suit your taste, and with our start-up guide, you can get brewing in no-time.
+
+Our selection of beans is based on recommendations from coffee aficionados around the world. Whether you like your coffee light and delicate or dark and bold, we have the perfect beans for you. Start your subscription today and enjoy the best coffee beans delivered right to your door.
 
 ## :goal_net: Goals
 
