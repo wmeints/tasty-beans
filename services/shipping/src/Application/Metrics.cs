@@ -4,7 +4,7 @@ namespace RecommendCoffee.Shipping.Application;
 
 public class Metrics
 {
-    private static Meter _meter = new Meter("RecommendCoffee.Subscriptions.Application");
+    private static Meter _meter = new Meter("RecommendCoffee.Shipping.Application");
 
     private static Counter<int> _subscriptionsStarted =
         _meter.CreateCounter<int>("subscriptions-subscriptions-started");

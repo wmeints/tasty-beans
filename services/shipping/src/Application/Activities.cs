@@ -4,7 +4,7 @@ namespace RecommendCoffee.Shipping.Application;
 
 public static class Activities
 {
-    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Subscriptions.Application");
+    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Shipping.Application");
 
     public static Activity? ExecuteCommand(string commandName)
     {

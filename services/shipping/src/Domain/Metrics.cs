@@ -4,5 +4,5 @@ namespace RecommendCoffee.Shipping.Domain;
 
 public class Metrics
 {
-    private static Meter _meter = new Meter("RecommendCoffee.Subscriptions.Domain");
+    private static Meter _meter = new Meter("RecommendCoffee.Shipping.Domain");
 }

@@ -4,7 +4,7 @@ namespace RecommendCoffee.Shipping.Domain;
 
 public static class Activities
 {
-    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Subscriptions.Domain");
+    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Shipping.Domain");
 
     public static Activity? Subscribe(Guid customerId)
     {

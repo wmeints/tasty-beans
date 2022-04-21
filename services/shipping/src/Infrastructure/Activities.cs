@@ -4,7 +4,7 @@ namespace RecommendCoffee.Shipping.Infrastructure;
 
 public static class Activities
 {
-    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Subscriptions.Infrastructure");
+    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Shipping.Infrastructure");
 
     public static Activity? PublishEvent(string eventName)
     {
