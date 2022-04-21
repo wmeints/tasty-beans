@@ -1,6 +1,6 @@
 # Tasty Beans sample solution
 
-[Tasty Beans logo](./images/tasty-beans.png)
+![Tasty Beans logo](./images/tasty-beans.png)
 
 Welcome to Tasty Beans, the subscription-based coffee beans shop that makes it easy to get your hands on the best beans around!
 
