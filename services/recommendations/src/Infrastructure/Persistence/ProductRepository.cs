@@ -37,4 +37,9 @@ public class ProductRepository: IProductRepository
         using var activity = Activities.ExecuteDatabaseCommand();
         return await _applicationDbContext.Products.AnyAsync(x => x.Id == productId);
     }
+
+    public async Task<Product> GetRandomProductAsync()
+    {
+        return await _applicationDbContext.Products.OrderBy(o => Guid.NewGuid()).FirstAsync();
+    }
 }

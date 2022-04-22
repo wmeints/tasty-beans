@@ -6,4 +6,6 @@ public interface IProductRepository
     Task<int> UpdateAsync(Product product);
     Task<Product?> FindByIdAsync(Guid id);
     Task<bool> ExistsAsync(Guid productId);
+
+    Task<Product> GetRandomProductAsync();
 }
