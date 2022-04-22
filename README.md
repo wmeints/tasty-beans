@@ -27,6 +27,9 @@ This sample is a work in progress and by no means complete. Currently, only the
 microservices are available in the solution. Also, not all planned functionality
 is in the microservices yet.
 
+Please note, the solution was previously called recommend-coffee. We're renaming it to tasty beans.
+You may or may not find a lot of references to the old solution name :smile:
+
 All features are subject to change. But that's part of the fun :grin:
 
 ## :computer: System requirements
