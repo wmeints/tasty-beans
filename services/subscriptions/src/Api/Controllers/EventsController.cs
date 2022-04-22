@@ -24,7 +24,9 @@ public class EventsController: ControllerBase
     public async Task<IActionResult> OnMonthHasPassed(MonthHasPassedEvent evt)
     {
         // Queue the actual operation on the background worker otherwise this HTTP call might take a bit too long.
-        await _backgroundTaskQueue.Enqueue(async cancellationToken => await _monthHasPassedEventHandler.HandleAsync(evt));
+        await _backgroundTaskQueue.Enqueue(async cancellationToken => 
+            await _monthHasPassedEventHandler.HandleAsync(evt));
+        
         return Accepted();
     }
 }

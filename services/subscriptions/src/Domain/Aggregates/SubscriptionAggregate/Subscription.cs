@@ -97,6 +97,8 @@ public class Subscription
 
         var shipmentCreatedEvent = new ShipmentCreatedEvent(Id, recommendation);
 
+        Metrics.ShipmentsCreated.Add(1);
+        
         return new CreateShipmentCommandResponse(
             Enumerable.Empty<ValidationError>(), 
             new[] { shipmentCreatedEvent });

@@ -9,6 +9,10 @@ using RecommendCoffee.Subscriptions.Application.Common;
 using RecommendCoffee.Subscriptions.Application.EventHandlers;
 using RecommendCoffee.Subscriptions.Application.QueryHandlers;
 using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+using RecommendCoffee.Subscriptions.Domain.Services.Recommendations;
+using RecommendCoffee.Subscriptions.Domain.Services.Shipping;
+using RecommendCoffee.Subscriptions.Infrastructure.Agents.Recommendations;
+using RecommendCoffee.Subscriptions.Infrastructure.Agents.Shipping;
 using RecommendCoffee.Subscriptions.Infrastructure.EventBus;
 using RecommendCoffee.Subscriptions.Infrastructure.Persistence;
 
@@ -50,6 +54,8 @@ builder.AddTelemetry("Subscriptions",
 
 builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+builder.Services.AddScoped<IShipping, ShippingAgent>();
+builder.Services.AddScoped<IRecommendations, RecommendationsAgent>();
 builder.Services.AddScoped<StartSubscriptionCommandHandler>();
 builder.Services.AddScoped<CancelSubscriptionCommandHandler>();
 builder.Services.AddScoped<ChangeShippingFrequencyCommandHandler>();

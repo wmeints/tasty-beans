@@ -46,4 +46,11 @@ public class SubscriptionRepository: ISubscriptionRepository
         _applicationDbContext.Update(subscription);
         return await _applicationDbContext.SaveChangesAsync();
     }
+
+    public async Task<IEnumerable<Subscription>> FindAllMonthlySubscriptions()
+    {
+        return await _applicationDbContext.Subscriptions
+            .Where(x => x.ShippingFrequency == ShippingFrequency.Monthly)
+            .ToListAsync();
+    }
 }

@@ -8,4 +8,5 @@ public interface ISubscriptionRepository
     Task<PagedResult<Subscription>> FindAll(int pageIndex, int pageSize);
     Task<int> InsertAsync(Subscription subscription);
     Task<int> UpdateAsync(Subscription subscription);
+    Task<IEnumerable<Subscription>> FindAllMonthlySubscriptions();
 }
