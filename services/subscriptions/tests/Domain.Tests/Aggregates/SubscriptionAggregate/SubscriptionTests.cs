@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Net;
+using System.Threading.Tasks;
+using FakeItEasy;
 using FluentAssertions;
 using NodaTime;
 using NodaTime.Extensions;
 using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
 using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
 using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Events;
+using RecommendCoffee.Subscriptions.Domain.Services.Recommendations;
+using RecommendCoffee.Subscriptions.Domain.Services.Shipping;
+using RecommendCoffee.Subscriptions.Domain.Services.Shipping.Commands;
 using Xunit;
 
 namespace RecommendCoffee.Subscriptions.Domain.Tests.Aggregates.SubscriptionAggregate;
@@ -65,5 +70,32 @@ public class SubscriptionTests
 
         subscription.EndDate.Should().BeNull();
         subscription.IsActive.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task CanCreateShipment()
+    {
+        var productId = Guid.NewGuid();
+        var customerId = Guid.NewGuid();
+        
+        var recommendations = A.Fake<IRecommendations>();
+        var shipping = A.Fake<IShipping>();
+
+        A.CallTo(() => recommendations.GetRecommendProductAsync(A<Guid>.Ignored)).Returns(productId);
+        
+        var subscription = new Subscription(
+            customerId, 
+            DateTime.UtcNow, 
+            ShippingFrequency.Monthly,
+            SubscriptionKind.OneYear);
+
+        await subscription.CreateShipment(new CreateShipmentCommand(), recommendations, shipping);
+
+        A.CallTo(() => recommendations.GetRecommendProductAsync(A<Guid>.Ignored)).MustHaveHappened();
+        
+        A.CallTo(() => shipping.CreateShippingOrderAsync(
+            A<CreateShippingOrderCommand>.That.Matches(
+                x=> x.CustomerId ==customerId && x.ProductId == productId))
+        ).MustHaveHappened();
     }
 }

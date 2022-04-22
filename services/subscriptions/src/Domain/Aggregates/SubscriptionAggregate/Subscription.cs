@@ -6,6 +6,9 @@ using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Comm
 using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Events;
 using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Validators;
 using RecommendCoffee.Subscriptions.Domain.Common;
+using RecommendCoffee.Subscriptions.Domain.Services.Recommendations;
+using RecommendCoffee.Subscriptions.Domain.Services.Shipping;
+using RecommendCoffee.Subscriptions.Domain.Services.Shipping.Commands;
 
 namespace RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
 
@@ -83,6 +86,20 @@ public class Subscription
         return new ChangeShippingFrequencyCommandReply(
             Enumerable.Empty<ValidationError>(),
             Enumerable.Empty<IDomainEvent>());
+    }
+
+    public async Task<CreateShipmentCommandResponse> CreateShipment(
+        CreateShipmentCommand cmd, IRecommendations recommendations, IShipping shipping)
+    {
+        var recommendation = await recommendations.GetRecommendProductAsync(Id);
+        await shipping.CreateShippingOrderAsync(new CreateShippingOrderCommand(
+            Id, recommendation));
+
+        var shipmentCreatedEvent = new ShipmentCreatedEvent(Id, recommendation);
+
+        return new CreateShipmentCommandResponse(
+            Enumerable.Empty<ValidationError>(), 
+            new[] { shipmentCreatedEvent });
     }
 
     public StartSubscriptionCommandReply Resubscribe(StartSubscriptionCommand command)
