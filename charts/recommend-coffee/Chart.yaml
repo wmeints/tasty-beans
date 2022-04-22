@@ -35,3 +35,5 @@ dependencies:
     version: 0.1.0-alpha.1
   - name: shipping
     version: 0.1.0-alpha.1
+  - name: recommendations
+    version: 0.1.0-alpha.1

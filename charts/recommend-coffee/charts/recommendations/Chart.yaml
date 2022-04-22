@@ -1,0 +1,6 @@
+apiVersion: v2
+name: recommendations
+description: Deploys the recommendations microservice
+type: application
+version: 0.1.0-alpha.1
+appVersion: 1.16.0
