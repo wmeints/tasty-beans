@@ -7,19 +7,24 @@ namespace RecommendCoffee.Shipping.Domain.Aggregates.ProductAggregate;
 
 public class Product
 {
+    
+#nullable disable
+
     private Product()
     {
-        
     }
+
+#nullable enable
 
     private Product(Guid id, string name)
     {
-        
+        this.Name = name;
+        this.Id = id;
     }
-    
+
     public Guid Id { get; private set; }
     public string Name { get; private set; }
-    
+
     public static RegisterProductCommandResponse Register(RegisterProductCommand cmd)
     {
         using var activity = Activities.RegisterProduct(cmd.Id);

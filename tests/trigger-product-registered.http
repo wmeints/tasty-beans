@@ -1,0 +1,14 @@
+POST http://localhost:54640/events/productregistered
+Content-Type: application/cloudevents+json; charset=utf-8
+Accept: application/json
+
+{
+    "data": {
+        "productId": "1da64fc4-7356-4211-a965-5d44fe611962",
+        "name": "Organic French Roast",
+        "description": "Big-bodied and sweet, this dark-roasted blend features plenty of roastiness with a chocolaty body and caramel sweetness to bring it all together.",
+        "variants": [
+            { "weight": "310", "unitPrice": "22.40" }
+        ]
+    }
+}

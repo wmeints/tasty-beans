@@ -7,7 +7,7 @@ using RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate.Commands
 namespace RecommendCoffee.Shipping.Api.Controllers;
 
 [ApiController]
-[Route("/orders")]
+[Route("/shippingorders")]
 public class ShippingOrdersController: ControllerBase
 {
     private readonly CreateShippingOrderCommandHandler _createShippingOrderCommandHandler;
@@ -20,10 +20,7 @@ public class ShippingOrdersController: ControllerBase
     [HttpPost("")]
     public async Task<IActionResult> Create(CreateShippingOrderForm form)
     {
-        var createShippingOrderCommand = new CreateShippingOrderCommand(form.CustomerId, form.FirstName,
-            form.LastName, form.Street, form.HouseNumber, form.PostalCode, form.City, form.CountryCode,
-            form.OrderItems);
-        
+        var createShippingOrderCommand = new CreateShippingOrderCommand(form.CustomerId, form.OrderItems);
         var response = await _createShippingOrderCommandHandler.ExecuteAsync(createShippingOrderCommand);
         
         ModelState.AddValidationErrors(response.Errors);

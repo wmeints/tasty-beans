@@ -7,10 +7,14 @@ namespace RecommendCoffee.Shipping.Domain.Aggregates.CustomerAggregate;
 
 public class Customer
 {
+    
+#nullable disable
+
     private Customer()
     {
-        
     }
+
+#nullable enable
 
     private Customer(Guid id, string firstName, string lastName, string emailAddress, Address shippingAddress)
     {
@@ -26,7 +30,7 @@ public class Customer
     public string LastName { get; private set; }
     public string EmailAddress { get; private set; }
     public Address ShippingAddress { get; private set; }
-    
+
     public static RegisterCustomerCommandResponse Register(RegisterCustomerCommand cmd)
     {
         using var activity = Activities.RegisterProduct(cmd.Id);
@@ -40,7 +44,7 @@ public class Customer
                 null, validationResult.GetValidationErrors());
         }
 
-        var customer = new Customer(cmd.Id, cmd.FirstName, cmd.LastName,cmd.EmailAddress, cmd.ShippingAddress);
+        var customer = new Customer(cmd.Id, cmd.FirstName, cmd.LastName, cmd.EmailAddress, cmd.ShippingAddress);
 
         return new RegisterCustomerCommandResponse(customer, Enumerable.Empty<ValidationError>());
     }
