@@ -1,8 +1,0 @@
-﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=861e09d4_002Dd23c_002D4c32_002Da08d_002D5b6926c047d6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="FlagsInvalidExpirationDate" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::8BF1DEDA-F501-4751-82B8-759CFF89EABF::net6.0::RecommendCoffee.Payments.Domain.Tests.Aggregates.PaymentMethodAggregate.Validators.RegisterPaymentMethodCommandValidatorTests.Validate_IncorrectExpirationDate_ReturnsInvalidResult&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::8BF1DEDA-F501-4751-82B8-759CFF89EABF::net6.0::RecommendCoffee.Payments.Domain.Tests.Aggregates.PaymentMethodAggregate.PaymentMethodTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
