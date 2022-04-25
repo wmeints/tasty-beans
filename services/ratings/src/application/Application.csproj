@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\domain\Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\application\Application.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\domain\Domain.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>RecommendCoffee.Ratings.Application</RootNamespace>
+    <AssemblyName>RecommendCoffee.Ratings.Application</AssemblyName>
+  </PropertyGroup>
+
+</Project>
