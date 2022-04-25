@@ -7,9 +7,11 @@ pushd services/$ServiceName
 # Clean up project references
 
 pushd src/Api
-dotnet remove reference ../Domain
-dotnet remove reference ../Application
-dotnet remove reference ../Infrastructure
+
+dotnet remove reference ../Domain/Domain.csproj
+dotnet remove reference ../Application/Application.csproj
+dotnet remove reference ../Infrastructure/Application.csproj
+
 popd
 
 pushd src/Application
