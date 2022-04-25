@@ -15,8 +15,11 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\domain\Domain.csproj" />
+    <ProjectReference Include="..\application\Application.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\api\Api.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\application\Application.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\domain\Domain.csproj" />
   </ItemGroup>
 </Project>

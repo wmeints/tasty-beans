@@ -1,7 +1,5 @@
-﻿using System;
-using Cronos;
-using FakeItEasy;
-using RecommendCoffee.Timer.Application.Common;
+﻿using FakeItEasy;
+using RecommendCoffee.Shared.Application;
 using RecommendCoffee.Timer.Application.Services;
 using Xunit;
 

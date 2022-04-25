@@ -7,12 +7,10 @@
     <RootNamespace>RecommendCoffee.Timer.Infrastructure</RootNamespace>
     <AssemblyName>RecommendCoffee.Timer.Infrastructure</AssemblyName>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Dapr.Client" Version="1.6.0" />
-  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\domain\Domain.csproj" />
+    <ProjectReference Include="..\application\Application.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 </Project>

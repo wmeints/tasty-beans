@@ -11,4 +11,8 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="10.4.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\shared\domain\Domain.csproj" />
+  </ItemGroup>
 </Project>

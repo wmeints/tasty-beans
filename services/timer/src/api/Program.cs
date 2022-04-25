@@ -1,11 +1,10 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using RecommendCoffee.Shared.Application;
+using RecommendCoffee.Shared.Infrastructure.EventBus;
 using RecommendCoffee.Timer.Api;
-using RecommendCoffee.Timer.Application.Common;
 using RecommendCoffee.Timer.Application.Services;
-using RecommendCoffee.Timer.Infrastructure.EventBus;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +33,7 @@ builder.AddTelemetry("Timer",
     "RecommendCoffee.Timer.Domain",
     "RecommendCoffee.Timer.Infrastructure");
 
-builder.Services.AddSingleton<IEventPublisher, DaprEventPublisher>();
+builder.Services.AddEventPublisher(options => options.DeadLetterTopic = "timer.deadletter.v1");
 
 // This timer can be sped up to simulate months faster.
 // We use CRON expressions here as they feel familiar :D

@@ -1,7 +1,5 @@
-﻿using System.ComponentModel;
-using Cronos;
+﻿using Cronos;
 using Microsoft.Extensions.Hosting;
-using RecommendCoffee.Timer.Application.Common;
 using RecommendCoffee.Timer.Domain.Events;
 using Sgbj.Cron;
 
