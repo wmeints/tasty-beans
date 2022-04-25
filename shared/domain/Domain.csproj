@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="10.3.6" />
+    <PackageReference Include="NodaTime" Version="3.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="RecommendCoffee.Shared.Domain"/>
+  </ItemGroup>
+</Project>

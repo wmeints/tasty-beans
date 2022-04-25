@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>RecommendCoffee.Payments.Application</AssemblyName>
+    <RootNamespace>RecommendCoffee.Payments.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\domain\Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\application\Application.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\domain\Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+  </ItemGroup>
+
+</Project>

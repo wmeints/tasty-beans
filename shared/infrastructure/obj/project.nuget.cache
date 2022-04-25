@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "dgSpecHash": "+h4vBnWEX3wR8suSNAsAxBa77RWZreF5REtruitXXaV3/zlBQ/A3n700i+Po8a1zt+aV7W7Dhqsw973ePmdVUg==",
+  "success": true,
+  "projectFilePath": "/home/willem/projects/recommend-coffee/shared/infrastructure/Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "/home/willem/.nuget/packages/dapr.client/1.7.0/dapr.client.1.7.0.nupkg.sha512",
+    "/home/willem/.nuget/packages/fluentvalidation/10.3.6/fluentvalidation.10.3.6.nupkg.sha512",
+    "/home/willem/.nuget/packages/google.api.commonprotos/2.2.0/google.api.commonprotos.2.2.0.nupkg.sha512",
+    "/home/willem/.nuget/packages/google.protobuf/3.15.0/google.protobuf.3.15.0.nupkg.sha512",
+    "/home/willem/.nuget/packages/grpc.core.api/2.32.0/grpc.core.api.2.32.0.nupkg.sha512",
+    "/home/willem/.nuget/packages/grpc.net.client/2.32.0/grpc.net.client.2.32.0.nupkg.sha512",
+    "/home/willem/.nuget/packages/grpc.net.common/2.32.0/grpc.net.common.2.32.0.nupkg.sha512",
+    "/home/willem/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/6.0.0/microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "/home/willem/.nuget/packages/microsoft.extensions.logging.abstractions/3.0.3/microsoft.extensions.logging.abstractions.3.0.3.nupkg.sha512",
+    "/home/willem/.nuget/packages/microsoft.extensions.options/6.0.0/microsoft.extensions.options.6.0.0.nupkg.sha512",
+    "/home/willem/.nuget/packages/microsoft.extensions.primitives/6.0.0/microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "/home/willem/.nuget/packages/nodatime/3.0.9/nodatime.3.0.9.nupkg.sha512",
+    "/home/willem/.nuget/packages/system.diagnostics.diagnosticsource/4.5.1/system.diagnostics.diagnosticsource.4.5.1.nupkg.sha512",
+    "/home/willem/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
+    "/home/willem/.nuget/packages/system.net.http.json/5.0.0/system.net.http.json.5.0.0.nupkg.sha512",
+    "/home/willem/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
