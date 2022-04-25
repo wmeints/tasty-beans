@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RecommendCoffee.Payments.Api.Common;
 using RecommendCoffee.Payments.Api.Forms;
 using RecommendCoffee.Payments.Application.CommandHandlers;
 using RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate.Commands;
