@@ -9,6 +9,7 @@ using RecommendCoffee.Ratings.Domain.Aggregates.CustomerAggregate;
 using RecommendCoffee.Ratings.Domain.Aggregates.ProductAggregate;
 using RecommendCoffee.Ratings.Domain.Aggregates.RatingAggregate;
 using RecommendCoffee.Ratings.Infrastructure.Persistence;
+using RecommendCoffee.Shared.Diagnostics;
 using RecommendCoffee.Shared.Infrastructure.EventBus;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,7 +42,15 @@ builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
     .AddDbContextCheck<ApplicationDbContext>();
 
-builder.AddTelemetry("Ratings",
+var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
+
+builder.Services.AddTracing(telemetryOptions,
+    "RecommendCoffee.Ratings.Api",
+    "RecommendCoffee.Ratings.Application",
+    "RecommendCoffee.Ratings.Domain",
+    "RecommendCoffee.Ratings.Infrastructure");
+
+builder.Services.AddMetrics(telemetryOptions,
     "RecommendCoffee.Ratings.Api",
     "RecommendCoffee.Ratings.Application",
     "RecommendCoffee.Ratings.Domain",

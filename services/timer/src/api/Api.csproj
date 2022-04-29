@@ -21,5 +21,6 @@
     <ProjectReference Include="..\..\..\..\shared\api\Api.csproj" />
     <ProjectReference Include="..\..\..\..\shared\application\Application.csproj" />
     <ProjectReference Include="..\..\..\..\shared\domain\Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\diagnostics\Diagnostics.csproj" />
   </ItemGroup>
 </Project>

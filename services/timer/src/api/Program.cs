@@ -2,8 +2,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using RecommendCoffee.Shared.Application;
+using RecommendCoffee.Shared.Diagnostics;
 using RecommendCoffee.Shared.Infrastructure.EventBus;
-using RecommendCoffee.Timer.Api;
 using RecommendCoffee.Timer.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +27,15 @@ builder.Services
 
 builder.Services.AddHealthChecks();
 
-builder.AddTelemetry("Timer",
+var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
+
+builder.Services.AddTracing(telemetryOptions,
+    "RecommendCoffee.Timer.Api",
+    "RecommendCoffee.Timer.Application",
+    "RecommendCoffee.Timer.Domain",
+    "RecommendCoffee.Timer.Infrastructure");
+
+builder.Services.AddMetrics(telemetryOptions,
     "RecommendCoffee.Timer.Api",
     "RecommendCoffee.Timer.Application",
     "RecommendCoffee.Timer.Domain",

@@ -8,7 +8,7 @@ using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
 using RecommendCoffee.Catalog.Infrastructure.Persistence;
 using RecommendCoffee.Shared.Diagnostics;
 using RecommendCoffee.Shared.Infrastructure.EventBus;
-    
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -63,13 +63,10 @@ builder.Services.AddScoped<FindAllProductsQueryHandler>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    await using var scope = app.Services.CreateAsyncScope();
-    await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+await using var scope = app.Services.CreateAsyncScope();
+await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-    await dbContext.Database.MigrateAsync();
-}
+await dbContext.Database.MigrateAsync();
 
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
 

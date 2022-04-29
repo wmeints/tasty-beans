@@ -5,7 +5,7 @@ namespace RecommendCoffee.Shared.Diagnostics;
 
 public static class TraceServiceExtensions
 {
-    public static void AddTracing<TInterface>(this IServiceCollection services) where TInterface : class
+    public static void AutomateTracing<TInterface>(this IServiceCollection services) where TInterface : class
     {
         services.Decorate<TInterface>((inner, serviceProvider) =>
         {

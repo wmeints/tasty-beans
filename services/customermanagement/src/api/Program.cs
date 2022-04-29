@@ -2,11 +2,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.CustomerManagement.Api;
 using RecommendCoffee.CustomerManagement.Application.CommandHandlers;
 using RecommendCoffee.CustomerManagement.Application.QueryHandlers;
 using RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate;
 using RecommendCoffee.CustomerManagement.Infrastructure.Persistence;
+using RecommendCoffee.Shared.Diagnostics;
 using RecommendCoffee.Shared.Infrastructure.EventBus;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,7 +41,15 @@ builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
     .AddDbContextCheck<ApplicationDbContext>();
 
-builder.AddTelemetry("CustomerManagement",
+var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
+
+builder.Services.AddTracing(telemetryOptions,
+    "RecommendCoffee.CustomerManagement.Api",
+    "RecommendCoffee.CustomerManagement.Application",
+    "RecommendCoffee.CustomerManagement.Domain",
+    "RecommendCoffee.CustomerManagement.Infrastructure");
+
+builder.Services.AddMetrics(telemetryOptions,
     "RecommendCoffee.CustomerManagement.Api",
     "RecommendCoffee.CustomerManagement.Application",
     "RecommendCoffee.CustomerManagement.Domain",

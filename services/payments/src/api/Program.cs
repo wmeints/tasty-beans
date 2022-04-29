@@ -6,6 +6,7 @@ using RecommendCoffee.Payments.Api;
 using RecommendCoffee.Payments.Application.CommandHandlers;
 using RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate;
 using RecommendCoffee.Payments.Infrastructure.Persistence;
+using RecommendCoffee.Shared.Diagnostics;
 using RecommendCoffee.Shared.Infrastructure.EventBus;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,7 +39,15 @@ builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
     .AddDbContextCheck<ApplicationDbContext>();
 
-builder.AddTelemetry("Payments",
+var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
+
+builder.Services.AddTracing(telemetryOptions,
+    "RecommendCoffee.Payments.Api",
+    "RecommendCoffee.Payments.Application",
+    "RecommendCoffee.Payments.Domain",
+    "RecommendCoffee.Payments.Infrastructure");
+
+builder.Services.AddMetrics(telemetryOptions,
     "RecommendCoffee.Payments.Api",
     "RecommendCoffee.Payments.Application",
     "RecommendCoffee.Payments.Domain",

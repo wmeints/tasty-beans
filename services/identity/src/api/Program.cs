@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using RecommendCoffee.Identity.Api;
 using RecommendCoffee.Identity.Application.EventHandlers;
 using RecommendCoffee.Identity.Infrastructure.Persistence;
+using RecommendCoffee.Shared.Diagnostics;
 using RecommendCoffee.Shared.Infrastructure.Bindings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,7 +67,15 @@ builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
     .AddDbContextCheck<ApplicationDbContext>();
 
-builder.AddTelemetry("Identity",
+var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
+
+builder.Services.AddTracing(telemetryOptions,
+    "RecommendCoffee.Identity.Api",
+    "RecommendCoffee.Identity.Application",
+    "RecommendCoffee.Identity.Domain",
+    "RecommendCoffee.Identity.Infrastructure");
+
+builder.Services.AddMetrics(telemetryOptions,
     "RecommendCoffee.Identity.Api",
     "RecommendCoffee.Identity.Application",
     "RecommendCoffee.Identity.Domain",

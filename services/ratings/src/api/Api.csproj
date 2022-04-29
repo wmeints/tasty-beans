@@ -8,6 +8,7 @@
     <ProjectReference Include="..\..\..\..\shared\infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\..\shared\domain\Domain.csproj" />
     <ProjectReference Include="..\..\..\..\shared\api\Api.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\diagnostics\Diagnostics.csproj" />
   </ItemGroup>
 
   <ItemGroup>

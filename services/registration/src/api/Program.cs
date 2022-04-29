@@ -8,6 +8,7 @@ using RecommendCoffee.Registration.Domain.Customers;
 using RecommendCoffee.Registration.Domain.Payments;
 using RecommendCoffee.Registration.Domain.Subscriptions;
 using RecommendCoffee.Registration.Infrastructure.Agents;
+using RecommendCoffee.Shared.Diagnostics;
 using RecommendCoffee.Shared.Infrastructure.StateManagement;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,7 +49,15 @@ builder.Services.AddHealthChecks()
         );
     });
 
-builder.AddTelemetry("Registration",
+var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
+
+builder.Services.AddTracing(telemetryOptions,
+    "RecommendCoffee.Registration.Api",
+    "RecommendCoffee.Registration.Application",
+    "RecommendCoffee.Registration.Domain",
+    "RecommendCoffee.Registration.Infrastructure");
+
+builder.Services.AddMetrics(telemetryOptions,
     "RecommendCoffee.Registration.Api",
     "RecommendCoffee.Registration.Application",
     "RecommendCoffee.Registration.Domain",
