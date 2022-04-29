@@ -2,3 +2,4 @@ manifests/
 bin/
 obj/
 tests/
+.idea/
