@@ -1,5 +1,6 @@
 ﻿using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
 using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Commands;
+using RecommendCoffee.Shared.Diagnostics;
 
 namespace RecommendCoffee.Catalog.Application.CommandHandlers;
 
@@ -14,6 +15,7 @@ public class DiscontinueProductCommandHandler
         _eventPublisher = eventPublisher;
     }
 
+    [Trace]
     public async Task<DiscontinueProductCommandResponse> ExecuteAsync(DiscontinueProductCommand cmd)
     {
         using var activity = Activities.ExecuteCommand("DiscontinueProduct");

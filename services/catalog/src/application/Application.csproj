@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\shared\diagnostics\Diagnostics.csproj" />
     <ProjectReference Include="..\domain\Domain.csproj" />
     <ProjectReference Include="..\..\..\..\shared\application\Application.csproj" />
   </ItemGroup>

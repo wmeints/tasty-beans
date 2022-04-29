@@ -7,6 +7,7 @@ using RecommendCoffee.Catalog.Application.CommandHandlers;
 using RecommendCoffee.Catalog.Application.QueryHandlers;
 using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
 using RecommendCoffee.Catalog.Infrastructure.Persistence;
+using RecommendCoffee.Shared.Diagnostics;
 using RecommendCoffee.Shared.Infrastructure.EventBus;
     
 var builder = WebApplication.CreateBuilder(args);
@@ -39,7 +40,15 @@ builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
     .AddDbContextCheck<ApplicationDbContext>();
 
-builder.AddTelemetry("Catalog",
+var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
+
+builder.Services.AddTracing(telemetryOptions,
+    "RecommendCoffee.Catalog.Api",
+    "RecommendCoffee.Catalog.Application",
+    "RecommendCoffee.Catalog.Domain",
+    "RecommendCoffee.Catalog.Infrastructure");
+
+builder.Services.AddMetrics(telemetryOptions,
     "RecommendCoffee.Catalog.Api",
     "RecommendCoffee.Catalog.Application",
     "RecommendCoffee.Catalog.Domain",
@@ -67,13 +76,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
-app.UseCloudEvents();
-
 app.MapHealthChecks("/healthz", new HealthCheckOptions
 {
     AllowCachingResponses = false
 });
 
+app.UseCloudEvents();
 app.MapSubscribeHandler();
 app.MapControllers();
 
