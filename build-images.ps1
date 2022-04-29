@@ -16,17 +16,16 @@
 # This table determines which components to build and how to build them.
 # Set migrate = $true for components that need the database migration init container.
 $ImagesToBuild = @(
-    @{ name = "catalog"; migrate = $true },
-    @{ name = "customermanagement"; migrate = $true },
-    @{ name = "payments"; migrate = $true },
-    @{ name = "ratings"; migrate = $true },
-    @{ name = "registration"; migrate = $false },
-    @{ name = "subscriptions"; migrate = $true },
-    @{ name = "identity"; migrate = $true },
-    @{ name = "portal"; migrate = $false },
-    @{ name = "timer"; migrate = $false },
-    @{ name = "shipping"; migrate = $true },
-    @{ name = "recommendations"; migrate = $true }
+    @{ name = "catalog"; migrate = $true; entrypoint = "RecommendCoffee.Catalog.Api.dll" },
+    @{ name = "customermanagement"; migrate = $true; entrypoint = "RecommendCoffee.CustomerManagement.Api.dll" },
+    @{ name = "payments"; migrate = $true; entrypoint = "RecommendCoffee.Payments.Api.dll" },
+    @{ name = "ratings"; migrate = $true; entrypoint = "RecommendCoffee.Ratings.Api.dll" },
+    @{ name = "registration"; migrate = $false; entrypoint = "RecommendCoffee.Registration.Api.dll" },
+    @{ name = "subscriptions"; migrate = $true; entrypoint = "RecommendCoffee.Subscriptions.Api.dll" },
+    @{ name = "identity"; migrate = $true; entrypoint = "RecommendCoffee.Identity.Api.dll" },
+    @{ name = "timer"; migrate = $false; entrypoint = "RecommendCoffee.Timer.Api.dll" },
+    @{ name = "shipping"; migrate = $true; entrypoint = "RecommendCoffee.Shipping.Api.dll" },
+    @{ name = "recommendations"; migrate = $true; entrypoint = "RecommendCoffee.Recommendations.Api.dll" }
 )
 
 # We generate a timestamp for the image tag.
@@ -47,10 +46,12 @@ foreach($ServiceDefinition in $ImagesToBuild) {
     $MigrationDockerFilePath = "./services/$ServiceName/Dockerfile.migrations"
     $ContextPath = "./services/$ServiceName"
     $ImageTag = "recommendcoffee.azurecr.io/${ServiceName}:$Timestamp"
+    $Entrypoint = $ServiceDefinition.entrypoint
+    
     $MigrationImageTag = "recommendcoffee.azurecr.io/${ServiceName}-migrations:$Timestamp"
 
     # Build the application container.
-    docker build -t $ImageTag -f $DockerFilePath $ContextPath
+    docker build -t $ImageTag -f $DockerFilePath --build-arg SERVICE_NAME=$ServiceName --build-arg ENTRYPOINT=$Entrypoint .
 
     # Build the database migration init container if we need to.
     # This container will be used to run the migrations.

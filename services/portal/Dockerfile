@@ -1,10 +1,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
-WORKDIR /project
+WORKDIR /project/services/portal
 
-COPY Server/Server.csproj Server/Server.csproj
-COPY Shared/Shared.csproj Shared/Shared.csproj
-COPY Client/Client.csproj Client/Client.csproj
+COPY services/portal/Server/Server.csproj Server/Server.csproj
+COPY services/portal/Shared/Shared.csproj Shared/Shared.csproj
+COPY services/portal/Client/Client.csproj Client/Client.csproj
 
 RUN dotnet restore Server/Server.csproj
 

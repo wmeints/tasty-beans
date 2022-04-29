@@ -1,17 +1,24 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
-WORKDIR /project
+ARG SERVICE_NAME
+ARG ENTRYPOINT
 
-COPY src/Api/Api.csproj src/Api/Api.csproj
-COPY src/Application/Application.csproj src/Application/Application.csproj
-COPY src/Domain/Domain.csproj src/Domain/Domain.csproj
-COPY src/Infrastructure/Infrastructure.csproj src/Infrastructure/Infrastructure.csproj
+COPY shared/ /project/shared
 
-RUN dotnet restore src/Api/Api.csproj
+ENV SERVICE_NAME=${SERVICE_NAME}
 
-COPY . .
+WORKDIR /project/services/${SERVICE_NAME}
 
-RUN dotnet publish src/Api/Api.csproj -o /dist
+COPY services/${SERVICE_NAME}/src/api/Api.csproj /project/services/${SERVICE_NAME}/src/api/Api.csproj
+COPY services/${SERVICE_NAME}/src/application/Application.csproj /project/services/${SERVICE_NAME}/src/application/Application.csproj
+COPY services/${SERVICE_NAME}/src/domain/Domain.csproj /project/services/${SERVICE_NAME}/src/domain/Domain.csproj
+COPY services/${SERVICE_NAME}/src/infrastructure/Infrastructure.csproj /project/services/${SERVICE_NAME}/src/infrastructure/Infrastructure.csproj
+
+RUN dotnet restore /project/services/${SERVICE_NAME}/src/api/Api.csproj
+
+COPY services/${SERVICE_NAME} /project/services/${SERVICE_NAME}
+
+RUN dotnet publish src/api/Api.csproj -o /dist
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 
@@ -23,4 +30,4 @@ COPY --from=build /dist /app
 
 WORKDIR /app
 
-CMD ["dotnet", "RecommendCoffee.Identity.Api.dll"]
+CMD ["dotnet", ${ENTRYPOINT}]
