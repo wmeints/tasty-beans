@@ -15,7 +15,6 @@ public class DiscontinueProductCommandHandler
         _eventPublisher = eventPublisher;
     }
 
-    [Trace]
     public async Task<DiscontinueProductCommandResponse> ExecuteAsync(DiscontinueProductCommand cmd)
     {
         using var activity = Activities.ExecuteCommand("DiscontinueProduct");

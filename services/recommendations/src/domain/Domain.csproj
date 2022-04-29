@@ -8,8 +8,8 @@
     <AssemblyName>RecommendCoffee.Recommendations.Domain</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="10.3.6" />
-    <PackageReference Include="NodaTime" Version="3.0.9" />
+    <PackageReference Include="FluentValidation" Version="10.4.0" />
+    <PackageReference Include="NodaTime" Version="3.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\shared\domain\Domain.csproj" />
