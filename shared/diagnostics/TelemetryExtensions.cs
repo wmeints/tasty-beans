@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Context.Propagation;
 using OpenTelemetry.Exporter;
@@ -65,9 +66,17 @@ public static class TelemetryExtensions
                 .AddSqlClientInstrumentation()
                 .AddJaegerExporter(exporterOptions =>
                 {
-                    exporterOptions.Endpoint = new Uri(options.Endpoint);
+                    exporterOptions.Endpoint = new Uri(options.TracingEndpoint);
                     exporterOptions.Protocol = JaegerExportProtocol.HttpBinaryThrift;
                 });
+        });
+    }
+
+    public static void AddLogging(this IServiceCollection services, TelemetryOptions options)
+    {
+        services.AddLogging(builder =>
+        {
+            builder.AddSeq(options.LoggingEndpoint);
         });
     }
 }

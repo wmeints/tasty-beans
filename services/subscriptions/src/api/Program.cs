@@ -59,6 +59,8 @@ builder.Services.AddMetrics(telemetryOptions,
     "RecommendCoffee.Subscriptions.Domain",
     "RecommendCoffee.Subscriptions.Infrastructure");
 
+builder.Services.AddLogging(telemetryOptions);
+
 builder.Services.AddEventPublisher(options => options.DeadLetterTopic = "subscriptions.deadletter.v1");
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<IShipping, ShippingAgent>();

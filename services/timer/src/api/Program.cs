@@ -42,6 +42,8 @@ builder.Services.AddMetrics(telemetryOptions,
     "RecommendCoffee.Timer.Domain",
     "RecommendCoffee.Timer.Infrastructure");
 
+builder.Services.AddLogging(telemetryOptions);
+
 builder.Services.AddEventPublisher(options => options.DeadLetterTopic = "timer.deadletter.v1");
 
 // This timer can be sped up to simulate months faster.

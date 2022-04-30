@@ -52,6 +52,8 @@ builder.Services.AddMetrics(telemetryOptions,
     "RecommendCoffee.Catalog.Domain",
     "RecommendCoffee.Catalog.Infrastructure");
 
+builder.Services.AddLogging(telemetryOptions);
+
 builder.Services.AddEventPublisher(options => options.DeadLetterTopic = "catalog.deadletter.v1");
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 

@@ -35,11 +35,16 @@ spec:
                 secretKeyRef:
                   name: recommend-coffee-secrets
                   key: shippingConnectionString
-            - name: TELEMETRY__ENDPOINT
+            - name: TELEMETRY__LOGGINGENDPOINT
               valueFrom:
                 configMapKeyRef:
-                  name: shipping-config
-                  key: "telemetry.endpoint"
+                  name: customermanagement-config
+                  key: "telemetry.loggingEndpoint"
+            - name: TELEMETRY__TRACINGENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: customermanagement-config
+                  key: "telemetry.tracingEndpoint"
             - name: TELEMETRY__NAME
               valueFrom:
                 configMapKeyRef:

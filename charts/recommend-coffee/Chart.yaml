@@ -11,6 +11,8 @@ dependencies:
     version: 0.1.0-alpha.1
   - name: redis
     version: 0.1.0-alpha.1
+  - name: seq
+    version: 0.1.0-alpha.1
   - name: rabbitmq
     version: 0.1.0-alpha.1
   - name: emailserver

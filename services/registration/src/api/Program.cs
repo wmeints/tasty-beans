@@ -65,6 +65,8 @@ builder.Services.AddMetrics(telemetryOptions,
     "RecommendCoffee.Registration.Domain",
     "RecommendCoffee.Registration.Infrastructure");
 
+builder.Services.AddLogging(telemetryOptions);
+
 builder.Services.AddScoped<StartRegistrationCommandHandler>();
 
 builder.Services.AddScoped<CustomerRegisteredEventHandler>();

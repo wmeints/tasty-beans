@@ -52,6 +52,8 @@ builder.Services.AddMetrics(telemetryOptions,
     "RecommendCoffee.Payments.Domain",
     "RecommendCoffee.Payments.Infrastructure");
 
+builder.Services.AddLogging(telemetryOptions);
+
 builder.Services.AddEventPublisher(options => options.DeadLetterTopic = "payments.deadletter.v1");
 builder.Services.AddScoped<RegisterPaymentMethodCommandHandler>();
 builder.Services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();

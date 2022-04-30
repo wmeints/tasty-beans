@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+    name: seq
+spec:
+    hosts:
+    - seq
+    ports:
+    - number: 5341
+      name: seq
+      protocol: TCP
+    - number: 80
+      name: http
+      protocol: TCP
+    resolution: DNS
+    location: MESH_EXTERNAL

@@ -80,6 +80,8 @@ builder.Services.AddMetrics(telemetryOptions,
     "RecommendCoffee.Identity.Domain",
     "RecommendCoffee.Identity.Infrastructure");
 
+builder.Services.AddLogging(telemetryOptions);
+
 builder.Services.AddScoped<CustomerRegisteredEventHandler>();
 builder.Services.AddEmailSender();
 

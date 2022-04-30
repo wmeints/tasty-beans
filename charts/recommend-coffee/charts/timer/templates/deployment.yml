@@ -32,11 +32,16 @@ spec:
           env:
             - name: TIMERS__MONTHHASPASSED
               value: "30 * * * * *"
-            - name: TELEMETRY__ENDPOINT
+            - name: TELEMETRY__LOGGINGENDPOINT
               valueFrom:
                 configMapKeyRef:
-                  name: timer-config
-                  key: "telemetry.endpoint"
+                  name: customermanagement-config
+                  key: "telemetry.loggingEndpoint"
+            - name: TELEMETRY__TRACINGENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: customermanagement-config
+                  key: "telemetry.tracingEndpoint"
             - name: TELEMETRY__NAME
               valueFrom:
                 configMapKeyRef:
