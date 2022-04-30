@@ -23,15 +23,15 @@ param(
 # This table determines which components to build and how to build them.
 # Set migrate = $true for components that need the database migration init container.
 $ImagesToBuild = @(
-    @{ name = "catalog"; migrate = $true; entrypoint = "RecommendCoffee.Catalog.Api.dll" },
-    @{ name = "customermanagement"; migrate = $true; entrypoint = "RecommendCoffee.CustomerManagement.Api.dll" },
-    @{ name = "payments"; migrate = $true; entrypoint = "RecommendCoffee.Payments.Api.dll" },
-    @{ name = "ratings"; migrate = $true; entrypoint = "RecommendCoffee.Ratings.Api.dll" },
-    @{ name = "registration"; migrate = $false; entrypoint = "RecommendCoffee.Registration.Api.dll" },
-    @{ name = "subscriptions"; migrate = $true; entrypoint = "RecommendCoffee.Subscriptions.Api.dll" },
-    @{ name = "identity"; migrate = $true; entrypoint = "RecommendCoffee.Identity.Api.dll" },
-    @{ name = "timer"; migrate = $false; entrypoint = "RecommendCoffee.Timer.Api.dll" },
-    @{ name = "shipping"; migrate = $true; entrypoint = "RecommendCoffee.Shipping.Api.dll" },
+    @{ name = "catalog"; migrate = $true; entrypoint = "RecommendCoffee.Catalog.Api.dll" }
+    @{ name = "customermanagement"; migrate = $true; entrypoint = "RecommendCoffee.CustomerManagement.Api.dll" }
+    @{ name = "payments"; migrate = $true; entrypoint = "RecommendCoffee.Payments.Api.dll" }
+    @{ name = "ratings"; migrate = $true; entrypoint = "RecommendCoffee.Ratings.Api.dll" }
+    @{ name = "registration"; migrate = $false; entrypoint = "RecommendCoffee.Registration.Api.dll" }
+    @{ name = "subscriptions"; migrate = $true; entrypoint = "RecommendCoffee.Subscriptions.Api.dll" }
+    @{ name = "identity"; migrate = $true; entrypoint = "RecommendCoffee.Identity.Api.dll" }
+    @{ name = "timer"; migrate = $false; entrypoint = "RecommendCoffee.Timer.Api.dll" }
+    @{ name = "shipping"; migrate = $true; entrypoint = "RecommendCoffee.Shipping.Api.dll" }
     @{ name = "recommendations"; migrate = $true; entrypoint = "RecommendCoffee.Recommendations.Api.dll" }
 )
 
