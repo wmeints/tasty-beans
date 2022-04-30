@@ -54,6 +54,7 @@ builder.Services.AddHostedService<MonthHasPassedTimer>(serviceProvider => new Mo
 var app = builder.Build();
 
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
+app.UseHeaderPropagation();
 app.UseCloudEvents();
 
 app.MapHealthChecks("/healthz", new HealthCheckOptions 

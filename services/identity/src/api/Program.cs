@@ -101,6 +101,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 });
 
 app.UseStaticFiles();
+app.UseHeaderPropagation();
 app.UseCloudEvents();
 app.MapHealthChecks("/healthz", new HealthCheckOptions()
 {

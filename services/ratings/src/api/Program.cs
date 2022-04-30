@@ -34,8 +34,8 @@ builder.Services
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
-    
-        serializerOptions.Converters.Add(new JsonStringEnumConverter());    
+
+        serializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
 builder.Services.AddHeaderPropagation();
@@ -67,19 +67,16 @@ builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 
 var app = builder.Build();
 
-if(app.Environment.IsDevelopment())
-{
-    await using var scope = app.Services.CreateAsyncScope();
-    await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+await using var scope = app.Services.CreateAsyncScope();
+await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-    await dbContext.Database.MigrateAsync();
-}
+await dbContext.Database.MigrateAsync();
 
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
-
+app.UseHeaderPropagation();
 app.UseCloudEvents();
 
-app.MapHealthChecks("/healthz", new HealthCheckOptions 
+app.MapHealthChecks("/healthz", new HealthCheckOptions
 {
     AllowCachingResponses = false
 });

@@ -15,7 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultDatabase"),
-        opts=>opts.EnableRetryOnFailure());
+        opts => opts.EnableRetryOnFailure());
 });
 
 builder.Services
@@ -31,7 +31,7 @@ builder.Services
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
-    
+
         serializerOptions.Converters.Add(new JsonStringEnumConverter());
 
         daprClientBuilder.UseJsonSerializationOptions(serializerOptions);
@@ -62,16 +62,13 @@ builder.Services.AddScoped<FindAllCustomersQueryHandler>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    await using var scope = app.Services.CreateAsyncScope();
-    await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+await using var scope = app.Services.CreateAsyncScope();
+await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-    await dbContext.Database.MigrateAsync();
-}
+await dbContext.Database.MigrateAsync();
 
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
-
+app.UseHeaderPropagation();
 app.UseCloudEvents();
 
 app.MapHealthChecks("/healthz", new HealthCheckOptions()
