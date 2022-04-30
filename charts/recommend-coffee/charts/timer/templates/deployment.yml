@@ -32,14 +32,21 @@ spec:
           env:
             - name: TIMERS__MONTHHASPASSED
               value: "30 * * * * *"
-            - name: IMAGE_TAG
-              value: "{{ .Chart.Version }}"
-            - name: POD_NAMESPACE
+            - name: TELEMETRY__ENDPOINT
               valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-            - name: TELEMETRY__SPANS
-              value: "http://jaeger-collector.istio-system:14268/api/traces"
+                configMapKeyRef:
+                  name: timer-config
+                  key: "telemetry.endpoint"
+            - name: TELEMETRY__NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: timer-config
+                  key: "telemetry.name"
+            - name: TELEMETRY__VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: timer-config
+                  key: "telemetry.version"
           ports:
             - containerPort: 80
               name: http

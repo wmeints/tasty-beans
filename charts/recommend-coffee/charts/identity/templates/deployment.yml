@@ -32,10 +32,21 @@ spec:
                 secretKeyRef:
                   name: recommend-coffee-secrets
                   key: identityConnectionString
-            - name: IMAGE_TAG
-              value: "{{ .Chart.Version }}"
-            - name: OTLP__ENDPOINT
-              value: "http://localhost:4317"
+            - name: TELEMETRY__ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: identity-config
+                  key: "telemetry.endpoint"
+            - name: TELEMETRY__NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: identity-config
+                  key: "telemetry.name"
+            - name: TELEMETRY__VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: identity-config
+                  key: "telemetry.version"
           ports:
             - containerPort: 80
           livenessProbe:

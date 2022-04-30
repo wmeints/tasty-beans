@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: payments-config
+data:
+    telemetry.endpoint: "http://jaeger-collector.istio-system:14268/api/traces"
+    telemetry.name: payments.default
+    telemetry.version: "{{ .Chart.Version }}"
