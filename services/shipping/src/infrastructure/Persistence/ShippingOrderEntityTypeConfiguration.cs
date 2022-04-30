@@ -13,8 +13,6 @@ public class ShippingOrderEntityTypeConfiguration: IEntityTypeConfiguration<Ship
         builder.Property<byte[]>("Version").IsRowVersion();
         
         var orderItemsNavigation = builder.OwnsMany(x => x.OrderItems);
-        
-        orderItemsNavigation.Property(x => x.Description).IsRequired().HasMaxLength(250);
         orderItemsNavigation.HasOne<Product>().WithMany().HasForeignKey(x => x.ProductId);
 
         builder.HasOne<Customer>().WithMany().HasForeignKey("CustomerId");

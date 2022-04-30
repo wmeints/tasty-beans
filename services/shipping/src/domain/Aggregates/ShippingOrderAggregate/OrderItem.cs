@@ -1,3 +1,3 @@
 namespace RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate;
 
-public record OrderItem(Guid ProductId, string Description, int Amount);
+public record OrderItem(Guid ProductId, int Amount);
