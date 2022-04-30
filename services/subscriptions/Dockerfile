@@ -22,12 +22,15 @@ RUN dotnet publish src/api/Api.csproj -o /dist
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 
+ARG ENTRYPOINT
+
 RUN apt-get update && apt-get -y install procps curl
 RUN curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l ~/vsdbg
 
 COPY --from=build /dist /app
 
+ENV ENTRYPOINT=${ENTRYPOINT}
 
 WORKDIR /app
 
-CMD ["dotnet", ${ENTRYPOINT}]
+CMD ["sh", "-c", "dotnet ${ENTRYPOINT}"]
