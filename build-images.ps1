@@ -11,7 +11,14 @@
         This will set the environment variables for the docker images so they
         work with minikube. You can ignore this when you're using another
         solution to run Kubernetes.
+    
+    .PARAMETER Repository
+        The repository name prefix to tag the images with.
 #>
+
+param(
+    [System.String] $Repository = "recommendcoffee.azurecr.io"
+)
 
 # This table determines which components to build and how to build them.
 # Set migrate = $true for components that need the database migration init container.
@@ -39,24 +46,24 @@ docker build -t recommendcoffee.azurecr.io/database-migrations:$Timestamp `
     ./tools/migrate-database
 
 foreach($ServiceDefinition in $ImagesToBuild) {
-    $ServiceName = $ServiceDefinition.name
     $GenerateMigrationContainer = $ServiceDefinition.migrate
 
-    $DockerFilePath = "./services/$ServiceName/Dockerfile"
     $MigrationDockerFilePath = "./services/$ServiceName/Dockerfile.migrations"
-    $ContextPath = "./services/$ServiceName"
-    $ImageTag = "recommendcoffee.azurecr.io/${ServiceName}:$Timestamp"
-    $Entrypoint = $ServiceDefinition.entrypoint
-    
-    $MigrationImageTag = "recommendcoffee.azurecr.io/${ServiceName}-migrations:$Timestamp"
+    $MigrationContextPath = "./services/$ServiceName"
+    $MigrationImageTag = "${Repository}/${ServiceName}-migrations:$Timestamp"
 
+    $ServiceName = $ServiceDefinition.name
+    $DockerFilePath = "./services/$ServiceName/Dockerfile"
+    $Entrypoint = $ServiceDefinition.entrypoint
+    $ImageTag = "${Repository}/${ServiceName}:$Timestamp"
+    
     # Build the application container.
     docker build -t $ImageTag -f $DockerFilePath --build-arg SERVICE_NAME=$ServiceName --build-arg ENTRYPOINT=$Entrypoint .
 
     # Build the database migration init container if we need to.
     # This container will be used to run the migrations.
     if($GenerateMigrationContainer) {
-        docker build -t $MigrationImageTag --build-arg TOOL_VERSION=$Timestamp -f $MigrationDockerFilePath $ContextPath
+        docker build -t $MigrationImageTag --build-arg TOOL_VERSION=$Timestamp -f $MigrationDockerFilePath $MigrationContextPath
     }
 }
 
