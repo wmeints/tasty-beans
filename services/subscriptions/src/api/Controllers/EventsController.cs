@@ -10,12 +10,10 @@ namespace RecommendCoffee.Subscriptions.Api.Controllers;
 [Route("/events")]
 public class EventsController: ControllerBase
 {
-    private readonly MonthHasPassedEventHandler _monthHasPassedEventHandler;
     private readonly BackgroundTaskQueue _backgroundTaskQueue;
     
-    public EventsController(MonthHasPassedEventHandler monthHasPassedEventHandler, BackgroundTaskQueue backgroundTaskQueue)
+    public EventsController(BackgroundTaskQueue backgroundTaskQueue)
     {
-        _monthHasPassedEventHandler = monthHasPassedEventHandler;
         _backgroundTaskQueue = backgroundTaskQueue;
     }
 
@@ -23,9 +21,8 @@ public class EventsController: ControllerBase
     [Topic("pubsub", "timer.month-has-passed.v1")]
     public async Task<IActionResult> OnMonthHasPassed(MonthHasPassedEvent evt)
     {
-        // Queue the actual operation on the background worker otherwise this HTTP call might take a bit too long.
-        await _backgroundTaskQueue.Enqueue(async cancellationToken => 
-            await _monthHasPassedEventHandler.HandleAsync(evt));
+        // Queue the event on the background worker for processing.
+        await _backgroundTaskQueue.Enqueue(evt);
         
         return Accepted();
     }
