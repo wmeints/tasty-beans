@@ -12,40 +12,39 @@ public class MonthHasPassedEventHandler
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<MonthHasPassedEventHandler> _logger;
-    
-    public MonthHasPassedEventHandler(ILogger<MonthHasPassedEventHandler> logger, IServiceProvider serviceProvider)
+    private ISubscriptionRepository _subscriptionRepository;
+    private IRecommendations _recommendations;
+    private IShipping _shipping;
+    private IEventPublisher _eventPublisher;
+
+    public MonthHasPassedEventHandler(ILogger<MonthHasPassedEventHandler> logger, IServiceProvider serviceProvider,
+        ISubscriptionRepository subscriptionRepository, IRecommendations recommendations, IShipping shipping,
+        IEventPublisher eventPublisher)
     {
         _logger = logger;
         _serviceProvider = serviceProvider;
+        _subscriptionRepository = subscriptionRepository;
+        _recommendations = recommendations;
+        _shipping = shipping;
+        _eventPublisher = eventPublisher;
     }
 
     public async ValueTask HandleAsync(MonthHasPassedEvent evt)
     {
-        // IMPORTANT: This event handler creates its own scope because it's launched from the background task queue.
-        // Without this scope it would use disposed objects or things from a scope that it shouldn't be using.
-        // Using objects from a scope that is disposed can cause serious trouble.
-        
-        await using var scope = _serviceProvider.CreateAsyncScope();
-
-        var subscriptionRepository = scope.ServiceProvider.GetRequiredService<ISubscriptionRepository>();
-        var recommendations = scope.ServiceProvider.GetRequiredService<IRecommendations>();
-        var shipping = scope.ServiceProvider.GetRequiredService<IShipping>();
-        var eventPublisher = scope.ServiceProvider.GetRequiredService<IEventPublisher>();
-        
-        var subscriptions = await subscriptionRepository.FindAllMonthlySubscriptions();
+        var subscriptions = await _subscriptionRepository.FindAllMonthlySubscriptions();
 
         foreach (var subscription in subscriptions)
         {
             var result = await subscription.CreateShipment(
-                new CreateShipmentCommand(), recommendations, shipping);
+                new CreateShipmentCommand(), _recommendations, _shipping);
 
             if (!result.IsValid)
             {
-                _logger.LogWarning("Could not generate a shipment for subscription {SubscriptionId}: {Errors}", 
+                _logger.LogWarning("Could not generate a shipment for subscription {SubscriptionId}: {Errors}",
                     subscription.Id, result.Errors.First().ErrorMessage);
             }
 
-            await eventPublisher.PublishEventsAsync(result.Events);
+            await _eventPublisher.PublishEventsAsync(result.Events);
         }
     }
 }

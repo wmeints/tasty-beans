@@ -1,19 +1,23 @@
 ﻿using Cronos;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using RecommendCoffee.Timer.Domain.Events;
 using Sgbj.Cron;
 
 namespace RecommendCoffee.Timer.Application.Services;
 
-public class MonthHasPassedTimer: BackgroundService
+public class MonthHasPassedTimer : BackgroundService
 {
     private readonly string _timerExpression;
     private readonly IEventPublisher _eventPublisher;
+    private readonly ILogger<MonthHasPassedTimer> _logger;
 
-    public MonthHasPassedTimer(string timerExpression, IEventPublisher eventPublisher)
+    public MonthHasPassedTimer(string timerExpression, IEventPublisher eventPublisher,
+        ILogger<MonthHasPassedTimer> logger)
     {
         _timerExpression = timerExpression;
         _eventPublisher = eventPublisher;
+        _logger = logger;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -22,6 +26,8 @@ public class MonthHasPassedTimer: BackgroundService
 
         while (await timer.WaitForNextTickAsync(stoppingToken))
         {
+            _logger.LogInformation("Month has passed");
+            
             await _eventPublisher.PublishEventsAsync(new[] { new MonthHasPassedEvent() });
             Metrics.MonthsPassed.Add(1);
         }

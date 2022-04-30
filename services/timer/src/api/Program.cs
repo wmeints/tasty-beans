@@ -50,7 +50,8 @@ builder.Services.AddEventPublisher(options => options.DeadLetterTopic = "timer.d
 // We use CRON expressions here as they feel familiar :D
 builder.Services.AddHostedService<MonthHasPassedTimer>(serviceProvider => new MonthHasPassedTimer(
     builder.Configuration["Timers:MonthHasPassed"],
-    serviceProvider.GetRequiredService<IEventPublisher>())
+    serviceProvider.GetRequiredService<IEventPublisher>(),
+    serviceProvider.GetRequiredService<ILogger<MonthHasPassedTimer>>())
 );
 
 var app = builder.Build();

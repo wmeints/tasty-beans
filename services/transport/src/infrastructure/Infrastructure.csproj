@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\shared\application\Application.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\domain\Domain.csproj" />
+    <ProjectReference Include="..\application\Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EventBus\" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>RecommendCoffee.Transport.Infrastructure</AssemblyName>
+    <RootNamespace>RecommendCoffee.Transport.Infrastructure</RootNamespace>
+  </PropertyGroup>
+
+</Project>

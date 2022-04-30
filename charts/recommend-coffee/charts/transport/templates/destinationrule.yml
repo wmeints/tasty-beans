@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+    name: transport
+spec:
+    host: transport
+    subsets:
+      - name: amazing-transport
+        labels:
+          company: amazing-transport
+      - name: trashy-transport
+        labels:
+          company: trashy-transport

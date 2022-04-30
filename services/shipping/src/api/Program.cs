@@ -6,9 +6,11 @@ using RecommendCoffee.Shared.Diagnostics;
 using RecommendCoffee.Shared.Infrastructure.EventBus;
 using RecommendCoffee.Shipping.Application.CommandHandlers;
 using RecommendCoffee.Shipping.Application.EventHandlers;
+using RecommendCoffee.Shipping.Application.Services;
 using RecommendCoffee.Shipping.Domain.Aggregates.CustomerAggregate;
 using RecommendCoffee.Shipping.Domain.Aggregates.ProductAggregate;
 using RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate;
+using RecommendCoffee.Shipping.Infrastructure.Agents;
 using RecommendCoffee.Shipping.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -64,6 +66,7 @@ builder.Services.AddScoped<CustomerRegisteredEventHandler>();
 builder.Services.AddScoped<ProductRegisteredEventHandler>();
 builder.Services.AddScoped<ProductUpdatedEventHandler>();
 builder.Services.AddScoped<CreateShippingOrderCommandHandler>();
+builder.Services.AddScoped<ITransportCompany, TransportCompanyAgent>();
 
 var app = builder.Build();
 

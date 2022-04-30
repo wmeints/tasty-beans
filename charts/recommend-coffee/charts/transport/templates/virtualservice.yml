@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: transport
+spec:
+    hosts:
+    - transport
+    http:
+    - route:
+      - destination:
+          host: transport
+          subset: amazing-transport
+        weight: 50
+      - destination:
+          host: transport
+          subset: trashy-transport
+        weight: 50

@@ -1,4 +1,5 @@
 .env
 .vs/
 .vscode/
+.idea/
 infrastructure/secrets.yml

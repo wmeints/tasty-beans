@@ -33,6 +33,7 @@ $ImagesToBuild = @(
     @{ name = "timer"; migrate = $false; entrypoint = "RecommendCoffee.Timer.Api.dll" }
     @{ name = "shipping"; migrate = $true; entrypoint = "RecommendCoffee.Shipping.Api.dll" }
     @{ name = "recommendations"; migrate = $true; entrypoint = "RecommendCoffee.Recommendations.Api.dll" }
+    @{ name = "transport"; migrate = $false; entrypoint = "RecommendCoffee.Transport.Api.dll" }
 )
 
 # We generate a timestamp for the image tag.

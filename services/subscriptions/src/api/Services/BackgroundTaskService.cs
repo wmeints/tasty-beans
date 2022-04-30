@@ -27,10 +27,11 @@ public class BackgroundTaskService: BackgroundService
 
                 var workItem = await _backgroundTaskQueue.Dequeue();
 
-                await using var scope = _serviceProvider.CreateAsyncScope();
-                var eventHandler = scope.ServiceProvider.GetRequiredService<MonthHasPassedEventHandler>();
-
-                await eventHandler.HandleAsync(workItem);
+                await using (var scope = _serviceProvider.CreateAsyncScope())
+                {
+                    var eventHandler = scope.ServiceProvider.GetRequiredService<MonthHasPassedEventHandler>();
+                    await eventHandler.HandleAsync(workItem);
+                }
             }
             catch (Exception ex)
             {

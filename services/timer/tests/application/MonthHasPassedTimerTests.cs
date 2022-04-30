@@ -13,7 +13,7 @@ public class MonthHasPassedTimerTests
         var eventPublisher = A.Fake<IEventPublisher>();
         var expressionText = "30 * * * * *";
         
-        var timer = new MonthHasPassedTimer(expressionText, eventPublisher);
+        var timer = new MonthHasPassedTimer(expressionText, eventPublisher,null);
         
         Assert.NotNull(timer);
     }
