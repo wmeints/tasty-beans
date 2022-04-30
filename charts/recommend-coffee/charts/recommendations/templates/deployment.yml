@@ -27,7 +27,7 @@ spec:
       serviceAccountName: recommendations
       containers:
         - name: recommendations
-          image: recommendcoffee.azurecr.io/recommendations:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/recommendations:{{ .Values.global.releaseVersion }}"
           imagePullPolicy: IfNotPresent
           env:
             - name: CONNECTIONSTRINGS__DEFAULTDATABASE
@@ -63,7 +63,7 @@ spec:
             periodSeconds: 3
       initContainers:
         - name: database-migrations
-          image: recommendcoffee.azurecr.io/recommendations-migrations:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/recommendations-migrations:{{ .Values.global.releaseVersion }}"
           env:
             - name: DB_PASSWORD
               valueFrom:

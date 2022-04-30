@@ -27,7 +27,7 @@ spec:
       serviceAccountName: catalog
       containers:
         - name: catalog
-          image: recommendcoffee.azurecr.io/catalog:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/catalog:{{ .Values.global.releaseVersion }}"
           imagePullPolicy: IfNotPresent
           env:
             - name: CONNECTIONSTRINGS__DEFAULTDATABASE
@@ -69,7 +69,7 @@ spec:
             periodSeconds: 3
       initContainers:
         - name: database-migrations
-          image: recommendcoffee.azurecr.io/catalog-migrations:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/catalog-migrations:{{ .Values.global.releaseVersion  }}"
           env:
             - name: DB_PASSWORD
               valueFrom:

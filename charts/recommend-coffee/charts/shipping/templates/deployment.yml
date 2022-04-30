@@ -27,7 +27,7 @@ spec:
       serviceAccountName: shipping
       containers:
         - name: shipping
-          image: recommendcoffee.azurecr.io/shipping:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/shipping:{{ .Values.global.releaseVersion }}"
           imagePullPolicy: IfNotPresent
           env:
             - name: CONNECTIONSTRINGS__DEFAULTDATABASE
@@ -63,7 +63,7 @@ spec:
             periodSeconds: 3
       initContainers:
         - name: database-migrations
-          image: recommendcoffee.azurecr.io/shipping-migrations:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/shipping-migrations:{{ .Values.global.releaseVersion }}"
           env:
             - name: DB_PASSWORD
               valueFrom:

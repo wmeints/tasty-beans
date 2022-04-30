@@ -2,3 +2,4 @@ shared.databasePassword: ""
 
 global:
   releaseVersion: ""
+  containerRegistry: "recommendcoffee.azurecr.io"

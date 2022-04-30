@@ -24,7 +24,7 @@ spec:
       serviceAccountName: identity
       containers:
         - name: identity
-          image: recommendcoffee.azurecr.io/identity:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/identity:{{ .Values.global.releaseVersion }}"
           imagePullPolicy: IfNotPresent
           env:
             - name: CONNECTIONSTRINGS__DEFAULTDATABASE

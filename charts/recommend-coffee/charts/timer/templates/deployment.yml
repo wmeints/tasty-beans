@@ -27,7 +27,7 @@ spec:
       serviceAccountName: timer
       containers:
         - name: timer
-          image: recommendcoffee.azurecr.io/timer:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/timer:{{ .Values.global.releaseVersion }}"
           imagePullPolicy: IfNotPresent
           env:
             - name: TIMERS__MONTHHASPASSED

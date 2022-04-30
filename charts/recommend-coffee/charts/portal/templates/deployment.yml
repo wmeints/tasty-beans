@@ -19,7 +19,7 @@ spec:
       serviceAccountName: portal
       containers:
         - name: portal
-          image: recommendcoffee.azurecr.io/portal:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/portal:{{ .Values.global.releaseVersion }}"
           imagePullPolicy: IfNotPresent
           env:
             - name: IMAGE_TAG

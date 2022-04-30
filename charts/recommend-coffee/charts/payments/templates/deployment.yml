@@ -27,7 +27,7 @@ spec:
       serviceAccountName: payments
       containers:
         - name: payments
-          image: recommendcoffee.azurecr.io/payments:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/payments:{{ .Values.global.releaseVersion }}"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
@@ -60,7 +60,7 @@ spec:
             periodSeconds: 3
       initContainers:
         - name: database-migrations
-          image: recommendcoffee.azurecr.io/payments-migrations:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/payments-migrations:{{ .Values.global.releaseVersion }}"
           env:
             - name: DB_PASSWORD
               valueFrom:

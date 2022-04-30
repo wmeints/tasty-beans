@@ -27,7 +27,7 @@ spec:
       serviceAccountName: customermanagement
       containers:
         - name: customermanagement
-          image: recommendcoffee.azurecr.io/customermanagement:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/customermanagement:{{ .Values.global.releaseVersion }}"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
@@ -60,7 +60,7 @@ spec:
             periodSeconds: 3
       initContainers:
         - name: database-migrations
-          image: recommendcoffee.azurecr.io/customermanagement-migrations:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/customermanagement-migrations:{{ .Values.global.releaseVersion }}"
           env:
             - name: DB_PASSWORD
               valueFrom:

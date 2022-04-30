@@ -27,7 +27,7 @@ spec:
       serviceAccountName: subscriptions
       containers:
         - name: subscriptions
-          image: recommendcoffee.azurecr.io/subscriptions:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/subscriptions:{{ .Values.global.releaseVersion }}"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
@@ -60,7 +60,7 @@ spec:
             periodSeconds: 3
       initContainers:
         - name: database-migrations
-          image: recommendcoffee.azurecr.io/subscriptions-migrations:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/subscriptions-migrations:{{ .Values.global.releaseVersion }}"
           env:
             - name: DB_PASSWORD
               valueFrom:

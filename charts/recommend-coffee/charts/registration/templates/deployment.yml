@@ -27,7 +27,7 @@ spec:
       serviceAccountName: registration
       containers:
         - name: registration
-          image: recommendcoffee.azurecr.io/registration:{{ .Values.global.releaseVersion }}
+          image: "{{ .Values.global.containerRegistry }}/registration:{{ .Values.global.releaseVersion }}"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
