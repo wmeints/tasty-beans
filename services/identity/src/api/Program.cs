@@ -63,6 +63,7 @@ builder.Services.AddIdentityServer()
     .AddProfileService<ApplicationProfileService>()
     .AddAspNetIdentity<ApplicationUser>();
 
+builder.Services.AddHeaderPropagation();
 builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();

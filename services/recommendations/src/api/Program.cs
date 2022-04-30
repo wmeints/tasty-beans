@@ -36,6 +36,7 @@ builder.Services
         serializerOptions.Converters.Add(new JsonStringEnumConverter());    
     });
 
+builder.Services.AddHeaderPropagation();
 builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
