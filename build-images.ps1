@@ -68,4 +68,4 @@ foreach($ServiceDefinition in $ImagesToBuild) {
     }
 }
 
-
+docker build -t "${ContainerRegistry}/portal:$Timestamp" -f ./services/portal/Dockerfile .

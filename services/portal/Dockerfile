@@ -8,7 +8,7 @@ COPY services/portal/Client/Client.csproj Client/Client.csproj
 
 RUN dotnet restore Server/Server.csproj
 
-COPY . .
+COPY services/portal/ .
 
 RUN dotnet publish Server/Server.csproj -o /dist
 
