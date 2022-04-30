@@ -11,6 +11,7 @@
     <ItemGroup>
         <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="6.0.3" />
         <PackageReference Include="Dapr.AspNetCore" Version="1.7.0" />
+        <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="6.0.4" />
         <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.4" />
         <PackageReference Include="stateless" Version="5.11.0" />
         <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.2.0" />

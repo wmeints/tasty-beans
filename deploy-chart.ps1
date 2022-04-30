@@ -11,6 +11,9 @@
     
     .PARAMETER DatabasePassword
         The password to use for the database access.
+
+    .PARAMETER ContainerRegistry
+        The name of the container registry to use.
 #>
 
 [CmdletBinding()]
@@ -20,7 +23,10 @@ param (
 
     [Parameter(Mandatory)]
     [SecureString] 
-    $DatabasePassword
+    $DatabasePassword,
+
+    [System.String]
+    $ContainerRegistry = "recommendcoffee.azurecr.io"
 )
 
 # Find existing installations and remove them.
@@ -46,7 +52,7 @@ Write-Host "Installing the helm chart for release $ReleaseVersion"
 if($ReleaseVersion -eq "") {
     Write-Host "No explicit release version was specified. Using the latest version."
 
-    $existingImages = docker images recommendcoffee.azurecr.io/catalog --format "{{ .Tag }}"
+    $existingImages = docker images $ContainerRegistry/catalog --format "{{ .Tag }}"
     $latestVersion = $existingImages | sort-object | select-object -last 1
 
     $ReleaseVersion = $latestVersion
@@ -61,4 +67,5 @@ Write-Host "Installing helm chart"
 
 helm install --generate-name ./charts/recommend-coffee `
     --set global.releaseVersion=$ReleaseVersion `
-    --set shared.databasePassword=$DatabasePassword `
+    --set global.containerRegistry="${ContainerRegistry}" `
+    --set shared.databasePassword="${DatabasePassword}"

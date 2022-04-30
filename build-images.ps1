@@ -12,12 +12,12 @@
         work with minikube. You can ignore this when you're using another
         solution to run Kubernetes.
     
-    .PARAMETER Repository
-        The repository name prefix to tag the images with.
+    .PARAMETER ContainerRegistry
+        The container registry name prefix to tag the images with.
 #>
 
 param(
-    [System.String] $Repository = "recommendcoffee.azurecr.io"
+    [System.String] $ContainerRegistry = "recommendcoffee.azurecr.io"
 )
 
 # This table determines which components to build and how to build them.
@@ -48,14 +48,15 @@ docker build -t recommendcoffee.azurecr.io/database-migrations:$Timestamp `
 foreach($ServiceDefinition in $ImagesToBuild) {
     $GenerateMigrationContainer = $ServiceDefinition.migrate
 
+    $ServiceName = $ServiceDefinition.name
+
     $MigrationDockerFilePath = "./services/$ServiceName/Dockerfile.migrations"
     $MigrationContextPath = "./services/$ServiceName"
-    $MigrationImageTag = "${Repository}/${ServiceName}-migrations:$Timestamp"
+    $MigrationImageTag = "${ContainerRegistry}/${ServiceName}-migrations:$Timestamp"
 
-    $ServiceName = $ServiceDefinition.name
     $DockerFilePath = "./services/$ServiceName/Dockerfile"
     $Entrypoint = $ServiceDefinition.entrypoint
-    $ImageTag = "${Repository}/${ServiceName}:$Timestamp"
+    $ImageTag = "${ContainerRegistry}/${ServiceName}:$Timestamp"
     
     # Build the application container.
     docker build -t $ImageTag -f $DockerFilePath --build-arg SERVICE_NAME=$ServiceName --build-arg ENTRYPOINT=$Entrypoint .

@@ -37,6 +37,7 @@ builder.Services
         daprClientBuilder.UseJsonSerializationOptions(serializerOptions);
     });
 
+builder.Services.AddHeaderPropagation();
 builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
