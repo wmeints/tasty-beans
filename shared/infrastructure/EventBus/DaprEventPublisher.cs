@@ -32,8 +32,18 @@ public class DaprEventPublisher : IEventPublisher
                     "Missing topic attribute on event {eventType}. It will be published on the dead letter topic.", 
                     evt.GetType().Name);
             }
-            
-            await _daprClient.PublishEventAsync<object>("pubsub", topic?.Name ?? _options.Value.DeadLetterTopic, evt);
+
+            try
+            {
+                await _daprClient.PublishEventAsync<object>("pubsub", topic?.Name ?? _options.Value.DeadLetterTopic,
+                    evt);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(
+                    "A problem happened while publishing the event. This could be caused by the target application raising an error. Original error was: {Error}", 
+                    ex);
+            }
         }
     }
 }
