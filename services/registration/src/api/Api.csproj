@@ -9,7 +9,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.2" />
         <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="6.0.3" />
         <PackageReference Include="Dapr.AspNetCore" Version="1.7.0" />
         <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.4" />

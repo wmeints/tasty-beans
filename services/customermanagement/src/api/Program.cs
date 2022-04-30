@@ -37,9 +37,7 @@ builder.Services
         daprClientBuilder.UseJsonSerializationOptions(serializerOptions);
     });
 
-builder.Services.AddHealthChecks()
-    .AddSqlServer(builder.Configuration.GetConnectionString("DefaultDatabase"))
-    .AddDbContextCheck<ApplicationDbContext>();
+builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
 

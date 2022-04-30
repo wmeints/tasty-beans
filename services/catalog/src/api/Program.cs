@@ -75,6 +75,7 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions
     AllowCachingResponses = false
 });
 
+app.UseHeaderPropagation();
 app.UseCloudEvents();
 app.MapSubscribeHandler();
 app.MapControllers();
