@@ -1,5 +1,6 @@
-﻿using Castle.DynamicProxy;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -12,7 +13,7 @@ public static class TelemetryExtensions
     public static void AddMetrics(this IServiceCollection services, TelemetryOptions options, params string[] assemblyNames)
     {
         var machineName = Environment.MachineName;
-
+        
         var resourceBuilder = ResourceBuilder.CreateDefault().AddService(
             options.Name,
             serviceVersion: options.Version,
@@ -37,13 +38,15 @@ public static class TelemetryExtensions
     public static void AddTracing(this IServiceCollection services, TelemetryOptions options, params string[] assemblyNames)
     {
         var machineName = Environment.MachineName;
-
+        
         var resourceBuilder = ResourceBuilder.CreateDefault().AddService(
             options.Name,
             serviceVersion: options.Version,
             serviceInstanceId: machineName);
 
-        services.AddSingleton(new ProxyGenerator());
+        // Make sure to map the B3 headers as this is what istio is using at the moment for tracing.
+        // You can read more about B3 headers here: https://github.com/openzipkin/b3-propagation
+        Sdk.SetDefaultTextMapPropagator(new B3Propagator());
 
         services.AddOpenTelemetryTracing(traceOptions =>
         {
