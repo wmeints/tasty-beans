@@ -1,0 +1,12 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: redis
+spec:
+    hosts:
+    - redis
+    http:
+    - route:
+      - destination:
+          host: redis
+          subset: v1
