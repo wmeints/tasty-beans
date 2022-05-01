@@ -1,0 +1,12 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: seq
+spec:
+    hosts:
+    - seq
+    http:
+    - route:
+      - destination:
+          host: seq
+          subset: v1
