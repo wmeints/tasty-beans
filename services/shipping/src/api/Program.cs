@@ -66,7 +66,11 @@ builder.Services.AddScoped<CustomerRegisteredEventHandler>();
 builder.Services.AddScoped<ProductRegisteredEventHandler>();
 builder.Services.AddScoped<ProductUpdatedEventHandler>();
 builder.Services.AddScoped<CreateShippingOrderCommandHandler>();
-builder.Services.AddScoped<ITransportCompany, TransportCompanyAgent>();
+
+builder.Services.AddHttpClient<ITransportCompany, TransportCompanyAgent>(client =>
+{
+    client.BaseAddress = new Uri("http://transport/");
+});
 
 var app = builder.Build();
 

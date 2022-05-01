@@ -94,4 +94,6 @@ app.MapPost("/orders", async ([FromServices] CreateShipmentCommandHandler commma
     return Results.Accepted();
 });
 
+app.MapControllers();
+
 app.Run();
