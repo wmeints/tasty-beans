@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate.Commands;
+using TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate.Commands;
 
-namespace RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate.Validators;
+namespace TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate.Validators;
 
 public class CreateShippingOrderCommandValidator: AbstractValidator<CreateShippingOrderCommand>
 {

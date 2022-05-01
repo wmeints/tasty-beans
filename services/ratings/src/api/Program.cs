@@ -2,15 +2,14 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Ratings.Api;
-using RecommendCoffee.Ratings.Application.CommandHandlers;
-using RecommendCoffee.Ratings.Application.EventHandlers;
-using RecommendCoffee.Ratings.Domain.Aggregates.CustomerAggregate;
-using RecommendCoffee.Ratings.Domain.Aggregates.ProductAggregate;
-using RecommendCoffee.Ratings.Domain.Aggregates.RatingAggregate;
-using RecommendCoffee.Ratings.Infrastructure.Persistence;
-using RecommendCoffee.Shared.Diagnostics;
-using RecommendCoffee.Shared.Infrastructure.EventBus;
+using TastyBeans.Ratings.Application.CommandHandlers;
+using TastyBeans.Ratings.Application.EventHandlers;
+using TastyBeans.Ratings.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.Ratings.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Ratings.Domain.Aggregates.RatingAggregate;
+using TastyBeans.Ratings.Infrastructure.Persistence;
+using TastyBeans.Shared.Diagnostics;
+using TastyBeans.Shared.Infrastructure.EventBus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,16 +43,16 @@ builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
 
 builder.Services.AddTracing(telemetryOptions,
-    "RecommendCoffee.Ratings.Api",
-    "RecommendCoffee.Ratings.Application",
-    "RecommendCoffee.Ratings.Domain",
-    "RecommendCoffee.Ratings.Infrastructure");
+    "TastyBeans.Ratings.Api",
+    "TastyBeans.Ratings.Application",
+    "TastyBeans.Ratings.Domain",
+    "TastyBeans.Ratings.Infrastructure");
 
 builder.Services.AddMetrics(telemetryOptions,
-    "RecommendCoffee.Ratings.Api",
-    "RecommendCoffee.Ratings.Application",
-    "RecommendCoffee.Ratings.Domain",
-    "RecommendCoffee.Ratings.Infrastructure");
+    "TastyBeans.Ratings.Api",
+    "TastyBeans.Ratings.Application",
+    "TastyBeans.Ratings.Domain",
+    "TastyBeans.Ratings.Infrastructure");
 
 builder.Services.AddLogging(telemetryOptions);
 

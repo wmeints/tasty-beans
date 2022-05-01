@@ -1,6 +1,6 @@
-using RecommendCoffee.Shared.Domain;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Shared.Application;
+namespace TastyBeans.Shared.Application;
 
 public class EventValidationFailedException : Exception
 {

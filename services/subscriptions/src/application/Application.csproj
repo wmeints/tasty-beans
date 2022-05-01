@@ -14,8 +14,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyName>RecommendCoffee.Subscriptions.Application</AssemblyName>
-    <RootNamespace>RecommendCoffee.Subscriptions.Application</RootNamespace>
+    <AssemblyName>TastyBeans.Subscriptions.Application</AssemblyName>
+    <RootNamespace>TastyBeans.Subscriptions.Application</RootNamespace>
   </PropertyGroup>
 
 </Project>

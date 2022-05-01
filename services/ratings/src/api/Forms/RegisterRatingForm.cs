@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Ratings.Api.Forms
+﻿namespace TastyBeans.Ratings.Api.Forms
 {
     public class RegisterRatingForm
     {

@@ -1,3 +1,3 @@
-﻿namespace RecommendCoffee.Shared.Domain;
+﻿namespace TastyBeans.Shared.Domain;
 
 public record PagedResult<T>(IEnumerable<T> Items, int PageIndex, int PageSize, long TotalItems);

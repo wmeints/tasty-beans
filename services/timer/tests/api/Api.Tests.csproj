@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-    <RootNamespace>RecommendCoffee.Timer.Api.Tests</RootNamespace>
-    <AssemblyName>RecommendCoffee.Timer.Api.Tests</AssemblyName>
+    <RootNamespace>TastyBeans.Timer.Api.Tests</RootNamespace>
+    <AssemblyName>TastyBeans.Timer.Api.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

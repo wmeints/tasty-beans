@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Shipping.Application.Services;
+﻿namespace TastyBeans.Shipping.Application.Services;
 
 public interface ITransportCompany
 {

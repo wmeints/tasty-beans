@@ -5,8 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>86ad9455-17ef-464b-b091-405e370b4e5b</UserSecretsId>
-    <AssemblyName>RecommendCoffee.Catalog.Api</AssemblyName>
-    <RootNamespace>RecommendCoffee.Catalog.Api</RootNamespace>
+    <AssemblyName>TastyBeans.Catalog.Api</AssemblyName>
+    <RootNamespace>TastyBeans.Catalog.Api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

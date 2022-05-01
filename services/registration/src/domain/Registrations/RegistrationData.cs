@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using RecommendCoffee.Registration.Domain.Customers;
-using RecommendCoffee.Registration.Domain.Payments;
-using RecommendCoffee.Registration.Domain.Subscriptions;
+using TastyBeans.Registration.Domain.Customers;
+using TastyBeans.Registration.Domain.Payments;
+using TastyBeans.Registration.Domain.Subscriptions;
 
-namespace RecommendCoffee.Registration.Domain.Registrations;
+namespace TastyBeans.Registration.Domain.Registrations;
 
 public class RegistrationData
 {

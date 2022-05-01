@@ -1,6 +1,6 @@
-﻿using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+﻿using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
 
-namespace RecommendCoffee.Subscriptions.Application.QueryHandlers;
+namespace TastyBeans.Subscriptions.Application.QueryHandlers;
 
 public class FindSubscriptionQueryHandler
 {

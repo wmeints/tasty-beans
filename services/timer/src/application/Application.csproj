@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>RecommendCoffee.Timer.Application</RootNamespace>
-    <AssemblyName>RecommendCoffee.Timer.Application</AssemblyName>
+    <RootNamespace>TastyBeans.Timer.Application</RootNamespace>
+    <AssemblyName>TastyBeans.Timer.Application</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

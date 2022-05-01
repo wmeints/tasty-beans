@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 
-namespace RecommendCoffee.Portal.Client.Shared;
+namespace TastyBeans.Portal.Client.Shared;
 
 public class BootstrapFieldCssClassProvider: FieldCssClassProvider
 {

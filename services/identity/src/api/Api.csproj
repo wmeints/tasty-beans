@@ -37,8 +37,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>RecommendCoffee.Identity.Api</RootNamespace>
-    <AssemblyName>RecommendCoffee.Identity.Api</AssemblyName>
+    <RootNamespace>TastyBeans.Identity.Api</RootNamespace>
+    <AssemblyName>TastyBeans.Identity.Api</AssemblyName>
     <UserSecretsId>2e8b5105-8598-422b-8942-3c3c9badc521</UserSecretsId>
   </PropertyGroup>
 

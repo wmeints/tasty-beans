@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-    <RootNamespace>RecommendCoffee.Recommendations.Application.Tests</RootNamespace>
-    <AssemblyName>RecommendCoffee.Recommendations.Application.Tests</AssemblyName>
+    <RootNamespace>TastyBeans.Recommendations.Application.Tests</RootNamespace>
+    <AssemblyName>TastyBeans.Recommendations.Application.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

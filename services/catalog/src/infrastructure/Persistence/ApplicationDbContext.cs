@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 
-namespace RecommendCoffee.Catalog.Infrastructure.Persistence;
+namespace TastyBeans.Catalog.Infrastructure.Persistence;
 
 public class ApplicationDbContext: DbContext
 {

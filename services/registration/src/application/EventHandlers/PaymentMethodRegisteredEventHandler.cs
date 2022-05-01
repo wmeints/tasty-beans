@@ -1,10 +1,11 @@
-﻿using RecommendCoffee.Registration.Application.IntegrationEvents;
-using RecommendCoffee.Registration.Domain.Customers;
-using RecommendCoffee.Registration.Domain.Payments;
-using RecommendCoffee.Registration.Domain.Registrations;
-using RecommendCoffee.Registration.Domain.Subscriptions;
+﻿using TastyBeans.Registration.Application.IntegrationEvents;
+using TastyBeans.Registration.Domain.Customers;
+using TastyBeans.Registration.Domain.Payments;
+using TastyBeans.Registration.Domain.Registrations;
+using TastyBeans.Registration.Domain.Subscriptions;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Registration.Application.EventHandlers;
+namespace TastyBeans.Registration.Application.EventHandlers;
 
 public class PaymentMethodRegisteredEventHandler
 {

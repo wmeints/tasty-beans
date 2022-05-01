@@ -1,6 +1,7 @@
-﻿using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
+﻿using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Catalog.Application.QueryHandlers;
+namespace TastyBeans.Catalog.Application.QueryHandlers;
 
 public class FindAllProductsQueryHandler
 {

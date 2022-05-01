@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Shared.Domain;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+using TastyBeans.Shared.Domain;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
 
-namespace RecommendCoffee.Subscriptions.Infrastructure.Persistence;
+namespace TastyBeans.Subscriptions.Infrastructure.Persistence;
 
 public class SubscriptionRepository: ISubscriptionRepository
 {

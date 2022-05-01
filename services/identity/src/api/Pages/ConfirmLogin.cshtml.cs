@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TastyBeans.Identity.Domain.Aggregates.UserAggregate;
 
-namespace RecommendCoffee.Identity.Api.Pages;
+namespace TastyBeans.Identity.Api.Pages;
 
 public class ConfirmLoginPageModel : PageModel
 {

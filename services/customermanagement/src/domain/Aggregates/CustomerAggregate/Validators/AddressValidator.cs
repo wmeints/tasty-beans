@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate.Validators;
+namespace TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate.Validators;
 
 public class AddressValidator : AbstractValidator<Address>
 {

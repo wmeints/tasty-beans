@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace RecommendCoffee.Timer.Infrastructure;
+namespace TastyBeans.Timer.Infrastructure;
 
 public static class Activities
 {

@@ -1,4 +1,6 @@
-﻿namespace RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate;
+﻿using TastyBeans.Shared.Domain;
+
+namespace TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate;
 
 public interface IShippingOrderRepository
 {

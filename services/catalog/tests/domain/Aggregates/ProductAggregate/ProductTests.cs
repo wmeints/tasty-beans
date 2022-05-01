@@ -1,12 +1,11 @@
 ﻿using System;
-using Domain.Aggregates.ProductAggregate;
 using FluentAssertions;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Commands;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Events;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Events;
 using Xunit;
 
-namespace RecommendCoffee.Catalog.Domain.Tests.Aggregates.ProductAggregate;
+namespace TastyBeans.Catalog.Domain.Tests.Aggregates.ProductAggregate;
 
 public class ProductTests
 {

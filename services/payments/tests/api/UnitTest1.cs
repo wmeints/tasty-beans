@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Api.Tests;
+namespace RecommendCoffee.Payments.Api.Tests;
 
 public class UnitTest1
 {

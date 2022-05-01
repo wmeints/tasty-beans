@@ -1,7 +1,7 @@
 using Dapr.Client;
-using RecommendCoffee.Shared.Domain;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Shared.Infrastructure.StateManagement;
+namespace TastyBeans.Shared.Infrastructure.StateManagement;
 
 public class StateStore: IStateStore
 {

@@ -1,8 +1,9 @@
-﻿using RecommendCoffee.Shipping.Application.Services;
-using RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate;
-using RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate.Commands;
+﻿using TastyBeans.Shared.Application;
+using TastyBeans.Shipping.Application.Services;
+using TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate;
+using TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate.Commands;
 
-namespace RecommendCoffee.Shipping.Application.CommandHandlers;
+namespace TastyBeans.Shipping.Application.CommandHandlers;
 
 public class CreateShippingOrderCommandHandler
 {

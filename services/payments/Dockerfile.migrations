@@ -1,4 +1,5 @@
 ARG TOOL_VERSION
-FROM recommendcoffee.azurecr.io/database-migrations:${TOOL_VERSION}
+ARG REPOSITORY
+FROM ${REPOSITORY}/database-migrations:${TOOL_VERSION}
 
 COPY sql/*.sql /sql/

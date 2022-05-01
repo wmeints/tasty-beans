@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RecommendCoffee.Ratings.Api.Forms;
-using RecommendCoffee.Ratings.Application.CommandHandlers;
-using RecommendCoffee.Ratings.Domain.Aggregates.RatingAggregate.Commands;
-using RecommendCoffee.Shared.Api;
+using TastyBeans.Ratings.Api.Forms;
+using TastyBeans.Ratings.Application.CommandHandlers;
+using TastyBeans.Ratings.Domain.Aggregates.RatingAggregate.Commands;
+using TastyBeans.Shared.Api;
 
-namespace RecommendCoffee.Ratings.Api.Controllers;
+namespace TastyBeans.Ratings.Api.Controllers;
 
 [ApiController]
 [Route("/ratings")]

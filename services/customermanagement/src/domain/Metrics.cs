@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.Metrics;
 
-namespace RecommendCoffee.CustomerManagement.Domain;
+namespace TastyBeans.CustomerManagement.Domain;
 
 public class Metrics
 {
-    private static Meter _meter = new Meter("RecommendCoffee.CustomerManagement.Domain");
+    private static Meter _meter = new Meter("TastyBeans.CustomerManagement.Domain");
 }

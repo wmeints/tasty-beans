@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Shipping.Domain.Aggregates.CustomerAggregate;
+﻿namespace TastyBeans.Shipping.Domain.Aggregates.CustomerAggregate;
 
 public interface ICustomerRepository
 {

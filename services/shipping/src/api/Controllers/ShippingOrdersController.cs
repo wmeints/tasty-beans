@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RecommendCoffee.Shipping.Api.Forms;
-using RecommendCoffee.Shipping.Application.CommandHandlers;
-using RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate.Commands;
+using TastyBeans.Shared.Api;
+using TastyBeans.Shipping.Api.Forms;
+using TastyBeans.Shipping.Application.CommandHandlers;
+using TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate.Commands;
 
-namespace RecommendCoffee.Shipping.Api.Controllers;
+namespace TastyBeans.Shipping.Api.Controllers;
 
 [ApiController]
 [Route("/shippingorders")]

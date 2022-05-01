@@ -1,6 +1,6 @@
 using FluentValidation.Results;
 
-namespace RecommendCoffee.Shared.Domain;
+namespace TastyBeans.Shared.Domain;
 
 public static class ValidationResultExtensions {
     public static IEnumerable<ValidationError> GetValidationErrors(this ValidationResult results)

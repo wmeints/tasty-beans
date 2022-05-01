@@ -1,7 +1,6 @@
-﻿using RecommendCoffee.Shared.Application;
-using RecommendCoffee.Shared.Domain;
+﻿using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Shared.Application;
+namespace TastyBeans.Shared.Application;
 
 public interface IEventPublisher
 {

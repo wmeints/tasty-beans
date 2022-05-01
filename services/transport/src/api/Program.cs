@@ -5,13 +5,13 @@ using Akka.Configuration;
 using Akka.Logger.Extensions.Logging;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
-using RecommendCoffee.Shared.Application;
-using RecommendCoffee.Shared.Diagnostics;
-using RecommendCoffee.Shared.Infrastructure.EventBus;
-using RecommendCoffee.Transport.Application.CommandHandlers;
-using RecommendCoffee.Transport.Domain.Aggregates.ShipmentAggregate;
-using RecommendCoffee.Transport.Domain.Aggregates.ShipmentAggregate.Commands;
-using RecommendCoffee.Transport.Infrastructure.EventBus;
+using TastyBeans.Shared.Application;
+using TastyBeans.Shared.Diagnostics;
+using TastyBeans.Shared.Infrastructure.EventBus;
+using TastyBeans.Transport.Application.CommandHandlers;
+using TastyBeans.Transport.Domain.Aggregates.ShipmentAggregate;
+using TastyBeans.Transport.Domain.Aggregates.ShipmentAggregate.Commands;
+using TastyBeans.Transport.Infrastructure.EventBus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,16 +59,16 @@ builder.Services.AddHealthChecks();
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
 
 builder.Services.AddTracing(telemetryOptions,
-    "RecommendCoffee.Catalog.Api",
-    "RecommendCoffee.Catalog.Application",
-    "RecommendCoffee.Catalog.Domain",
-    "RecommendCoffee.Catalog.Infrastructure");
+    "TastyBeans.Catalog.Api",
+    "TastyBeans.Catalog.Application",
+    "TastyBeans.Catalog.Domain",
+    "TastyBeans.Catalog.Infrastructure");
 
 builder.Services.AddMetrics(telemetryOptions,
-    "RecommendCoffee.Catalog.Api",
-    "RecommendCoffee.Catalog.Application",
-    "RecommendCoffee.Catalog.Domain",
-    "RecommendCoffee.Catalog.Infrastructure");
+    "TastyBeans.Catalog.Api",
+    "TastyBeans.Catalog.Application",
+    "TastyBeans.Catalog.Domain",
+    "TastyBeans.Catalog.Infrastructure");
 
 builder.Services.AddLogging(telemetryOptions);
 

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RecommendCoffee.Registration.Api.Forms;
-using RecommendCoffee.Registration.Application.CommandHandlers;
-using RecommendCoffee.Registration.Domain.Registrations.Commands;
+using TastyBeans.Registration.Api.Forms;
+using TastyBeans.Registration.Application.CommandHandlers;
+using TastyBeans.Registration.Domain.Registrations.Commands;
 
-namespace RecommendCoffee.Registration.Api.Controllers;
+namespace TastyBeans.Registration.Api.Controllers;
 
 [ApiController]
 [Route("/")]

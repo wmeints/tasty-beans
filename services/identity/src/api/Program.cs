@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Identity.Api;
-using RecommendCoffee.Identity.Application.EventHandlers;
-using RecommendCoffee.Identity.Infrastructure.Persistence;
-using RecommendCoffee.Shared.Diagnostics;
-using RecommendCoffee.Shared.Infrastructure.Bindings;
+using TastyBeans.Identity.Api;
+using TastyBeans.Identity.Application.EventHandlers;
+using TastyBeans.Identity.Domain.Aggregates.UserAggregate;
+using TastyBeans.Identity.Infrastructure.Persistence;
+using TastyBeans.Shared.Diagnostics;
+using TastyBeans.Shared.Infrastructure.Bindings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,16 +70,16 @@ builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
 
 builder.Services.AddTracing(telemetryOptions,
-    "RecommendCoffee.Identity.Api",
-    "RecommendCoffee.Identity.Application",
-    "RecommendCoffee.Identity.Domain",
-    "RecommendCoffee.Identity.Infrastructure");
+    "TastyBeans.Identity.Api",
+    "TastyBeans.Identity.Application",
+    "TastyBeans.Identity.Domain",
+    "TastyBeans.Identity.Infrastructure");
 
 builder.Services.AddMetrics(telemetryOptions,
-    "RecommendCoffee.Identity.Api",
-    "RecommendCoffee.Identity.Application",
-    "RecommendCoffee.Identity.Domain",
-    "RecommendCoffee.Identity.Infrastructure");
+    "TastyBeans.Identity.Api",
+    "TastyBeans.Identity.Application",
+    "TastyBeans.Identity.Domain",
+    "TastyBeans.Identity.Infrastructure");
 
 builder.Services.AddLogging(telemetryOptions);
 

@@ -2,15 +2,15 @@
 using System.Threading.Tasks;
 using FakeItEasy;
 using FluentAssertions;
-using RecommendCoffee.Registration.Domain.Customers;
-using RecommendCoffee.Registration.Domain.Payments;
-using RecommendCoffee.Registration.Domain.Registrations;
-using RecommendCoffee.Registration.Domain.Registrations.Commands;
-using RecommendCoffee.Registration.Domain.Subscriptions;
-using RecommendCoffee.Shared.Domain;
+using TastyBeans.Registration.Domain.Customers;
+using TastyBeans.Registration.Domain.Payments;
+using TastyBeans.Registration.Domain.Registrations;
+using TastyBeans.Registration.Domain.Registrations.Commands;
+using TastyBeans.Registration.Domain.Subscriptions;
+using TastyBeans.Shared.Domain;
 using Xunit;
 
-namespace RecommendCoffee.Registration.Domain.Tests.Registrations;
+namespace TastyBeans.Registration.Domain.Tests.Registrations;
 
 public class RegistrationTests
 {

@@ -17,23 +17,23 @@
 #>
 
 param(
-    [System.String] $ContainerRegistry = "recommendcoffee.azurecr.io"
+    [System.String] $ContainerRegistry = "tastybeans.azurecr.io"
 )
 
 # This table determines which components to build and how to build them.
 # Set migrate = $true for components that need the database migration init container.
 $ImagesToBuild = @(
-    @{ name = "catalog"; migrate = $true; entrypoint = "RecommendCoffee.Catalog.Api.dll" }
-    @{ name = "customermanagement"; migrate = $true; entrypoint = "RecommendCoffee.CustomerManagement.Api.dll" }
-    @{ name = "payments"; migrate = $true; entrypoint = "RecommendCoffee.Payments.Api.dll" }
-    @{ name = "ratings"; migrate = $true; entrypoint = "RecommendCoffee.Ratings.Api.dll" }
-    @{ name = "registration"; migrate = $false; entrypoint = "RecommendCoffee.Registration.Api.dll" }
-    @{ name = "subscriptions"; migrate = $true; entrypoint = "RecommendCoffee.Subscriptions.Api.dll" }
-    @{ name = "identity"; migrate = $true; entrypoint = "RecommendCoffee.Identity.Api.dll" }
-    @{ name = "timer"; migrate = $false; entrypoint = "RecommendCoffee.Timer.Api.dll" }
-    @{ name = "shipping"; migrate = $true; entrypoint = "RecommendCoffee.Shipping.Api.dll" }
-    @{ name = "recommendations"; migrate = $true; entrypoint = "RecommendCoffee.Recommendations.Api.dll" }
-    @{ name = "transport"; migrate = $false; entrypoint = "RecommendCoffee.Transport.Api.dll" }
+    @{ name = "catalog"; migrate = $true; entrypoint = "TastyBeans.Catalog.Api.dll" }
+    @{ name = "customermanagement"; migrate = $true; entrypoint = "TastyBeans.CustomerManagement.Api.dll" }
+    @{ name = "payments"; migrate = $true; entrypoint = "TastyBeans.Payments.Api.dll" }
+    @{ name = "ratings"; migrate = $true; entrypoint = "TastyBeans.Ratings.Api.dll" }
+    @{ name = "registration"; migrate = $false; entrypoint = "TastyBeans.Registration.Api.dll" }
+    @{ name = "subscriptions"; migrate = $true; entrypoint = "TastyBeans.Subscriptions.Api.dll" }
+    @{ name = "identity"; migrate = $true; entrypoint = "TastyBeans.Identity.Api.dll" }
+    @{ name = "timer"; migrate = $false; entrypoint = "TastyBeans.Timer.Api.dll" }
+    @{ name = "shipping"; migrate = $true; entrypoint = "TastyBeans.Shipping.Api.dll" }
+    @{ name = "recommendations"; migrate = $true; entrypoint = "TastyBeans.Recommendations.Api.dll" }
+    @{ name = "transport"; migrate = $false; entrypoint = "TastyBeans.Transport.Api.dll" }
 )
 
 # We generate a timestamp for the image tag.
@@ -42,7 +42,7 @@ $Timestamp = Get-Date -Format 'yyyyMMddHHmmss'
 
 # Build the migration tooling for the application first.
 # We'll be generating migration images for each of the services.
-docker build -t recommendcoffee.azurecr.io/database-migrations:$Timestamp `
+docker build -t ${ContainerRegistry}/database-migrations:$Timestamp `
     -f ./tools/migrate-database/Dockerfile `
     ./tools/migrate-database
 
@@ -60,12 +60,19 @@ foreach($ServiceDefinition in $ImagesToBuild) {
     $ImageTag = "${ContainerRegistry}/${ServiceName}:$Timestamp"
     
     # Build the application container.
-    docker build -t $ImageTag -f $DockerFilePath --build-arg SERVICE_NAME=$ServiceName --build-arg ENTRYPOINT=$Entrypoint .
+    docker build -t $ImageTag `
+        -f $DockerFilePath `
+        --build-arg SERVICE_NAME=$ServiceName `
+        --build-arg ENTRYPOINT=$Entrypoint .
 
     # Build the database migration init container if we need to.
     # This container will be used to run the migrations.
     if($GenerateMigrationContainer) {
-        docker build -t $MigrationImageTag --build-arg TOOL_VERSION=$Timestamp -f $MigrationDockerFilePath $MigrationContextPath
+        docker build -t $MigrationImageTag `
+            --build-arg REPOSITORY=$ContainerRegistry `
+            --build-arg TOOL_VERSION=$Timestamp `
+            -f $MigrationDockerFilePath `
+            $MigrationContextPath
     }
 }
 

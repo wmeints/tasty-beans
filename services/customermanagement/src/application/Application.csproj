@@ -4,8 +4,8 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<RootNamespace>RecommendCoffee.CustomerManagement.Application</RootNamespace>
-		<AssemblyName>RecommendCoffee.CustomerManagement.Application</AssemblyName>
+		<RootNamespace>TastyBeans.CustomerManagement.Application</RootNamespace>
+		<AssemblyName>TastyBeans.CustomerManagement.Application</AssemblyName>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -3,8 +3,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>RecommendCoffee.Timer.Api</RootNamespace>
-    <AssemblyName>RecommendCoffee.Timer.Api</AssemblyName>
+    <RootNamespace>TastyBeans.Timer.Api</RootNamespace>
+    <AssemblyName>TastyBeans.Timer.Api</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapr.AspNetCore" Version="1.7.0" />

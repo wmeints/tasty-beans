@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Akka.Actor;
+﻿using Akka.Actor;
 using Microsoft.Extensions.Options;
-using RecommendCoffee.Transport.Domain.Aggregates.ShipmentAggregate;
-using RecommendCoffee.Transport.Domain.Aggregates.ShipmentAggregate.Commands;
+using TastyBeans.Transport.Domain.Aggregates.ShipmentAggregate;
+using TastyBeans.Transport.Domain.Aggregates.ShipmentAggregate.Commands;
 
-namespace RecommendCoffee.Transport.Application.CommandHandlers;
+namespace TastyBeans.Transport.Application.CommandHandlers;
 
 public class CreateShipmentCommandHandler
 {

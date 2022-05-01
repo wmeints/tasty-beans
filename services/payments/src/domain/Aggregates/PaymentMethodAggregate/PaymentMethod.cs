@@ -1,6 +1,7 @@
 ﻿using RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate.Commands;
 using RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate.Events;
 using RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate.Validators;
+using TastyBeans.Shared.Domain;
 
 namespace RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate;
 

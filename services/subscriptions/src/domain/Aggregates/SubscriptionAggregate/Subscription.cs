@@ -1,13 +1,14 @@
 ﻿using NodaTime;
 using NodaTime.Extensions;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Events;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Validators;
-using RecommendCoffee.Subscriptions.Domain.Services.Recommendations;
-using RecommendCoffee.Subscriptions.Domain.Services.Shipping;
-using RecommendCoffee.Subscriptions.Domain.Services.Shipping.Commands;
+using TastyBeans.Shared.Domain;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Events;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Validators;
+using TastyBeans.Subscriptions.Domain.Services.Recommendations;
+using TastyBeans.Subscriptions.Domain.Services.Shipping;
+using TastyBeans.Subscriptions.Domain.Services.Shipping.Commands;
 
-namespace RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+namespace TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
 
 public class Subscription
 {

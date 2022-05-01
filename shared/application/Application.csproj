@@ -8,10 +8,10 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>RecommendCoffee.Shared.Application</RootNamespace>
-    <AssemblyName>RecommendCoffee.Shared.Application</AssemblyName>
+    <RootNamespace>TastyBeans.Shared.Application</RootNamespace>
+    <AssemblyName>TastyBeans.Shared.Application</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <Using Include="RecommendCoffee.Shared.Application"/>
+    <Using Include="TastyBeans.Shared.Application" />
   </ItemGroup>
 </Project>

@@ -1,10 +1,10 @@
 ﻿using System.Collections.ObjectModel;
-using Domain.Aggregates.ProductAggregate.Validators;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Commands;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Events;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Validators;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Events;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Validators;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
+namespace TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 
 public class Product
 {

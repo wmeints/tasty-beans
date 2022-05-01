@@ -1,4 +1,4 @@
-namespace RecommendCoffee.Shared.Infrastructure.EventBus;
+namespace TastyBeans.Shared.Infrastructure.EventBus;
 
 public class DaprEventPublisherOptions
 {

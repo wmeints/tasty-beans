@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Infrastructure.Tests;
+namespace TastyBeans.Timer.Infrastructure.Tests;
 
 public class UnitTest1
 {

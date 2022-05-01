@@ -1,10 +1,9 @@
 ﻿using Akka.Actor;
 using Akka.Event;
-using Microsoft.Extensions.DependencyInjection;
-using RecommendCoffee.Shared.Application;
-using RecommendCoffee.Shared.Domain;
+using TastyBeans.Shared.Application;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Transport.Infrastructure.EventBus;
+namespace TastyBeans.Transport.Infrastructure.EventBus;
 
 public class EventBusAdapter : ReceiveActor
 {

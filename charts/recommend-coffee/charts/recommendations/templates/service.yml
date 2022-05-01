@@ -5,12 +5,11 @@ metadata:
   labels:
     app: recommendations
     service: recommendations
-    version: v1
 spec:
   type: ClusterIP
   selector:
     app: recommendations
-    version: {{ .Chart.Version }}
+    service: recommendations
   ports:
   - port: 80
     name: http

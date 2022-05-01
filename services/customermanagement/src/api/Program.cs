@@ -2,12 +2,13 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.CustomerManagement.Application.CommandHandlers;
-using RecommendCoffee.CustomerManagement.Application.QueryHandlers;
-using RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate;
 using RecommendCoffee.CustomerManagement.Infrastructure.Persistence;
-using RecommendCoffee.Shared.Diagnostics;
-using RecommendCoffee.Shared.Infrastructure.EventBus;
+using TastyBeans.CustomerManagement.Application.CommandHandlers;
+using TastyBeans.CustomerManagement.Application.QueryHandlers;
+using TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.CustomerManagement.Infrastructure.Persistence;
+using TastyBeans.Shared.Diagnostics;
+using TastyBeans.Shared.Infrastructure.EventBus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,16 +44,16 @@ builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
 
 builder.Services.AddTracing(telemetryOptions,
-    "RecommendCoffee.CustomerManagement.Api",
-    "RecommendCoffee.CustomerManagement.Application",
-    "RecommendCoffee.CustomerManagement.Domain",
-    "RecommendCoffee.CustomerManagement.Infrastructure");
+    "TastyBeans.CustomerManagement.Api",
+    "TastyBeans.CustomerManagement.Application",
+    "TastyBeans.CustomerManagement.Domain",
+    "TastyBeans.CustomerManagement.Infrastructure");
 
 builder.Services.AddMetrics(telemetryOptions,
-    "RecommendCoffee.CustomerManagement.Api",
-    "RecommendCoffee.CustomerManagement.Application",
-    "RecommendCoffee.CustomerManagement.Domain",
-    "RecommendCoffee.CustomerManagement.Infrastructure");
+    "TastyBeans.CustomerManagement.Api",
+    "TastyBeans.CustomerManagement.Application",
+    "TastyBeans.CustomerManagement.Domain",
+    "TastyBeans.CustomerManagement.Infrastructure");
 
 builder.Services.AddLogging(telemetryOptions);
 

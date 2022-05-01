@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Ratings.Domain.Aggregates.RatingAggregate;
+﻿namespace TastyBeans.Ratings.Domain.Aggregates.RatingAggregate;
 
 public interface IRatingRepository
 {

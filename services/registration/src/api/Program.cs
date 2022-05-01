@@ -1,15 +1,14 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using RecommendCoffee.Registration.Api;
-using RecommendCoffee.Registration.Application.CommandHandlers;
-using RecommendCoffee.Registration.Application.EventHandlers;
-using RecommendCoffee.Registration.Domain.Customers;
-using RecommendCoffee.Registration.Domain.Payments;
-using RecommendCoffee.Registration.Domain.Subscriptions;
-using RecommendCoffee.Registration.Infrastructure.Agents;
-using RecommendCoffee.Shared.Diagnostics;
-using RecommendCoffee.Shared.Infrastructure.StateManagement;
+using TastyBeans.Registration.Application.CommandHandlers;
+using TastyBeans.Registration.Application.EventHandlers;
+using TastyBeans.Registration.Domain.Customers;
+using TastyBeans.Registration.Domain.Payments;
+using TastyBeans.Registration.Domain.Subscriptions;
+using TastyBeans.Registration.Infrastructure.Agents;
+using TastyBeans.Shared.Diagnostics;
+using TastyBeans.Shared.Infrastructure.StateManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,17 +35,17 @@ builder.Services.AddHealthChecks()
     .AddUrlGroup(options =>
     {
         options.AddUri(
-            new Uri("http://subscriptions/healthz"),
+            new Uri(new Uri(builder.Configuration["ServiceLocations:Subscriptions"]), "/healthz"),
             uo => uo.UseGet().UseTimeout(TimeSpan.FromSeconds(3))
         );
 
         options.AddUri(
-            new Uri("http://customermanagement/healthz"),
+            new Uri(new Uri(builder.Configuration["ServiceLocations:CustomerManagement"]), "/healthz"),
             uo => uo.UseGet().UseTimeout(TimeSpan.FromSeconds(3))
         );
 
         options.AddUri(
-            new Uri("http://payments/healthz"),
+            new Uri(new Uri(builder.Configuration["ServiceLocations:Payments"]), "/healthz"),
             uo => uo.UseGet().UseTimeout(TimeSpan.FromSeconds(3))
         );
     });
@@ -54,16 +53,16 @@ builder.Services.AddHealthChecks()
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
 
 builder.Services.AddTracing(telemetryOptions,
-    "RecommendCoffee.Registration.Api",
-    "RecommendCoffee.Registration.Application",
-    "RecommendCoffee.Registration.Domain",
-    "RecommendCoffee.Registration.Infrastructure");
+    "TastyBeans.Registration.Api",
+    "TastyBeans.Registration.Application",
+    "TastyBeans.Registration.Domain",
+    "TastyBeans.Registration.Infrastructure");
 
 builder.Services.AddMetrics(telemetryOptions,
-    "RecommendCoffee.Registration.Api",
-    "RecommendCoffee.Registration.Application",
-    "RecommendCoffee.Registration.Domain",
-    "RecommendCoffee.Registration.Infrastructure");
+    "TastyBeans.Registration.Api",
+    "TastyBeans.Registration.Application",
+    "TastyBeans.Registration.Domain",
+    "TastyBeans.Registration.Infrastructure");
 
 builder.Services.AddLogging(telemetryOptions);
 

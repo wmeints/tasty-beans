@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Subscriptions.Application.IntegrationEvents;
+﻿namespace TastyBeans.Subscriptions.Application.IntegrationEvents;
 
 public class MonthHasPassedEvent
 {

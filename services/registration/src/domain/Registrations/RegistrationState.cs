@@ -1,4 +1,4 @@
-namespace RecommendCoffee.Registration.Domain.Registrations;
+namespace TastyBeans.Registration.Domain.Registrations;
 
 public enum RegistrationState
 {

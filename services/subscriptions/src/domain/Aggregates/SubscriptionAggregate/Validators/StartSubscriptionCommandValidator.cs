@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
 
-namespace RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Validators;
+namespace TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Validators;
 
 public class StartSubscriptionCommandValidator: AbstractValidator<StartSubscriptionCommand>
 {

@@ -1,11 +1,10 @@
 ﻿using System.Diagnostics.Metrics;
 
-namespace RecommendCoffee.Payments.Application;
+namespace TastyBeans.Payments.Application;
 
 public class Metrics
 {
-    private static Meter _meter = new Meter("RecommendCoffee.Payments.Application");
-    private static Counter<int> _paymentMethodRegistered = _meter.CreateCounter<int>("payments-paymentmethods-registered");
+    private static Meter _meter = new Meter("TastyBeans.Payments.Application");
 
-    public static Counter<int> PaymentMethodRegistered => _paymentMethodRegistered;
+    public static Counter<int> PaymentMethodRegistered { get; } = _meter.CreateCounter<int>("payments-paymentmethods-registered");
 }

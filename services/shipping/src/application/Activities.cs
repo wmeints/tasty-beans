@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 
-namespace RecommendCoffee.Shipping.Application;
+namespace TastyBeans.Shipping.Application;
 
 public static class Activities
 {
-    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Shipping.Application");
+    private static readonly ActivitySource ActivitySource = new ActivitySource("TastyBeans.Shipping.Application");
 
     public static Activity? ExecuteCommand(string commandName)
     {
@@ -20,15 +20,6 @@ public static class Activities
         var activity = ActivitySource.StartActivity("HandleEvent", ActivityKind.Internal);
 
         activity?.AddTag("event.name", eventName);
-
-        return activity;
-    }
-
-    public static Activity? ExecuteQuery(string queryName)
-    {
-        var activity = ActivitySource.StartActivity("ExecuteQuery", ActivityKind.Internal);
-
-        activity?.AddTag("query.name", queryName);
 
         return activity;
     }

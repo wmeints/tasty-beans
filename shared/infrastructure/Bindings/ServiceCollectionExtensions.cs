@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using RecommendCoffee.Shared.Application;
+using TastyBeans.Shared.Application;
 
-namespace RecommendCoffee.Shared.Infrastructure.Bindings;
+namespace TastyBeans.Shared.Infrastructure.Bindings;
 
 public static class ServiceCollectionExtensions
 {

@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 
-namespace RecommendCoffee.Registration.Domain;
+namespace TastyBeans.Registration.Domain;
 
 public static class Activities
 {
-    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Registration.Domain");
+    private static readonly ActivitySource ActivitySource = new ActivitySource("TastyBeans.Registration.Domain");
 
     public static Activity? RegisterPaymentMethod(string currentState)
     {

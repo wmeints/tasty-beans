@@ -1,10 +1,11 @@
-﻿using RecommendCoffee.Ratings.Domain.Aggregates.CustomerAggregate;
-using RecommendCoffee.Ratings.Domain.Aggregates.ProductAggregate;
-using RecommendCoffee.Ratings.Domain.Aggregates.RatingAggregate.Commands;
-using RecommendCoffee.Ratings.Domain.Aggregates.RatingAggregate.Events;
-using RecommendCoffee.Ratings.Domain.Aggregates.RatingAggregate.Validators;
+﻿using TastyBeans.Ratings.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.Ratings.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Ratings.Domain.Aggregates.RatingAggregate.Commands;
+using TastyBeans.Ratings.Domain.Aggregates.RatingAggregate.Events;
+using TastyBeans.Ratings.Domain.Aggregates.RatingAggregate.Validators;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Ratings.Domain.Aggregates.RatingAggregate;
+namespace TastyBeans.Ratings.Domain.Aggregates.RatingAggregate;
 
 public class Rating
 {

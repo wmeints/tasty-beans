@@ -1,4 +1,6 @@
-﻿namespace RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate.Events;
+﻿using TastyBeans.Shared.Domain;
+
+namespace TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate.Events;
 
 [Topic("customermanagement.customer.registered.v1")]
 public record CustomerRegisteredEvent(

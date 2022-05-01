@@ -1,4 +1,4 @@
-namespace RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate;
+namespace TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate;
 
 public enum OrderStatus
 {

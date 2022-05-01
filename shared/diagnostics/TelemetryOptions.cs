@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Shared.Diagnostics;
+﻿namespace TastyBeans.Shared.Diagnostics;
 
 public class TelemetryOptions
 {

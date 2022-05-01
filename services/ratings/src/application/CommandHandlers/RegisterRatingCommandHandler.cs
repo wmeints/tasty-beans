@@ -1,9 +1,10 @@
-﻿using RecommendCoffee.Ratings.Domain.Aggregates.CustomerAggregate;
-using RecommendCoffee.Ratings.Domain.Aggregates.ProductAggregate;
-using RecommendCoffee.Ratings.Domain.Aggregates.RatingAggregate;
-using RecommendCoffee.Ratings.Domain.Aggregates.RatingAggregate.Commands;
+﻿using TastyBeans.Ratings.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.Ratings.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Ratings.Domain.Aggregates.RatingAggregate;
+using TastyBeans.Ratings.Domain.Aggregates.RatingAggregate.Commands;
+using TastyBeans.Shared.Application;
 
-namespace RecommendCoffee.Ratings.Application.CommandHandlers;
+namespace TastyBeans.Ratings.Application.CommandHandlers;
 
 public class RegisterRatingCommandHandler
 {

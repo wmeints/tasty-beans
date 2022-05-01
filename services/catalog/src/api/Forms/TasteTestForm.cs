@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Catalog.Api.Forms;
+﻿namespace TastyBeans.Catalog.Api.Forms;
 
 public class TasteTestForm
 {

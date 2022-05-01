@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 
-namespace RecommendCoffee.Subscriptions.Application;
+namespace TastyBeans.Subscriptions.Application;
 
 public static class Activities
 {
-    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Subscriptions.Application");
+    private static readonly ActivitySource ActivitySource = new ActivitySource("TastyBeans.Subscriptions.Application");
 
     public static Activity? ExecuteCommand(string commandName)
     {

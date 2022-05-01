@@ -3,8 +3,10 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TastyBeans.Identity.Domain.Aggregates.UserAggregate;
+using TastyBeans.Shared.Application;
 
-namespace RecommendCoffee.Identity.Api.Pages;
+namespace TastyBeans.Identity.Api.Pages;
 
 public class LoginPageModel: PageModel
 {

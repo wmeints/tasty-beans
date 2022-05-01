@@ -1,3 +1,3 @@
-﻿namespace RecommendCoffee.Shipping.Domain.Aggregates.ProductAggregate.Commands;
+﻿namespace TastyBeans.Shipping.Domain.Aggregates.ProductAggregate.Commands;
 
 public record RegisterProductCommand(Guid Id, string Name);

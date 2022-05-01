@@ -1,6 +1,6 @@
-﻿using RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate;
+﻿using TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate;
 
-namespace RecommendCoffee.Shipping.Api.Forms;
+namespace TastyBeans.Shipping.Api.Forms;
 
 public class CreateShippingOrderForm
 {

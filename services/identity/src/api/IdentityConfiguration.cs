@@ -1,6 +1,6 @@
 ﻿using Duende.IdentityServer.Models;
 
-namespace RecommendCoffee.Identity.Api;
+namespace TastyBeans.Identity.Api;
 
 public static class Configuration
 {

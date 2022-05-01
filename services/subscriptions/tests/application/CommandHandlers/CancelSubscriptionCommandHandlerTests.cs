@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FakeItEasy;
 using FluentAssertions;
-using RecommendCoffee.Shared.Application;
-using RecommendCoffee.Shared.Domain;
-using RecommendCoffee.Subscriptions.Application.CommandHandlers;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
+using TastyBeans.Shared.Application;
+using TastyBeans.Shared.Domain;
+using TastyBeans.Subscriptions.Application.CommandHandlers;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
 using Xunit;
 
-namespace RecommendCoffee.Subscriptions.Application.Tests.CommandHandlers;
+namespace TastyBeans.Subscriptions.Application.Tests.CommandHandlers;
 
 public class CancelSubscriptionCommandHandlerTests
 {

@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyName>RecommendCoffee.Registration.Domain</AssemblyName>
-    <RootNamespace>RecommendCoffee.Registration.Domain</RootNamespace>
+    <AssemblyName>TastyBeans.Registration.Domain</AssemblyName>
+    <RootNamespace>TastyBeans.Registration.Domain</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

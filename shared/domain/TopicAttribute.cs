@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Shared.Domain;
+﻿namespace TastyBeans.Shared.Domain;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class TopicAttribute: Attribute

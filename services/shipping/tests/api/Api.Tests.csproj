@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-    <RootNamespace>RecommendCoffee.Shipping.Api.Tests</RootNamespace>
-    <AssemblyName>RecommendCoffee.Shipping.Api.Tests</AssemblyName>
+    <RootNamespace>TastyBeans.Shipping.Api.Tests</RootNamespace>
+    <AssemblyName>TastyBeans.Shipping.Api.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

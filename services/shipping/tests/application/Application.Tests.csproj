@@ -5,8 +5,8 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
-    <RootNamespace>RecommendCoffee.Shipping.Application.Tests</RootNamespace>
-    <AssemblyName>RecommendCoffee.Shipping.Application.Tests</AssemblyName>
+    <RootNamespace>TastyBeans.Shipping.Application.Tests</RootNamespace>
+    <AssemblyName>TastyBeans.Shipping.Application.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

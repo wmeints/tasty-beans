@@ -1,4 +1,6 @@
-﻿namespace RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate.Events;
+﻿using TastyBeans.Shared.Domain;
+
+namespace RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate.Events;
 
 [Topic("payments.paymentmethod.registered.v1")]
 public record PaymentMethodRegisteredEvent(

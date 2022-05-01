@@ -1,7 +1,8 @@
-﻿using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Commands;
+﻿using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
+using TastyBeans.Shared.Application;
 
-namespace RecommendCoffee.Catalog.Application.CommandHandlers;
+namespace TastyBeans.Catalog.Application.CommandHandlers;
 
 public class RegisterProductCommandHandler
 {

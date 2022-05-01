@@ -1,4 +1,6 @@
-﻿namespace RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
+﻿using TastyBeans.Shared.Domain;
+
+namespace TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
 
 public record ChangeShippingFrequencyCommandReply(
     IEnumerable<ValidationError> Errors,

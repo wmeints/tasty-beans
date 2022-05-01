@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using TastyBeans.Identity.Domain.Aggregates.UserAggregate;
 
-namespace RecommendCoffee.Identity.Api;
+namespace TastyBeans.Identity.Api;
 
 public class PasswordlessLoginTokenProvider: TotpSecurityStampBasedTokenProvider<ApplicationUser>
 {

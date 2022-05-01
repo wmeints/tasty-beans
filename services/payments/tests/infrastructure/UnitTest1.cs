@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Infrastructure.Tests;
+namespace RecommendCoffee.Payments.Infrastructure.Tests;
 
 public class UnitTest1
 {

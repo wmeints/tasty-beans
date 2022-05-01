@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using RecommendCoffee.Shared.Application;
+using TastyBeans.Shared.Application;
 
-namespace RecommendCoffee.Shared.Infrastructure.EventBus;
+namespace TastyBeans.Shared.Infrastructure.EventBus;
 
 public static class ServiceCollectionExtensions {
     public static IServiceCollection AddEventPublisher(this IServiceCollection services, Action<DaprEventPublisherOptions> configureOptions)

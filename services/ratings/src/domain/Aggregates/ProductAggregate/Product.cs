@@ -1,7 +1,8 @@
-﻿using RecommendCoffee.Ratings.Domain.Aggregates.ProductAggregate.Commands;
-using RecommendCoffee.Ratings.Domain.Aggregates.ProductAggregate.Validators;
+﻿using TastyBeans.Ratings.Domain.Aggregates.ProductAggregate.Commands;
+using TastyBeans.Ratings.Domain.Aggregates.ProductAggregate.Validators;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Ratings.Domain.Aggregates.ProductAggregate;
+namespace TastyBeans.Ratings.Domain.Aggregates.ProductAggregate;
 
 public class Product
 {

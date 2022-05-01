@@ -1,6 +1,6 @@
-﻿using RecommendCoffee.Shared.Domain;
+﻿using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Transport.Domain.Aggregates.ShipmentAggregate.Events;
+namespace TastyBeans.Transport.Domain.Aggregates.ShipmentAggregate.Events;
 
 [Topic("transport.shipment.delivery-attempt-failed.v1")]
 public record DeliveryAttemptFailedEvent() : IDomainEvent;

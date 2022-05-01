@@ -1,9 +1,10 @@
-﻿using RecommendCoffee.Registration.Domain.Customers;
-using RecommendCoffee.Registration.Domain.Payments;
-using RecommendCoffee.Registration.Domain.Registrations.Commands;
-using RecommendCoffee.Registration.Domain.Subscriptions;
+﻿using TastyBeans.Registration.Domain.Customers;
+using TastyBeans.Registration.Domain.Payments;
+using TastyBeans.Registration.Domain.Registrations.Commands;
+using TastyBeans.Registration.Domain.Subscriptions;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Registration.Application.CommandHandlers;
+namespace TastyBeans.Registration.Application.CommandHandlers;
 
 public class StartRegistrationCommandHandler
 {

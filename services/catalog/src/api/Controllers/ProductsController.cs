@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RecommendCoffee.Catalog.Api.Common;
-using RecommendCoffee.Catalog.Api.Forms;
-using RecommendCoffee.Catalog.Application.CommandHandlers;
-using RecommendCoffee.Catalog.Application.QueryHandlers;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Commands;
-using RecommendCoffee.Shared.Domain;
+using TastyBeans.Catalog.Api.Common;
+using TastyBeans.Catalog.Api.Forms;
+using TastyBeans.Catalog.Application.CommandHandlers;
+using TastyBeans.Catalog.Application.QueryHandlers;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Catalog.Api.Controllers;
+namespace TastyBeans.Catalog.Api.Controllers;
 
 [ApiController]
 [Route("/products")]

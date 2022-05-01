@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RecommendCoffee.Shared.Domain;
-using RecommendCoffee.Subscriptions.Api.Forms;
-using RecommendCoffee.Subscriptions.Application.CommandHandlers;
-using RecommendCoffee.Subscriptions.Application.QueryHandlers;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
+using TastyBeans.Shared.Api;
+using TastyBeans.Shared.Domain;
+using TastyBeans.Subscriptions.Api.Forms;
+using TastyBeans.Subscriptions.Application.CommandHandlers;
+using TastyBeans.Subscriptions.Application.QueryHandlers;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
 
-namespace RecommendCoffee.Subscriptions.Api.Controllers;
+namespace TastyBeans.Subscriptions.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

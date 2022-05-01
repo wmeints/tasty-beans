@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 
-namespace RecommendCoffee.Catalog.Api.Forms;
+namespace TastyBeans.Catalog.Api.Forms;
 
 public class CreateProductForm
 {

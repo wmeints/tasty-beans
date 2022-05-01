@@ -1,8 +1,9 @@
-﻿using RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate.Commands;
-using RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate.Events;
-using RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate.Validators;
+﻿using TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate.Commands;
+using TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate.Events;
+using TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate.Validators;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate;
+namespace TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate;
 
 public class Customer
 {

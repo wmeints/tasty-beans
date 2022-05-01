@@ -1,8 +1,10 @@
-﻿using RecommendCoffee.Recommendations.Application.IntegrationEvents;
-using RecommendCoffee.Recommendations.Domain.Aggregates.ProductAggregate;
-using RecommendCoffee.Recommendations.Domain.Aggregates.ProductAggregate.Commands;
+﻿using TastyBeans.Recommendations.Application.IntegrationEvents;
+using TastyBeans.Recommendations.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Recommendations.Domain.Aggregates.ProductAggregate.Commands;
+using TastyBeans.Shared.Application;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Recommendations.Application.EventHandlers;
+namespace TastyBeans.Recommendations.Application.EventHandlers;
 
 public class ProductUpdatedEventHandler
 {

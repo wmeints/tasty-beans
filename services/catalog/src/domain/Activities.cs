@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 
-namespace RecommendCoffee.Catalog.Domain;
+namespace TastyBeans.Catalog.Domain;
 
 public static class Activities
 {
-    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Catalog.Domain");
+    private static readonly ActivitySource ActivitySource = new ActivitySource("TastyBeans.Catalog.Domain");
 
     public static Activity? TasteTest(Guid productId)
     {

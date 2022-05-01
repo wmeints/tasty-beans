@@ -1,8 +1,7 @@
-﻿using System.Net.Mail;
-using Dapr.Client;
-using RecommendCoffee.Shared.Application;
+﻿using Dapr.Client;
+using TastyBeans.Shared.Application;
 
-namespace RecommendCoffee.Shared.Infrastructure.Bindings;
+namespace TastyBeans.Shared.Infrastructure.Bindings;
 
 public class EmailSender : IEmailSender
 {

@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics.Metrics;
 
-namespace RecommendCoffee.Timer.Infrastructure;
+namespace TastyBeans.Timer.Infrastructure;
 
 public static class Metrics
 {
-    private static readonly Meter Meter = new Meter("RecommendCoffee.Ratings.Infrastructure");
+    private static readonly Meter Meter = new Meter("TastyBeans.Ratings.Infrastructure");
     public static readonly Counter<int> EventsPublished = Meter.CreateCounter<int>("ratings-events-published");
 }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RecommendCoffee.Ratings.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.Ratings.Domain.Aggregates.CustomerAggregate;
 
-namespace RecommendCoffee.Ratings.Infrastructure.Persistence;
+namespace TastyBeans.Ratings.Infrastructure.Persistence;
 
 public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer>
 {

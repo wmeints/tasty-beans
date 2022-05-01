@@ -26,7 +26,7 @@ param (
     $DatabasePassword,
 
     [System.String]
-    $ContainerRegistry = "recommendcoffee.azurecr.io"
+    $ContainerRegistry = "tastybeans.azurecr.io"
 )
 
 # Find existing installations and remove them.

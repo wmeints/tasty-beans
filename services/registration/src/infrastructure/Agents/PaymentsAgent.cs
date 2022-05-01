@@ -1,8 +1,8 @@
 ﻿using Dapr.Client;
 using Microsoft.Extensions.Logging;
-using RecommendCoffee.Registration.Domain.Payments;
+using TastyBeans.Registration.Domain.Payments;
 
-namespace RecommendCoffee.Registration.Infrastructure.Agents;
+namespace TastyBeans.Registration.Infrastructure.Agents;
 
 public class PaymentsAgent: IPayments
 {

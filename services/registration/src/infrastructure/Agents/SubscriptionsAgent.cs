@@ -1,8 +1,8 @@
 ﻿using Dapr.Client;
 using Microsoft.Extensions.Logging;
-using RecommendCoffee.Registration.Domain.Subscriptions;
+using TastyBeans.Registration.Domain.Subscriptions;
 
-namespace RecommendCoffee.Registration.Infrastructure.Agents;
+namespace TastyBeans.Registration.Infrastructure.Agents;
 
 public class SubscriptionsAgent: ISubscriptions
 {

@@ -1,10 +1,11 @@
 ﻿using Cronos;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using RecommendCoffee.Timer.Domain.Events;
 using Sgbj.Cron;
+using TastyBeans.Shared.Application;
+using TastyBeans.Timer.Domain.Events;
 
-namespace RecommendCoffee.Timer.Application.Services;
+namespace TastyBeans.Timer.Application.Services;
 
 public class MonthHasPassedTimer : BackgroundService
 {

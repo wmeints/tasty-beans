@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
 
-namespace RecommendCoffee.Subscriptions.Infrastructure.Persistence;
+namespace TastyBeans.Subscriptions.Infrastructure.Persistence;
 
 public class ApplicationDbContext : DbContext
 {

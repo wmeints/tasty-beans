@@ -1,8 +1,9 @@
-﻿using RecommendCoffee.Shipping.Application.IntegrationEvents;
-using RecommendCoffee.Shipping.Domain.Aggregates.CustomerAggregate;
-using RecommendCoffee.Shipping.Domain.Aggregates.CustomerAggregate.Commands;
+﻿using TastyBeans.Shared.Application;
+using TastyBeans.Shipping.Application.IntegrationEvents;
+using TastyBeans.Shipping.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.Shipping.Domain.Aggregates.CustomerAggregate.Commands;
 
-namespace RecommendCoffee.Shipping.Application.EventHandlers;
+namespace TastyBeans.Shipping.Application.EventHandlers;
 
 public class CustomerRegisteredEventHandler
 {

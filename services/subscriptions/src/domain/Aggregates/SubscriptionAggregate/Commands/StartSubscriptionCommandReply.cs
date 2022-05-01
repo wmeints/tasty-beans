@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
+namespace TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
 
 public record StartSubscriptionCommandReply(
     Subscription? Subscription, 

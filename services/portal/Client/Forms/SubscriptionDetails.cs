@@ -1,7 +1,6 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace RecommendCoffee.Portal.Client.Forms;
+namespace TastyBeans.Portal.Client.Forms;
 
 public record SubscriptionDetails
 {

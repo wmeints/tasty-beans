@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using TastyBeans.Shared.Domain;
 
 namespace RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate.Commands;
 

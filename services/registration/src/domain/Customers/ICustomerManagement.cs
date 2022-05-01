@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Registration.Domain.Customers;
+﻿namespace TastyBeans.Registration.Domain.Customers;
 
 public interface ICustomerManagement
 {

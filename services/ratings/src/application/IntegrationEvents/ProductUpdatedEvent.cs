@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Ratings.Application.IntegrationEvents;
+﻿namespace TastyBeans.Ratings.Application.IntegrationEvents;
 
 public record ProductUpdatedEvent(
     Guid ProductId, 

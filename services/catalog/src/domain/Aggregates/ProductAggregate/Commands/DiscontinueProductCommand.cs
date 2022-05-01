@@ -1,3 +1,3 @@
-﻿namespace RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Commands;
+﻿namespace TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
 
 public record DiscontinueProductCommand(Guid ProductId);

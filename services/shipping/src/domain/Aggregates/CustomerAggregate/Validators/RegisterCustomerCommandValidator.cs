@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using RecommendCoffee.Shipping.Domain.Aggregates.CustomerAggregate.Commands;
+using TastyBeans.Shipping.Domain.Aggregates.CustomerAggregate.Commands;
 
-namespace RecommendCoffee.Ratings.Domain.Aggregates.CustomerAggregate.Validators;
+namespace TastyBeans.Shipping.Domain.Aggregates.CustomerAggregate.Validators;
 
 public class RegisterCustomerCommandValidator: AbstractValidator<RegisterCustomerCommand>
 {

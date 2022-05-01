@@ -1,10 +1,11 @@
-﻿using RecommendCoffee.Registration.Domain.Customers;
-using RecommendCoffee.Registration.Domain.Payments;
-using RecommendCoffee.Registration.Domain.Registrations.Commands;
-using RecommendCoffee.Registration.Domain.Subscriptions;
-using Stateless;
+﻿using Stateless;
+using TastyBeans.Registration.Domain.Customers;
+using TastyBeans.Registration.Domain.Payments;
+using TastyBeans.Registration.Domain.Registrations.Commands;
+using TastyBeans.Registration.Domain.Subscriptions;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Registration.Domain.Registrations;
+namespace TastyBeans.Registration.Domain.Registrations;
 
 public class Registration
 {

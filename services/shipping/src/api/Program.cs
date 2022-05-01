@@ -2,16 +2,17 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Shared.Diagnostics;
-using RecommendCoffee.Shared.Infrastructure.EventBus;
-using RecommendCoffee.Shipping.Application.CommandHandlers;
-using RecommendCoffee.Shipping.Application.EventHandlers;
-using RecommendCoffee.Shipping.Application.Services;
-using RecommendCoffee.Shipping.Domain.Aggregates.CustomerAggregate;
-using RecommendCoffee.Shipping.Domain.Aggregates.ProductAggregate;
-using RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate;
-using RecommendCoffee.Shipping.Infrastructure.Agents;
 using RecommendCoffee.Shipping.Infrastructure.Persistence;
+using TastyBeans.Shared.Diagnostics;
+using TastyBeans.Shared.Infrastructure.EventBus;
+using TastyBeans.Shipping.Application.CommandHandlers;
+using TastyBeans.Shipping.Application.EventHandlers;
+using TastyBeans.Shipping.Application.Services;
+using TastyBeans.Shipping.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.Shipping.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate;
+using TastyBeans.Shipping.Infrastructure.Agents;
+using TastyBeans.Shipping.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,16 +46,16 @@ builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
 
 builder.Services.AddTracing(telemetryOptions,
-    "RecommendCoffee.Shipping.Api",
-    "RecommendCoffee.Shipping.Application",
-    "RecommendCoffee.Shipping.Domain",
-    "RecommendCoffee.Shipping.Infrastructure");
+    "TastyBeans.Shipping.Api",
+    "TastyBeans.Shipping.Application",
+    "TastyBeans.Shipping.Domain",
+    "TastyBeans.Shipping.Infrastructure");
 
 builder.Services.AddMetrics(telemetryOptions,
-    "RecommendCoffee.Shipping.Api",
-    "RecommendCoffee.Shipping.Application",
-    "RecommendCoffee.Shipping.Domain",
-    "RecommendCoffee.Shipping.Infrastructure");
+    "TastyBeans.Shipping.Api",
+    "TastyBeans.Shipping.Application",
+    "TastyBeans.Shipping.Domain",
+    "TastyBeans.Shipping.Infrastructure");
 
 builder.Services.AddLogging(telemetryOptions);
 
@@ -69,7 +70,7 @@ builder.Services.AddScoped<CreateShippingOrderCommandHandler>();
 
 builder.Services.AddHttpClient<ITransportCompany, TransportCompanyAgent>(client =>
 {
-    client.BaseAddress = new Uri("http://transport/");
+    client.BaseAddress = new Uri(builder.Configuration["ServiceLocations:Transport"]);
 });
 
 var app = builder.Build();

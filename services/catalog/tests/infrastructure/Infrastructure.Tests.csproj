@@ -6,9 +6,9 @@
 
     <IsPackable>false</IsPackable>
 
-    <AssemblyName>RecommendCoffee.Catalog.Infrastructure.Tests</AssemblyName>
+    <AssemblyName>TastyBeans.Catalog.Infrastructure.Tests</AssemblyName>
 
-    <RootNamespace>RecommendCoffee.Catalog.Infrastructure.Tests</RootNamespace>
+    <RootNamespace>TastyBeans.Catalog.Infrastructure.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

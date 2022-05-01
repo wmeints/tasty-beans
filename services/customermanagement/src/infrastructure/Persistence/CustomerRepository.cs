@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate;
-using RecommendCoffee.Shared.Domain;
+using TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.CustomerManagement.Infrastructure.Persistence;
+namespace TastyBeans.CustomerManagement.Infrastructure.Persistence;
 
 public class CustomerRepository : ICustomerRepository
 {

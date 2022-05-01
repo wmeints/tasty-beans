@@ -1,7 +1,7 @@
-﻿using RecommendCoffee.Registration.Domain.Customers;
-using RecommendCoffee.Registration.Domain.Payments;
-using RecommendCoffee.Registration.Domain.Subscriptions;
+﻿using TastyBeans.Registration.Domain.Customers;
+using TastyBeans.Registration.Domain.Payments;
+using TastyBeans.Registration.Domain.Subscriptions;
 
-namespace RecommendCoffee.Registration.Api.Forms;
+namespace TastyBeans.Registration.Api.Forms;
 
 public record StartRegistrationForm(CustomerDetails CustomerDetails, SubscriptionDetails Subscription, PaymentMethodDetails PaymentMethod);

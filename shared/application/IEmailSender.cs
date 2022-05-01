@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Shared.Application;
+﻿namespace TastyBeans.Shared.Application;
 
 public interface IEmailSender
 {

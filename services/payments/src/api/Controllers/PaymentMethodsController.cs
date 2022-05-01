@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RecommendCoffee.Payments.Api.Forms;
-using RecommendCoffee.Payments.Application.CommandHandlers;
 using RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate.Commands;
+using TastyBeans.Payments.Api.Forms;
+using TastyBeans.Payments.Application.CommandHandlers;
+using TastyBeans.Shared.Api;
 
-namespace RecommendCoffee.Payments.Api.Controllers;
+namespace TastyBeans.Payments.Api.Controllers;
 
 [ApiController]
 [Route("/paymentmethods")]

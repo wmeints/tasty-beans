@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RecommendCoffee.Recommendations.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Recommendations.Domain.Aggregates.ProductAggregate;
 
-namespace RecommendCoffee.Recommendations.Api.Controllers;
+namespace TastyBeans.Recommendations.Api.Controllers;
 
 [ApiController]
 [Route("/recommendation")]

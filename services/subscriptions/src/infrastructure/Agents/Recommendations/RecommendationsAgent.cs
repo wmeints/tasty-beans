@@ -1,8 +1,8 @@
 ﻿using Dapr.Client;
 using Microsoft.Extensions.Logging;
-using RecommendCoffee.Subscriptions.Domain.Services.Recommendations;
+using TastyBeans.Subscriptions.Domain.Services.Recommendations;
 
-namespace RecommendCoffee.Subscriptions.Infrastructure.Agents.Recommendations;
+namespace TastyBeans.Subscriptions.Infrastructure.Agents.Recommendations;
 
 public class RecommendationsAgent : IRecommendations
 {

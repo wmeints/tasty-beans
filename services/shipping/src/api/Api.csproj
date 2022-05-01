@@ -31,8 +31,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>RecommendCoffee.Shipping.Api</RootNamespace>
-    <AssemblyName>RecommendCoffee.Shipping.Api</AssemblyName>
+    <RootNamespace>TastyBeans.Shipping.Api</RootNamespace>
+    <AssemblyName>TastyBeans.Shipping.Api</AssemblyName>
     <UserSecretsId>bb28b888-fa40-4eb1-a441-00e218548afe</UserSecretsId>
   </PropertyGroup>
 

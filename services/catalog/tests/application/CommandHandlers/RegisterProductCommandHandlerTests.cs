@@ -2,14 +2,14 @@
 using System.Threading.Tasks;
 using FakeItEasy;
 using FluentAssertions;
-using RecommendCoffee.Catalog.Application.CommandHandlers;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Commands;
-using RecommendCoffee.Shared.Application;
-using RecommendCoffee.Shared.Domain;
+using TastyBeans.Catalog.Application.CommandHandlers;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
+using TastyBeans.Shared.Application;
+using TastyBeans.Shared.Domain;
 using Xunit;
 
-namespace RecommendCoffee.Catalog.Application.Tests.CommandHandlers;
+namespace TastyBeans.Catalog.Application.Tests.CommandHandlers;
 
 public class RegisterProductCommandHandlerTests
 {

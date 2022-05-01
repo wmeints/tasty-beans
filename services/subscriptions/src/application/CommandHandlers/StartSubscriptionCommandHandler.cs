@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
+using TastyBeans.Shared.Application;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
 
-namespace RecommendCoffee.Subscriptions.Application.CommandHandlers;
+namespace TastyBeans.Subscriptions.Application.CommandHandlers;
 
 public class StartSubscriptionCommandHandler
 {

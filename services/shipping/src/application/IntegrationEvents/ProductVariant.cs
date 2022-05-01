@@ -1,3 +1,3 @@
-﻿namespace RecommendCoffee.Shipping.Application.IntegrationEvents;
+﻿namespace TastyBeans.Shipping.Application.IntegrationEvents;
 
 public record ProductVariant(int Weight, decimal UnitPrice);

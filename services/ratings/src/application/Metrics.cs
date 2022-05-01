@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Metrics;
 
-namespace RecommendCoffee.Ratings.Application;
+namespace TastyBeans.Ratings.Application;
 
 public static class Metrics
 {

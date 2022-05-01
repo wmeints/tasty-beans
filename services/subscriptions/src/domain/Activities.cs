@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 
-namespace RecommendCoffee.Subscriptions.Domain;
+namespace TastyBeans.Subscriptions.Domain;
 
 public static class Activities
 {
-    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Subscriptions.Domain");
+    private static readonly ActivitySource ActivitySource = new ActivitySource("TastyBeans.Subscriptions.Domain");
 
     public static Activity? Subscribe(Guid customerId)
     {

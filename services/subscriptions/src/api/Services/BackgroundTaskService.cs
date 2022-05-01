@@ -1,6 +1,6 @@
-﻿using RecommendCoffee.Subscriptions.Application.EventHandlers;
+﻿using TastyBeans.Subscriptions.Application.EventHandlers;
 
-namespace RecommendCoffee.Subscriptions.Api.Services;
+namespace TastyBeans.Subscriptions.Api.Services;
 
 public class BackgroundTaskService: BackgroundService
 {

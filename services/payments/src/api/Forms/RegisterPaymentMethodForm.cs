@@ -1,6 +1,6 @@
 ﻿using RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate;
 
-namespace RecommendCoffee.Payments.Api.Forms;
+namespace TastyBeans.Payments.Api.Forms;
 
 public class RegisterPaymentMethodForm
 {

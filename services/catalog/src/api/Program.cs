@@ -2,12 +2,12 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Catalog.Application.CommandHandlers;
-using RecommendCoffee.Catalog.Application.QueryHandlers;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
-using RecommendCoffee.Catalog.Infrastructure.Persistence;
-using RecommendCoffee.Shared.Diagnostics;
-using RecommendCoffee.Shared.Infrastructure.EventBus;
+using TastyBeans.Catalog.Application.CommandHandlers;
+using TastyBeans.Catalog.Application.QueryHandlers;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Catalog.Infrastructure.Persistence;
+using TastyBeans.Shared.Diagnostics;
+using TastyBeans.Shared.Infrastructure.EventBus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,16 +41,16 @@ builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
 
 builder.Services.AddTracing(telemetryOptions,
-    "RecommendCoffee.Catalog.Api",
-    "RecommendCoffee.Catalog.Application",
-    "RecommendCoffee.Catalog.Domain",
-    "RecommendCoffee.Catalog.Infrastructure");
+    "TastyBeans.Catalog.Api",
+    "TastyBeans.Catalog.Application",
+    "TastyBeans.Catalog.Domain",
+    "TastyBeans.Catalog.Infrastructure");
 
 builder.Services.AddMetrics(telemetryOptions,
-    "RecommendCoffee.Catalog.Api",
-    "RecommendCoffee.Catalog.Application",
-    "RecommendCoffee.Catalog.Domain",
-    "RecommendCoffee.Catalog.Infrastructure");
+    "TastyBeans.Catalog.Api",
+    "TastyBeans.Catalog.Application",
+    "TastyBeans.Catalog.Domain",
+    "TastyBeans.Catalog.Infrastructure");
 
 builder.Services.AddLogging(telemetryOptions);
 

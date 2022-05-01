@@ -1,6 +1,6 @@
-﻿using RecommendCoffee.Registration.Domain.Subscriptions;
+﻿using TastyBeans.Registration.Domain.Subscriptions;
 
-namespace RecommendCoffee.Registration.Application.IntegrationEvents;
+namespace TastyBeans.Registration.Application.IntegrationEvents;
 
 public record SubscriptionStartedEvent(
     Guid CustomerId, 

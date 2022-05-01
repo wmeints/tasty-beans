@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>RecommendCoffee.Portal.Shared</RootNamespace>
-    <AssemblyName>RecommendCoffee.Portal.Shared</AssemblyName>
+    <RootNamespace>TastyBeans.Portal.Shared</RootNamespace>
+    <AssemblyName>TastyBeans.Portal.Shared</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-namespace RecommendCoffee.Portal.Client.Forms;
+namespace TastyBeans.Portal.Client.Forms;
 
 public enum CardType
 {

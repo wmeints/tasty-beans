@@ -1,9 +1,9 @@
 ﻿using Dapr;
 using Microsoft.AspNetCore.Mvc;
-using RecommendCoffee.Ratings.Application.EventHandlers;
-using RecommendCoffee.Ratings.Application.IntegrationEvents;
+using TastyBeans.Ratings.Application.EventHandlers;
+using TastyBeans.Ratings.Application.IntegrationEvents;
 
-namespace RecommendCoffee.Ratings.Api.Controllers;
+namespace TastyBeans.Ratings.Api.Controllers;
 
 [ApiController]
 [Route("/events")]
@@ -33,7 +33,6 @@ public class EventsController :ControllerBase
     [Topic("pubsub", "catalog.product.registered.v1")]
     public async Task<IActionResult> OnProductRegistered(ProductRegisteredEvent evt)
     {
-        _logger.HandlingProductRegisteredEvent();
         await _productRegisteredEventHandler.HandleAsync(evt);
         return Accepted();
     }
@@ -42,7 +41,6 @@ public class EventsController :ControllerBase
     [Topic("pubsub", "catalog.product.updated.v1")]
     public async Task<IActionResult> OnProductUpdated(ProductUpdatedEvent evt)
     {
-        _logger.HandlingProductUpdatedEvent();
         await _productUpdatedEventHandler.HandleAsync(evt);
         return Accepted();
     }
@@ -51,7 +49,6 @@ public class EventsController :ControllerBase
     [Topic("pubsub", "catalog.product.discontinued.v1")]
     public async Task<IActionResult> OnProductDiscontinued(ProductDiscontinuedEvent evt)
     {
-        _logger.HandlingProductDiscontinuedEvent();
         await _productDiscontinuedEventHandler.HandleAsync(evt);
         return Accepted();
     }
@@ -60,7 +57,6 @@ public class EventsController :ControllerBase
     [Topic("pubsub", "customermanagement.customer.registered.v1")]
     public async Task<IActionResult> OnCustomerRegistered(CustomerRegisteredEvent evt)
     {
-        _logger.HandlingCustomerRegisteredEvent();
         await _customerRegisteredEventHandler.HandleAsync(evt);
         return Accepted();
     }

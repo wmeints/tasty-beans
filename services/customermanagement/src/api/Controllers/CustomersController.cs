@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RecommendCoffee.CustomerManagement.Api.Common;
-using RecommendCoffee.CustomerManagement.Api.Forms;
-using RecommendCoffee.CustomerManagement.Application.CommandHandlers;
-using RecommendCoffee.CustomerManagement.Application.QueryHandlers;
-using RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate;
-using RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate.Commands;
+using TastyBeans.CustomerManagement.Api.Common;
+using TastyBeans.CustomerManagement.Api.Forms;
+using TastyBeans.CustomerManagement.Application.CommandHandlers;
+using TastyBeans.CustomerManagement.Application.QueryHandlers;
+using TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate.Commands;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.CustomerManagement.Api.Controllers
+namespace TastyBeans.CustomerManagement.Api.Controllers
 {
     [ApiController]
     [Route("/customers")]

@@ -1,8 +1,8 @@
-﻿using RecommendCoffee.Identity.Domain.Aggregates.UserAggregate;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TastyBeans.Identity.Domain.Aggregates.UserAggregate;
 
-namespace RecommendCoffee.Identity.Infrastructure.Persistence;
+namespace TastyBeans.Identity.Infrastructure.Persistence;
 
 public class ApplicationDbContext: IdentityDbContext<ApplicationUser>
 {

@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using RecommendCoffee.Shared.Domain;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Shared.Infrastructure.StateManagement;
+namespace TastyBeans.Shared.Infrastructure.StateManagement;
 
 public static class ServiceCollectionExtensions {
     public static IServiceCollection AddStateStore(this IServiceCollection services) {

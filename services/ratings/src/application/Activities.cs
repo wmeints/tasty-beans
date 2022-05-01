@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 
-namespace RecommendCoffee.Ratings.Application;
+namespace TastyBeans.Ratings.Application;
 
 public static class Activities
 {
-    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Ratings.Application");
+    private static readonly ActivitySource ActivitySource = new ActivitySource("TastyBeans.Ratings.Application");
 
     public static Activity? ExecuteCommand(string commandName)
     {
@@ -24,12 +24,4 @@ public static class Activities
         return activity;
     }
 
-    public static Activity? ExecuteQuery(string queryName)
-    {
-        var activity = ActivitySource.StartActivity("ExecuteQuery", ActivityKind.Internal);
-
-        activity?.AddTag("query.name", queryName);
-
-        return activity;
-    }
 }

@@ -1,8 +1,8 @@
 ﻿using Dapr.Client;
 using Microsoft.Extensions.Logging;
-using RecommendCoffee.Registration.Domain.Customers;
+using TastyBeans.Registration.Domain.Customers;
 
-namespace RecommendCoffee.Registration.Infrastructure.Agents;
+namespace TastyBeans.Registration.Infrastructure.Agents;
 
 public class CustomerManagementAgent: ICustomerManagement
 {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Shared.Domain;
-using RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate;
+using TastyBeans.Shared.Domain;
+using TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate;
 
-namespace RecommendCoffee.Shipping.Infrastructure.Persistence;
+namespace TastyBeans.Shipping.Infrastructure.Persistence;
 
 public class ShippingOrderRepository: IShippingOrderRepository
 {

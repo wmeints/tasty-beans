@@ -1,6 +1,6 @@
-﻿using RecommendCoffee.Subscriptions.Domain.Services.Shipping.Commands;
+﻿using TastyBeans.Subscriptions.Domain.Services.Shipping.Commands;
 
-namespace RecommendCoffee.Subscriptions.Domain.Services.Shipping;
+namespace TastyBeans.Subscriptions.Domain.Services.Shipping;
 
 public interface IShipping
 {

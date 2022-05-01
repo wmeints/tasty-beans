@@ -1,8 +1,9 @@
-﻿using RecommendCoffee.Ratings.Application.IntegrationEvents;
-using RecommendCoffee.Ratings.Domain.Aggregates.CustomerAggregate;
-using RecommendCoffee.Ratings.Domain.Aggregates.CustomerAggregate.Commands;
+﻿using TastyBeans.Ratings.Application.IntegrationEvents;
+using TastyBeans.Ratings.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.Ratings.Domain.Aggregates.CustomerAggregate.Commands;
+using TastyBeans.Shared.Application;
 
-namespace RecommendCoffee.Ratings.Application.EventHandlers;
+namespace TastyBeans.Ratings.Application.EventHandlers;
 
 public class CustomerRegisteredEventHandler
 {

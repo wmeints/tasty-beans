@@ -6,9 +6,9 @@
 
     <IsPackable>false</IsPackable>
 
-    <AssemblyName>RecommendCoffee.Subscriptions.Domain.Tests</AssemblyName>
+    <AssemblyName>TastyBeans.Subscriptions.Domain.Tests</AssemblyName>
 
-    <RootNamespace>RecommendCoffee.Subscriptions.Domain.Tests</RootNamespace>
+    <RootNamespace>TastyBeans.Subscriptions.Domain.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

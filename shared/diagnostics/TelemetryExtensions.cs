@@ -7,7 +7,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-namespace RecommendCoffee.Shared.Diagnostics;
+namespace TastyBeans.Shared.Diagnostics;
 
 public static class TelemetryExtensions
 {

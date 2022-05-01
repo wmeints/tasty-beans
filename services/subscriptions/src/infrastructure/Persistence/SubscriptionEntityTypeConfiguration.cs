@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
 
-namespace RecommendCoffee.Subscriptions.Infrastructure.Persistence;
+namespace TastyBeans.Subscriptions.Infrastructure.Persistence;
 
 public class SubscriptionEntityTypeConfiguration: IEntityTypeConfiguration<Subscription>
 {

@@ -1,10 +1,10 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using RecommendCoffee.Shared.Application;
-using RecommendCoffee.Shared.Diagnostics;
-using RecommendCoffee.Shared.Infrastructure.EventBus;
-using RecommendCoffee.Timer.Application.Services;
+using TastyBeans.Shared.Application;
+using TastyBeans.Shared.Diagnostics;
+using TastyBeans.Shared.Infrastructure.EventBus;
+using TastyBeans.Timer.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,16 +31,16 @@ builder.Services.AddHealthChecks();
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
 
 builder.Services.AddTracing(telemetryOptions,
-    "RecommendCoffee.Timer.Api",
-    "RecommendCoffee.Timer.Application",
-    "RecommendCoffee.Timer.Domain",
-    "RecommendCoffee.Timer.Infrastructure");
+    "TastyBeans.Timer.Api",
+    "TastyBeans.Timer.Application",
+    "TastyBeans.Timer.Domain",
+    "TastyBeans.Timer.Infrastructure");
 
 builder.Services.AddMetrics(telemetryOptions,
-    "RecommendCoffee.Timer.Api",
-    "RecommendCoffee.Timer.Application",
-    "RecommendCoffee.Timer.Domain",
-    "RecommendCoffee.Timer.Infrastructure");
+    "TastyBeans.Timer.Api",
+    "TastyBeans.Timer.Application",
+    "TastyBeans.Timer.Domain",
+    "TastyBeans.Timer.Infrastructure");
 
 builder.Services.AddLogging(telemetryOptions);
 

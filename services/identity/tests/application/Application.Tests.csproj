@@ -5,6 +5,10 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
+
+    <AssemblyName>TastyBeans.CustomerManagement.Application.Tests</AssemblyName>
+
+    <RootNamespace>TastyBeans.CustomerManagement.Application.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,10 +1,10 @@
 ﻿using System.Security.Claims;
-using RecommendCoffee.Identity.Domain.Aggregates.UserAggregate;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
+using TastyBeans.Identity.Domain.Aggregates.UserAggregate;
 
-namespace RecommendCoffee.Identity.Api;
+namespace TastyBeans.Identity.Api;
 
 public class ApplicationProfileService: IProfileService
 {

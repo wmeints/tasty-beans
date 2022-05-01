@@ -1,9 +1,9 @@
 ﻿using Dapr;
 using Microsoft.AspNetCore.Mvc;
-using RecommendCoffee.Identity.Application.EventHandlers;
-using RecommendCoffee.Identity.Application.IntegrationEvents;
+using TastyBeans.Identity.Application.EventHandlers;
+using TastyBeans.Identity.Application.IntegrationEvents;
 
-namespace RecommendCoffee.Identity.Api.Controllers;
+namespace TastyBeans.Identity.Api.Controllers;
 
 [ApiController]
 [Route("/events")]

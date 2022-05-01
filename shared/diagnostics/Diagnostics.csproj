@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>RecommendCoffee.Shared.Diagnostics</RootNamespace>
-    <AssemblyName>RecommendCoffee.Shared.Diagnostics</AssemblyName>
+    <RootNamespace>TastyBeans.Shared.Diagnostics</RootNamespace>
+    <AssemblyName>TastyBeans.Shared.Diagnostics</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

@@ -15,8 +15,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyName>RecommendCoffee.Transport.Infrastructure</AssemblyName>
-    <RootNamespace>RecommendCoffee.Transport.Infrastructure</RootNamespace>
+    <AssemblyName>TastyBeans.Transport.Infrastructure</AssemblyName>
+    <RootNamespace>TastyBeans.Transport.Infrastructure</RootNamespace>
   </PropertyGroup>
 
 </Project>

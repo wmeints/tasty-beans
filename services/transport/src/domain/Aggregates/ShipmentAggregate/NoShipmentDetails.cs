@@ -1,3 +1,3 @@
-﻿namespace RecommendCoffee.Transport.Domain.Aggregates.ShipmentAggregate;
+﻿namespace TastyBeans.Transport.Domain.Aggregates.ShipmentAggregate;
 
 public class NoShipmentDetails : IShipmentData { }

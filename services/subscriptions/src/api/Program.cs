@@ -2,19 +2,18 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Shared.Diagnostics;
-using RecommendCoffee.Shared.Infrastructure.EventBus;
-using RecommendCoffee.Subscriptions.Api;
-using RecommendCoffee.Subscriptions.Api.Services;
-using RecommendCoffee.Subscriptions.Application.CommandHandlers;
-using RecommendCoffee.Subscriptions.Application.EventHandlers;
-using RecommendCoffee.Subscriptions.Application.QueryHandlers;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
-using RecommendCoffee.Subscriptions.Domain.Services.Recommendations;
-using RecommendCoffee.Subscriptions.Domain.Services.Shipping;
-using RecommendCoffee.Subscriptions.Infrastructure.Agents.Recommendations;
-using RecommendCoffee.Subscriptions.Infrastructure.Agents.Shipping;
-using RecommendCoffee.Subscriptions.Infrastructure.Persistence;
+using TastyBeans.Shared.Diagnostics;
+using TastyBeans.Shared.Infrastructure.EventBus;
+using TastyBeans.Subscriptions.Api.Services;
+using TastyBeans.Subscriptions.Application.CommandHandlers;
+using TastyBeans.Subscriptions.Application.EventHandlers;
+using TastyBeans.Subscriptions.Application.QueryHandlers;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+using TastyBeans.Subscriptions.Domain.Services.Recommendations;
+using TastyBeans.Subscriptions.Domain.Services.Shipping;
+using TastyBeans.Subscriptions.Infrastructure.Agents.Recommendations;
+using TastyBeans.Subscriptions.Infrastructure.Agents.Shipping;
+using TastyBeans.Subscriptions.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,16 +47,16 @@ builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
 
 builder.Services.AddTracing(telemetryOptions,
-    "RecommendCoffee.Subscriptions.Api",
-    "RecommendCoffee.Subscriptions.Application",
-    "RecommendCoffee.Subscriptions.Domain",
-    "RecommendCoffee.Subscriptions.Infrastructure");
+    "TastyBeans.Subscriptions.Api",
+    "TastyBeans.Subscriptions.Application",
+    "TastyBeans.Subscriptions.Domain",
+    "TastyBeans.Subscriptions.Infrastructure");
 
 builder.Services.AddMetrics(telemetryOptions,
-    "RecommendCoffee.Subscriptions.Api",
-    "RecommendCoffee.Subscriptions.Application",
-    "RecommendCoffee.Subscriptions.Domain",
-    "RecommendCoffee.Subscriptions.Infrastructure");
+    "TastyBeans.Subscriptions.Api",
+    "TastyBeans.Subscriptions.Application",
+    "TastyBeans.Subscriptions.Domain",
+    "TastyBeans.Subscriptions.Infrastructure");
 
 builder.Services.AddLogging(telemetryOptions);
 

@@ -1,6 +1,6 @@
-﻿using RecommendCoffee.Registration.Domain.Payments;
+﻿using TastyBeans.Registration.Domain.Payments;
 
-namespace RecommendCoffee.Registration.Application.IntegrationEvents;
+namespace TastyBeans.Registration.Application.IntegrationEvents;
 
 public record PaymentMethodRegisteredEvent(
     Guid Id,

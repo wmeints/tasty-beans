@@ -32,8 +32,8 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <AssemblyName>RecommendCoffee.Subscriptions.Api</AssemblyName>
-        <RootNamespace>RecommendCoffee.Subscriptions.Api</RootNamespace>
+        <AssemblyName>TastyBeans.Subscriptions.Api</AssemblyName>
+        <RootNamespace>TastyBeans.Subscriptions.Api</RootNamespace>
         <UserSecretsId>b3a0a5ef-4c02-449b-892a-605707bd08c6</UserSecretsId>
     </PropertyGroup>
 

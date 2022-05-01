@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate;
 using RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate.Commands;
+using TastyBeans.Shared.Application;
 
-namespace RecommendCoffee.Payments.Application.CommandHandlers;
+namespace TastyBeans.Payments.Application.CommandHandlers;
 
 public class RegisterPaymentMethodCommandHandler
 {

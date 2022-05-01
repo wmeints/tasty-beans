@@ -1,7 +1,7 @@
 ﻿using System.Threading.Channels;
-using RecommendCoffee.Subscriptions.Application.IntegrationEvents;
+using TastyBeans.Subscriptions.Application.IntegrationEvents;
 
-namespace RecommendCoffee.Subscriptions.Api.Services;
+namespace TastyBeans.Subscriptions.Api.Services;
 
 public class BackgroundTaskQueue
 {

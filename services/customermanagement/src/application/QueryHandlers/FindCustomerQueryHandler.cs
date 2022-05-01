@@ -1,6 +1,6 @@
-﻿using RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate;
+﻿using TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate;
 
-namespace RecommendCoffee.CustomerManagement.Application.QueryHandlers;
+namespace TastyBeans.CustomerManagement.Application.QueryHandlers;
 
 public class FindCustomerQueryHandler
 {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate;
-using RecommendCoffee.Shared.Domain;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Catalog.Infrastructure.Persistence;
+namespace TastyBeans.Catalog.Infrastructure.Persistence;
 
 public class ProductRepository: IProductRepository
 {

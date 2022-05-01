@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>RecommendCoffee.Shared.Api</RootNamespace>
-    <AssemblyName>RecommendCoffee.Shared.Api</AssemblyName>
+    <RootNamespace>TastyBeans.Shared.Api</RootNamespace>
+    <AssemblyName>TastyBeans.Shared.Api</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

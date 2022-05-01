@@ -1,4 +1,6 @@
-﻿namespace RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate;
+﻿using TastyBeans.Shared.Domain;
+
+namespace TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate;
 
 public interface ICustomerRepository
 {

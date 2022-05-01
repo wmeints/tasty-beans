@@ -1,9 +1,10 @@
 ﻿using System.Collections.ObjectModel;
-using RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate.Commands;
-using RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate.Events;
-using RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate.Validators;
+using TastyBeans.Shared.Domain;
+using TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate.Commands;
+using TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate.Events;
+using TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate.Validators;
 
-namespace RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate;
+namespace TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate;
 
 public class ShippingOrder
 {

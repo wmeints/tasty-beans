@@ -1,6 +1,6 @@
-﻿using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+﻿using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
 
-namespace RecommendCoffee.Subscriptions.Api.Forms;
+namespace TastyBeans.Subscriptions.Api.Forms;
 
 public class CreateSubscriptionForm
 {

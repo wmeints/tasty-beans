@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Shipping.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.Shipping.Domain.Aggregates.CustomerAggregate;
 
-namespace RecommendCoffee.Shipping.Infrastructure.Persistence;
+namespace TastyBeans.Shipping.Infrastructure.Persistence;
 
 public class CustomerRepository: ICustomerRepository
 {

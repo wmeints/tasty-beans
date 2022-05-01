@@ -1,3 +1,3 @@
-﻿namespace RecommendCoffee.Recommendations.Domain.Aggregates.ProductAggregate.Commands;
+﻿namespace TastyBeans.Recommendations.Domain.Aggregates.ProductAggregate.Commands;
 
 public record UpdateProductCommand(string Name);

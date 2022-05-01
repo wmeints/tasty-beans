@@ -1,3 +1,3 @@
-﻿namespace RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
+﻿namespace TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
 
 public record ChangeShippingFrequencyCommand(Guid CustomerId, ShippingFrequency ShippingFrequency);

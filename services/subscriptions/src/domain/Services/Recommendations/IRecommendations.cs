@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Subscriptions.Domain.Services.Recommendations;
+﻿namespace TastyBeans.Subscriptions.Domain.Services.Recommendations;
 
 public interface IRecommendations
 {

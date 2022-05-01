@@ -4,15 +4,15 @@ using FakeItEasy;
 using FluentAssertions;
 using NodaTime;
 using NodaTime.Extensions;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Events;
-using RecommendCoffee.Subscriptions.Domain.Services.Recommendations;
-using RecommendCoffee.Subscriptions.Domain.Services.Shipping;
-using RecommendCoffee.Subscriptions.Domain.Services.Shipping.Commands;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Events;
+using TastyBeans.Subscriptions.Domain.Services.Recommendations;
+using TastyBeans.Subscriptions.Domain.Services.Shipping;
+using TastyBeans.Subscriptions.Domain.Services.Shipping.Commands;
 using Xunit;
 
-namespace RecommendCoffee.Subscriptions.Domain.Tests.Aggregates.SubscriptionAggregate;
+namespace TastyBeans.Subscriptions.Domain.Tests.Aggregates.SubscriptionAggregate;
 
 public class SubscriptionTests
 {

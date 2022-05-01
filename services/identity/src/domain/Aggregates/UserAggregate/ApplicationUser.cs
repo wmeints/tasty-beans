@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace RecommendCoffee.Identity.Domain.Aggregates.UserAggregate;
+namespace TastyBeans.Identity.Domain.Aggregates.UserAggregate;
 
 public class ApplicationUser: IdentityUser
 {

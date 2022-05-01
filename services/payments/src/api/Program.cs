@@ -2,12 +2,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Payments.Api;
-using RecommendCoffee.Payments.Application.CommandHandlers;
 using RecommendCoffee.Payments.Domain.Aggregates.PaymentMethodAggregate;
 using RecommendCoffee.Payments.Infrastructure.Persistence;
-using RecommendCoffee.Shared.Diagnostics;
-using RecommendCoffee.Shared.Infrastructure.EventBus;
+using TastyBeans.Payments.Application.CommandHandlers;
+using TastyBeans.Shared.Diagnostics;
+using TastyBeans.Shared.Infrastructure.EventBus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,16 +40,16 @@ builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
 
 builder.Services.AddTracing(telemetryOptions,
-    "RecommendCoffee.Payments.Api",
-    "RecommendCoffee.Payments.Application",
-    "RecommendCoffee.Payments.Domain",
-    "RecommendCoffee.Payments.Infrastructure");
+    "TastyBeans.Payments.Api",
+    "TastyBeans.Payments.Application",
+    "TastyBeans.Payments.Domain",
+    "TastyBeans.Payments.Infrastructure");
 
 builder.Services.AddMetrics(telemetryOptions,
-    "RecommendCoffee.Payments.Api",
-    "RecommendCoffee.Payments.Application",
-    "RecommendCoffee.Payments.Domain",
-    "RecommendCoffee.Payments.Infrastructure");
+    "TastyBeans.Payments.Api",
+    "TastyBeans.Payments.Application",
+    "TastyBeans.Payments.Domain",
+    "TastyBeans.Payments.Infrastructure");
 
 builder.Services.AddLogging(telemetryOptions);
 

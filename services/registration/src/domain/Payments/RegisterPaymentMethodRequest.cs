@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Registration.Domain.Payments;
+﻿namespace TastyBeans.Registration.Domain.Payments;
 
 public record RegisterPaymentMethodRequest(
     Guid CustomerId, CardType CardType, string CardNumber, 

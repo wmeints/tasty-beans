@@ -1,4 +1,6 @@
-﻿namespace RecommendCoffee.Catalog.Domain.Aggregates.ProductAggregate.Events;
+﻿using TastyBeans.Shared.Domain;
+
+namespace TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Events;
 
 [Topic("catalog.product.registered.v1")]
 public record ProductTasteTestedEvent(

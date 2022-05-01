@@ -1,8 +1,8 @@
-﻿using RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate;
-using RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate.Commands;
-using RecommendCoffee.Shared.Application;
+﻿using TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate.Commands;
+using TastyBeans.Shared.Application;
 
-namespace RecommendCoffee.CustomerManagement.Application.CommandHandlers;
+namespace TastyBeans.CustomerManagement.Application.CommandHandlers;
 
 public class RegisterCustomerCommandHandler
 {

@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Shipping.Domain.Aggregates.ShippingOrderAggregate.Commands;
+namespace TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate.Commands;
 
 public record CreateShippingOrderCommandResponse(
     ShippingOrder? Order,

@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Subscriptions.Infrastructure.Agents.Recommendations;
+﻿namespace TastyBeans.Subscriptions.Infrastructure.Agents.Recommendations;
 
 public class GenerateRecommendationResponse
 {

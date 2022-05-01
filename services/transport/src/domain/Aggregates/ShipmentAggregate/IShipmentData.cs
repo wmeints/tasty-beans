@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Transport.Domain.Aggregates.ShipmentAggregate;
+﻿namespace TastyBeans.Transport.Domain.Aggregates.ShipmentAggregate;
 
 public interface IShipmentData
 {

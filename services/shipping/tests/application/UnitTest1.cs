@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Application.Tests;
+namespace TastyBeans.Shipping.Application.Tests;
 
 public class UnitTest1
 {

@@ -1,9 +1,8 @@
 ﻿using System.Net.Http.Json;
-using Dapr.Client;
 using Microsoft.Extensions.Logging;
-using RecommendCoffee.Shipping.Application.Services;
+using TastyBeans.Shipping.Application.Services;
 
-namespace RecommendCoffee.Shipping.Infrastructure.Agents;
+namespace TastyBeans.Shipping.Infrastructure.Agents;
 
 public class TransportCompanyAgent : ITransportCompany
 {

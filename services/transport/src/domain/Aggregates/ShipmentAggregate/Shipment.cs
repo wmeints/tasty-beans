@@ -1,9 +1,9 @@
 ﻿using Akka.Actor;
 using Akka.Event;
-using RecommendCoffee.Transport.Domain.Aggregates.ShipmentAggregate.Commands;
-using RecommendCoffee.Transport.Domain.Aggregates.ShipmentAggregate.Events;
+using TastyBeans.Transport.Domain.Aggregates.ShipmentAggregate.Commands;
+using TastyBeans.Transport.Domain.Aggregates.ShipmentAggregate.Events;
 
-namespace RecommendCoffee.Transport.Domain.Aggregates.ShipmentAggregate;
+namespace TastyBeans.Transport.Domain.Aggregates.ShipmentAggregate;
 
 public class Shipment : FSM<ShipmentStatus, IShipmentData>
 {

@@ -1,28 +1,28 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using RecommendCoffee.Subscriptions.Application.IntegrationEvents;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
-using RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
-using RecommendCoffee.Subscriptions.Domain.Services.Recommendations;
-using RecommendCoffee.Subscriptions.Domain.Services.Shipping;
+﻿using Microsoft.Extensions.Logging;
+using TastyBeans.Shared.Application;
+using TastyBeans.Subscriptions.Application.IntegrationEvents;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+using TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate.Commands;
+using TastyBeans.Subscriptions.Domain.Services.Recommendations;
+using TastyBeans.Subscriptions.Domain.Services.Shipping;
 
-namespace RecommendCoffee.Subscriptions.Application.EventHandlers;
+namespace TastyBeans.Subscriptions.Application.EventHandlers;
 
 public class MonthHasPassedEventHandler
 {
-    private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<MonthHasPassedEventHandler> _logger;
     private ISubscriptionRepository _subscriptionRepository;
     private IRecommendations _recommendations;
     private IShipping _shipping;
     private IEventPublisher _eventPublisher;
 
-    public MonthHasPassedEventHandler(ILogger<MonthHasPassedEventHandler> logger, IServiceProvider serviceProvider,
-        ISubscriptionRepository subscriptionRepository, IRecommendations recommendations, IShipping shipping,
+    public MonthHasPassedEventHandler(
+        ILogger<MonthHasPassedEventHandler> logger,
+        ISubscriptionRepository subscriptionRepository, 
+        IRecommendations recommendations, IShipping shipping,
         IEventPublisher eventPublisher)
     {
         _logger = logger;
-        _serviceProvider = serviceProvider;
         _subscriptionRepository = subscriptionRepository;
         _recommendations = recommendations;
         _shipping = shipping;

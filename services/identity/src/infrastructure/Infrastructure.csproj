@@ -16,8 +16,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>RecommendCoffee.Identity.Infrastructure</RootNamespace>
-    <AssemblyName>RecommendCoffee.Identity.Infrastructure</AssemblyName>
+    <RootNamespace>TastyBeans.Identity.Infrastructure</RootNamespace>
+    <AssemblyName>TastyBeans.Identity.Infrastructure</AssemblyName>
   </PropertyGroup>
 
 </Project>

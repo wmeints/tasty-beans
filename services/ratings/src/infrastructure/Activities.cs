@@ -1,22 +1,10 @@
 ﻿using System.Diagnostics;
 
-namespace RecommendCoffee.Ratings.Infrastructure;
+namespace TastyBeans.Ratings.Infrastructure;
 
 public static class Activities
 {
-    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Ratings.Infrastructure");
-
-    public static Activity? PublishEvent(string eventName)
-    {
-        var activity = ActivitySource.StartActivity("PublishEvent", ActivityKind.Client);
-
-        if (activity != null)
-        {
-            activity.AddTag("event-name", eventName);
-        }
-
-        return activity;
-    }
+    private static readonly ActivitySource ActivitySource = new ActivitySource("TastyBeans.Ratings.Infrastructure");
 
     public static Activity? ExecuteDatabaseCommand()
     {

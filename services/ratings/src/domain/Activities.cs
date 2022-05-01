@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 
-namespace RecommendCoffee.Ratings.Domain;
+namespace TastyBeans.Ratings.Domain;
 
 public static class Activities
 {
-    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Ratings.Domain");
+    private static readonly ActivitySource ActivitySource = new ActivitySource("TastyBeans.Ratings.Domain");
 
     public static Activity? RegisterRating(Guid customerId, Guid productId)
     {

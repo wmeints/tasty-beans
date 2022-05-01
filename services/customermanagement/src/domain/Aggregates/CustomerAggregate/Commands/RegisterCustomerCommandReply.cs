@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate.Commands;
+namespace TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate.Commands;
 
 public record RegisterCustomerCommandReply(Customer? Customer, IEnumerable<ValidationError> Errors, IEnumerable<IDomainEvent> Events)
 {

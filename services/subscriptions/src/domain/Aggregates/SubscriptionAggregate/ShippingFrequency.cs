@@ -1,4 +1,4 @@
-namespace RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+namespace TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
 
 public enum ShippingFrequency
 {

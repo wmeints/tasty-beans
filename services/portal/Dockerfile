@@ -21,4 +21,4 @@ COPY --from=build /dist /app
 
 WORKDIR /app
 
-CMD ["dotnet", "RecommendCoffee.Portal.Server.dll"]
+CMD ["dotnet", "TastyBeans.Portal.Server.dll"]

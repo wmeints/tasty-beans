@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using RecommendCoffee.Identity.Domain.Aggregates.UserAggregate;
-using RecommendCoffee.Identity.Application.IntegrationEvents;
+using TastyBeans.Identity.Application.IntegrationEvents;
+using TastyBeans.Identity.Domain.Aggregates.UserAggregate;
 
-namespace RecommendCoffee.Identity.Application.EventHandlers;
+namespace TastyBeans.Identity.Application.EventHandlers;
 
 public class CustomerRegisteredEventHandler
 {

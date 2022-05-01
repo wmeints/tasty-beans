@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using RecommendCoffee.Shared.Domain;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Catalog.Api.Common;
+namespace TastyBeans.Catalog.Api.Common;
 
 public static class ModelStateExtensions
 {

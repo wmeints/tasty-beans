@@ -1,12 +1,9 @@
-﻿using System.Net;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
-using Dapr.Client;
+﻿using Dapr.Client;
 using Microsoft.Extensions.Logging;
-using RecommendCoffee.Subscriptions.Domain.Services.Shipping;
-using RecommendCoffee.Subscriptions.Domain.Services.Shipping.Commands;
+using TastyBeans.Subscriptions.Domain.Services.Shipping;
+using TastyBeans.Subscriptions.Domain.Services.Shipping.Commands;
 
-namespace RecommendCoffee.Subscriptions.Infrastructure.Agents.Shipping;
+namespace TastyBeans.Subscriptions.Infrastructure.Agents.Shipping;
 
 public class ShippingAgent : IShipping
 {

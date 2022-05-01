@@ -1,4 +1,6 @@
-﻿namespace RecommendCoffee.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
+﻿using TastyBeans.Shared.Domain;
+
+namespace TastyBeans.Subscriptions.Domain.Aggregates.SubscriptionAggregate;
 
 public interface ISubscriptionRepository
 {

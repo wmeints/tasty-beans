@@ -1,4 +1,4 @@
-﻿namespace RecommendCoffee.Shipping.Application.IntegrationEvents;
+﻿namespace TastyBeans.Shipping.Application.IntegrationEvents;
 
 public record CustomerRegisteredEvent(
     Guid CustomerId, 

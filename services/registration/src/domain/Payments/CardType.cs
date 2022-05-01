@@ -1,4 +1,4 @@
-namespace RecommendCoffee.Registration.Domain.Payments;
+namespace TastyBeans.Registration.Domain.Payments;
 
 public enum CardType
 {

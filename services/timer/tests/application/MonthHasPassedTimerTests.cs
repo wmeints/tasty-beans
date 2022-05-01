@@ -1,9 +1,9 @@
 ﻿using FakeItEasy;
-using RecommendCoffee.Shared.Application;
-using RecommendCoffee.Timer.Application.Services;
+using TastyBeans.Shared.Application;
+using TastyBeans.Timer.Application.Services;
 using Xunit;
 
-namespace RecommendCoffee.Timer.Application.Tests;
+namespace TastyBeans.Timer.Application.Tests;
 
 public class MonthHasPassedTimerTests
 {

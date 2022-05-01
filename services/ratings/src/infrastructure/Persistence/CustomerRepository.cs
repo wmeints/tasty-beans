@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.Ratings.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.Ratings.Domain.Aggregates.CustomerAggregate;
 
-namespace RecommendCoffee.Ratings.Infrastructure.Persistence;
+namespace TastyBeans.Ratings.Infrastructure.Persistence;
 
 public class CustomerRepository: ICustomerRepository
 {

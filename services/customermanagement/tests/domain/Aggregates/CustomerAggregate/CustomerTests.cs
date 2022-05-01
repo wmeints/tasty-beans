@@ -1,10 +1,10 @@
-﻿using FluentAssertions;
-using RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate;
-using RecommendCoffee.CustomerManagement.Domain.Aggregates.CustomerAggregate.Commands;
-using System;
+﻿using System;
+using FluentAssertions;
+using TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate;
+using TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate.Commands;
 using Xunit;
 
-namespace RecommendCoffee.CustomerManagement.Domain.Tests.Aggregates.CustomerAggregate;
+namespace TastyBeans.CustomerManagement.Domain.Tests.Aggregates.CustomerAggregate;
 
 public class CustomerTests
 {

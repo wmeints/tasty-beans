@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics;
 
-namespace RecommendCoffee.CustomerManagement.Domain;
+namespace TastyBeans.CustomerManagement.Domain;
 
 public class Activities
 {
     private static readonly ActivitySource ActivitySource = 
-        new ActivitySource("RecommendCoffee.Ratings.Infrastructure");
+        new ActivitySource("TastyBeans.Ratings.Infrastructure");
 
     public static Activity? Register(Guid customerId)
     {

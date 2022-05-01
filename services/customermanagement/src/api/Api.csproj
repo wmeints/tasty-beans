@@ -4,8 +4,8 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>RecommendCoffee.CustomerManagement.Api</RootNamespace>
-        <AssemblyName>RecommendCoffee.CustomerManagement.Api</AssemblyName>
+        <RootNamespace>TastyBeans.CustomerManagement.Api</RootNamespace>
+        <AssemblyName>TastyBeans.CustomerManagement.Api</AssemblyName>
         <UserSecretsId>b5557c65-df19-4bc5-b261-744639cfe0d2</UserSecretsId>
     </PropertyGroup>
 

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RecommendCoffee.Shipping.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Shipping.Domain.Aggregates.ProductAggregate;
 
-namespace RecommendCoffee.Shipping.Infrastructure.Persistence;
+namespace TastyBeans.Shipping.Infrastructure.Persistence;
 
 public class ProductEntityTypeConfiguration: IEntityTypeConfiguration<Product>
 {

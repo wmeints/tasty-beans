@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 
-namespace RecommendCoffee.Shipping.Domain;
+namespace TastyBeans.Shipping.Domain;
 
 public static class Activities
 {
-    private static readonly ActivitySource ActivitySource = new ActivitySource("RecommendCoffee.Shipping.Domain");
+    private static readonly ActivitySource ActivitySource = new ActivitySource("TastyBeans.Shipping.Domain");
 
     public static Activity? RegisterProduct(Guid productId)
     {

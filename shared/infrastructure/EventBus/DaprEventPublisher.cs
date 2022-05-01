@@ -2,10 +2,10 @@ using System.Reflection;
 using Dapr.Client;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using RecommendCoffee.Shared.Domain;
-using RecommendCoffee.Shared.Application;
+using TastyBeans.Shared.Application;
+using TastyBeans.Shared.Domain;
 
-namespace RecommendCoffee.Shared.Infrastructure.EventBus;
+namespace TastyBeans.Shared.Infrastructure.EventBus;
 
 public class DaprEventPublisher : IEventPublisher
 {

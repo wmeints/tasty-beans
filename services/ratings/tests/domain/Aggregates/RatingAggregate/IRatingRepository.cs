@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using RecommendCoffee.Ratings.Domain.Aggregates.RatingAggregate;
+using TastyBeans.Ratings.Domain.Aggregates.RatingAggregate;
 
-namespace Domain.Tests.Aggregates.RatingAggregate;
+namespace TastyBeans.Ratings.Domain.Tests.Aggregates.RatingAggregate;
 
 public interface IRatingRepository
 {
