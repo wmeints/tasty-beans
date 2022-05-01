@@ -4,20 +4,20 @@ metadata:
   name: transport-a
   labels:
     app: transport
-    version: {{ .Chart.Version }}
-    company: amazing-transport
+    service: transport
+    version: amazing-transport
 spec:
   selector:
     matchLabels:
       app: transport
-      version: {{ .Chart.Version }}
-      company: amazing-transport
+      service: transport
+      version: amazing-transport
   template:
     metadata:
       labels:
         app: transport
-        version: {{ .Chart.Version }}
-        company: amazing-transport
+        service: transport
+        version: amazing-transport
       annotations:
         dapr.io/app-id: "transport"
         dapr.io/app-port: "80"

@@ -2,17 +2,24 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: database
+  labels:
+    app: database
+    service: database
+    version: v1
 spec:
   selector:
     matchLabels:
       app: database
+      service: database
+      version: v1
   template:
     metadata:
       labels:
         app: database
-      # annotations:
-      #   sidecar.istio.io/inject: "false"
+        service: database
+        version: v1
     spec:
+      serviceAccountName: database
       volumes:
       - name: database-volume
         persistentVolumeClaim:
@@ -22,7 +29,7 @@ spec:
         image: mcr.microsoft.com/mssql/server:2019-latest
         ports:
         - containerPort: 1433
-          name: database
+          name: tcp-sql
         env:
           - name: SA_PASSWORD
             valueFrom:

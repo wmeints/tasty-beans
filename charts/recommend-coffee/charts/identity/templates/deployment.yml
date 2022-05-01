@@ -4,17 +4,20 @@ metadata:
   name: identity
   labels:
     app: identity
-    version: {{ .Chart.Version }}
+    service: identity
+    version: v1
 spec:
   selector:
     matchLabels:
       app: identity
-      version: {{ .Chart.Version }}
+      service: identity
+      version: v1
   template:
     metadata:
       labels:
         app: identity
-        version: {{ .Chart.Version }}
+        service: identity
+        version: v1
       annotations:
         dapr.io/app-id: "identity"
         dapr.io/app-port: "80"

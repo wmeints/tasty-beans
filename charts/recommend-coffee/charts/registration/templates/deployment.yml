@@ -4,17 +4,20 @@ metadata:
   name: registration
   labels:
     app: registration
-    version: {{ .Chart.Version }}
+    service: registration
+    version: v1
 spec:
   selector:
     matchLabels:
       app: registration
-      version: {{ .Chart.Version }}
+      service: registration
+      version: v1
   template:
     metadata:
       labels:
         app: registration
-        version: {{ .Chart.Version }}
+        service: registration
+        version: v1
       annotations:
         dapr.io/app-id: "registration"
         dapr.io/app-port: "80"

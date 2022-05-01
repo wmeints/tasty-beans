@@ -4,17 +4,20 @@ metadata:
   name: catalog
   labels:
     app: catalog
-    version: {{ .Chart.Version }}
+    service: catalog
+    version: v1
 spec:
   selector:
     matchLabels:
       app: catalog
-      version: {{ .Chart.Version }}
+      service: catalog
+      version: v1
   template:
     metadata:
       labels:
         app: catalog
-        version: {{ .Chart.Version }}
+        service: catalog
+        version: v1
       annotations:
         dapr.io/app-id: "catalog"
         dapr.io/app-port: "80"

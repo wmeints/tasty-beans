@@ -4,12 +4,14 @@ metadata:
   name: shipping
   labels:
     app: shipping
-    version: {{ .Chart.Version }}
+    service: shipping
+    version: v1
 spec:
   type: ClusterIP
   selector:
     app: shipping
-    version: {{ .Chart.Version }}
+    service: shipping
+    version: v1
   ports:
   - port: 80
     name: http

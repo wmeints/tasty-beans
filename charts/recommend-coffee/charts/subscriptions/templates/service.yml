@@ -4,12 +4,14 @@ metadata:
   name: subscriptions
   labels:
     app: subscriptions
-    version: {{ .Chart.Version }}
+    service: subscriptions
+    version: v1
 spec:
   type: ClusterIP
   selector:
     app: subscriptions
-    version: {{ .Chart.Version }}
+    service: subscriptions
+    version: v1
   ports:
   - port: 80
     name: http

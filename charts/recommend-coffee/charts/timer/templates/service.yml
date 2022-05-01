@@ -4,12 +4,14 @@ metadata:
   name: timer
   labels:
     app: timer
-    version: {{ .Chart.Version }}
+    service: timer
+    version: v1
 spec:
   type: ClusterIP
   selector:
     app: timer
-    version: {{ .Chart.Version }}
+    service: timer
+    version: v1
   ports:
   - port: 80
     name: http

@@ -4,7 +4,8 @@ metadata:
   name: recommendations
   labels:
     app: recommendations
-    version: {{ .Chart.Version }}
+    service: recommendations
+    version: v1
 spec:
   type: ClusterIP
   selector:

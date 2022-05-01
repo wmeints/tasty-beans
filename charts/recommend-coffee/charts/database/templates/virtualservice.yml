@@ -1,0 +1,12 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: database
+spec:
+    hosts:
+    - database
+    http:
+    - route:
+      - destination:
+          host: database
+          subset: v1

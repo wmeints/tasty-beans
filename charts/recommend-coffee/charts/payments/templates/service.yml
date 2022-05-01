@@ -3,12 +3,14 @@ kind: Service
 metadata:
   name: payments
   labels:
-    app: customermanagement
-    version: {{ .Chart.Version }}
+    app: payments
+    service: payments
+    version: v1
 spec:
   selector:
     app: payments
-    version: {{ .Chart.Version }}
+    service: payments
+    version: v1
   ports:
   - port: 80
     name: http

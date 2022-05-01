@@ -4,17 +4,20 @@ metadata:
   name: customermanagement
   labels:
     app: customermanagement
-    version: {{ .Chart.Version }}
+    service: customermanagement
+    version: v1
 spec:
   selector:
     matchLabels:
       app: customermanagement
-      version: {{ .Chart.Version }}
+      service: customermanagement
+      version: v1
   template:
     metadata:
       labels:
         app: customermanagement
-        version: {{ .Chart.Version }}
+        service: customermanagement
+        version: v1
       annotations:
         dapr.io/app-id: "customermanagement"
         dapr.io/app-port: "80"

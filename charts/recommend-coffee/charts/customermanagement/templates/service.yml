@@ -4,12 +4,14 @@ metadata:
   name: customermanagement
   labels:
     app: customermanagement
-    version: {{ .Chart.Version }}
+    service: customermanagement
+    version: v1
 spec:
   type: ClusterIP
   selector:
     app: customermanagement
-    version: {{ .Chart.Version }}
+    service: customermanagement
+    version: v1
   ports:
   - port: 80
     name: http

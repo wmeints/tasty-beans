@@ -1,0 +1,12 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: rabbitmq
+spec:
+    hosts:
+    - rabbitmq
+    http:
+    - route:
+      - destination:
+          host: rabbitmq
+          subset: v1

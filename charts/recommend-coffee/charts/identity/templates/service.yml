@@ -4,12 +4,14 @@ metadata:
   name: identity
   labels:
     app: identity
-    version: {{ .Chart.Version }}
+    service: identity
+    version: v1
 spec:
   type: ClusterIP
   selector:
     app: identity
-    version: {{ .Chart.Version }}
+    service: identity
+    version: v1
   ports:
   - port: 80
     name: http

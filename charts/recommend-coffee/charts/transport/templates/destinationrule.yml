@@ -7,7 +7,7 @@ spec:
     subsets:
       - name: amazing-transport
         labels:
-          company: amazing-transport
+          version: amazing-transport
       - name: trashy-transport
         labels:
-          company: trashy-transport
+          version: trashy-transport

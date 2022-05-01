@@ -4,12 +4,14 @@ metadata:
   name: catalog
   labels:
     app: catalog
-    version: {{ .Chart.Version }}
+    service: catalog
+    version: v1
 spec:
   type: ClusterIP
   selector:
     app: catalog
-    version: {{ .Chart.Version }}
+    service: catalog
+    version: v1
   ports:
   - port: 80
     name: http

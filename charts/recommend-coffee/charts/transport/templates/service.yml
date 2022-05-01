@@ -4,12 +4,12 @@ metadata:
   name: transport
   labels:
     app: transport
-    version: {{ .Chart.Version }}
+    service: transport
 spec:
   type: ClusterIP
   selector:
     app: transport
-    version: {{ .Chart.Version }}
+    service: transport
   ports:
   - port: 80
     name: http

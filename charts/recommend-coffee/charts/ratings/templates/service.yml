@@ -4,12 +4,14 @@ metadata:
   name: ratings
   labels:
     app: ratings
-    version: {{ .Chart.Version }}
+    service: ratings
+    version: v1
 spec:
   type: ClusterIP
   selector:
     app: ratings
-    version: {{ .Chart.Version }}
+    service: ratings
+    version: v1
   ports:
   - port: 80
     name: http
