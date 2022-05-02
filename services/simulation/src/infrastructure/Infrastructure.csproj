@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\application\Application.csproj" />
+    <ProjectReference Include="..\domain\Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>TastyBeans.Simulation.Infrastructure</AssemblyName>
+    <RootNamespace>TastyBeans.Simulation.Infrastructure</RootNamespace>
+  </PropertyGroup>
+
+</Project>
