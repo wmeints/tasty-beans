@@ -29,20 +29,20 @@ builder.Services.AddHealthChecks();
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
 
 builder.Services.AddTracing(telemetryOptions,
-    "TastyBeans.Catalog.Api",
-    "TastyBeans.Catalog.Application",
-    "TastyBeans.Catalog.Domain",
-    "TastyBeans.Catalog.Infrastructure");
+    "TastyBeans.Simulation.Api",
+    "TastyBeans.Simulation.Application",
+    "TastyBeans.Simulation.Domain",
+    "TastyBeans.Simulation.Infrastructure");
 
 builder.Services.AddMetrics(telemetryOptions,
-    "TastyBeans.Catalog.Api",
-    "TastyBeans.Catalog.Application",
-    "TastyBeans.Catalog.Domain",
-    "TastyBeans.Catalog.Infrastructure");
+    "TastyBeans.Simulation.Api",
+    "TastyBeans.Simulation.Application",
+    "TastyBeans.Simulation.Domain",
+    "TastyBeans.Simulation.Infrastructure");
 
 builder.Services.AddLogging(telemetryOptions);
 
-builder.Services.AddEventPublisher(options => options.DeadLetterTopic = "catalog.deadletter.v1");
+builder.Services.AddEventPublisher(options => options.DeadLetterTopic = "simulation.deadletter.v1");
 
 var app = builder.Build();
 

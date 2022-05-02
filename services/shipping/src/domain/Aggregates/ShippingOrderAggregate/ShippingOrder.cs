@@ -43,7 +43,7 @@ public class ShippingOrder
         }
 
         var order = new ShippingOrder(Guid.NewGuid(), cmd.CustomerId, cmd.OrderItems.ToList());
-        var shippingOrderCreatedEvent = new ShippingOrderCreatedEvent(order);
+        var shippingOrderCreatedEvent = new ShippingOrderCreatedEvent(order.CustomerId, order.Id);
 
         return new CreateShippingOrderCommandResponse(
             order, Enumerable.Empty<ValidationError>(),

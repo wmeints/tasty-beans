@@ -3,4 +3,4 @@
 namespace TastyBeans.Shipping.Domain.Aggregates.ShippingOrderAggregate.Events;
 
 [Topic("shipping.shippingorder.created.v1")]
-public record ShippingOrderCreatedEvent(ShippingOrder Order) : IDomainEvent;
+public record ShippingOrderCreatedEvent(Guid CustomerId, Guid ShippingOrderId) : IDomainEvent;
