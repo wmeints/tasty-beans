@@ -2,6 +2,7 @@
 
 public interface ISimulation
 {
+    Task StartSimulationAsync(int customerCount);
     Task<bool> IsRunningAsync();
     Task DeliveryAttemptFailedAsync(Guid shippingOrderId);
     Task DeliveryDelayedAsync(Guid shippingOrderId);

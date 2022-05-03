@@ -2,7 +2,4 @@
 
 namespace TastyBeans.Simulation.Application.Services.Simulation;
 
-public record StartSimulation
-{
-    
-}
+public record StartSimulation(int CustomerCount);

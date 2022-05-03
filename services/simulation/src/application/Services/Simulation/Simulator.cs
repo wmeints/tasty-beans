@@ -1,4 +1,5 @@
 ﻿using Akka.Actor;
+using TastyBeans.Simulation.Application.Services.Registration;
 using TastyBeans.Simulation.Domain.Aggregates.CustomerAggregate;
 using TastyBeans.Simulation.Domain.Aggregates.CustomerAggregate.Commands;
 
@@ -9,18 +10,28 @@ public class Simulator: ReceiveActor
     private readonly Dictionary<Guid, IActorRef> _customersById = new();
     private readonly Dictionary<Guid, IActorRef> _customersByShippingOrderId = new();
     private readonly CustomerFactory _customerFactory;
+    private readonly RegistrationDataFactory _registrationDataFactory;
+    private readonly IRegistration _registrationService;
+    private bool _running;
     
-    public Simulator()
+    public Simulator(IRegistration registrationService)
     {
+        _registrationService = registrationService;
         _customerFactory = new CustomerFactory(Context);
+        _registrationDataFactory = new RegistrationDataFactory();
         
         // When a new order is received, we need to connect the order to the customer.
         // Otherwise there's no way we can properly route order related events to a customer.
         
-        Receive<ShippingOrderCreated>(msg => _customersByShippingOrderId.Add(msg.ShippingOrderId, LocateCustomerById(msg.CustomerId)));
+        Receive<ShippingOrderCreated>(msg => _customersByShippingOrderId.Add(
+            msg.ShippingOrderId, LocateCustomerById(msg.CustomerId)));
+        
+        // When a customer is registered we connect behavior to that customer.
+        
         Receive<CustomerRegistered>(msg =>
         {
             var customerRef = _customerFactory.CreateCustomer(msg.CustomerId);
+            _customersById.Add(msg.CustomerId, customerRef);
         });
         
         // Route incoming events to the correct customer actor in the system.
@@ -52,6 +63,42 @@ public class Simulator: ReceiveActor
             LocateCustomerByShippingOrder(msg.ShippingOrderId).Tell(msg);
             _customersByShippingOrderId.Remove(msg.ShippingOrderId);
         });
+
+        Receive<StartSimulation>(msg => OnStartSimulation(msg.CustomerCount));
+        Receive<IsSimulationRunning>(msg => Sender.Tell(new SimulationStatus(_running)));
+        
+        // The start simulation operation will fire n requests to register customers in the system.
+        // These will come back as messages to the simulator which will have to call the IRegistration service.
+        
+        Receive<RegisterCustomer>(msg => OnRegisterCustomer());
+    }
+
+    public static Props Props(IRegistration registrationService)
+    {
+        return new Props(
+            type: typeof(Simulator),
+            supervisorStrategy: Akka.Actor.SupervisorStrategy.DefaultStrategy,
+            args: registrationService);
+    }
+    
+    private void OnRegisterCustomer()
+    {
+        var request = _registrationDataFactory.Create();
+        
+        var requestHandler = Context.ActorOf(
+            CustomerRegistrationWorker.Props(_registrationService));
+        
+        requestHandler.Tell(request);
+    }
+
+    private void OnStartSimulation(int customerCount)
+    {
+        _running = true;
+        
+        for (int i = 0; i < customerCount; i++)
+        {
+            Self.Tell(RegisterCustomer.Instance);
+        }
     }
 
     private IActorRef LocateCustomerById(Guid customerId)
@@ -62,13 +109,6 @@ public class Simulator: ReceiveActor
         }
 
         return customerRef;
-    }
-
-    public static Props Props()
-    {
-        return new Props(
-            typeof(Simulator), 
-            Akka.Actor.SupervisorStrategy.DefaultStrategy);
     }
 
     private IActorRef LocateCustomerByShippingOrder(Guid shippingOrderId)

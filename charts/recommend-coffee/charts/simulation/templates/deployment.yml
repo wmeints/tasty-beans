@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: catalog
+  name: simulation
   labels:
-    app: catalog
-    service: catalog
+    app: simulation
+    service: simulation
     version: v1
 spec:
   selector:
     matchLabels:
-      app: catalog
-      service: catalog
+      app: simulation
+      service: simulation
       version: v1
   template:
     metadata:
       labels:
-        app: catalog
-        service: catalog
+        app: simulation
+        service: simulation
         version: v1
       annotations:
-        dapr.io/app-id: "catalog"
+        dapr.io/app-id: "simulation"
         dapr.io/app-port: "80"
         dapr.io/enabled: "true"
         sidecar.opentelemetry.io/inject: "true"
@@ -27,36 +27,31 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/path: "/metrics"
     spec:
-      serviceAccountName: catalog
+      serviceAccountName: simulation
       containers:
-        - name: catalog
-          image: "{{ .Values.global.containerRegistry }}/catalog:{{ .Values.global.releaseVersion }}"
+        - name: simulation
+          image: "{{ .Values.global.containerRegistry }}/simulation:{{ .Values.global.releaseVersion }}"
           imagePullPolicy: IfNotPresent
           env:
-            - name: CONNECTIONSTRINGS__DEFAULTDATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: recommend-coffee-secrets
-                  key: catalogConnectionString
             - name: TELEMETRY__LOGGINGENDPOINT
               valueFrom:
                 configMapKeyRef:
-                  name: catalog-config
+                  name: simulation-config
                   key: "telemetry.loggingEndpoint"
             - name: TELEMETRY__TRACINGENDPOINT
               valueFrom:
                 configMapKeyRef:
-                  name: catalog-config
+                  name: simulation-config
                   key: "telemetry.tracingEndpoint"
             - name: TELEMETRY__NAME
               valueFrom:
                 configMapKeyRef:
-                  name: catalog-config
+                  name: simulation-config
                   key: "telemetry.name"
             - name: TELEMETRY__VERSION
               valueFrom:
                 configMapKeyRef:
-                  name: catalog-config
+                  name: simulation-config
                   key: "telemetry.version"
           ports:
             - containerPort: 80
@@ -68,19 +63,4 @@ spec:
               path: /healthz
               port: 80
             initialDelaySeconds: 3
-            periodSeconds: 3
-      initContainers:
-        - name: database-migrations
-          image: "{{ .Values.global.containerRegistry }}/catalog-migrations:{{ .Values.global.releaseVersion  }}"
-          env:
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: recommend-coffee-secrets
-                  key: databasePassword
-            - name: DB_USER
-              value: sa
-            - name: DB_NAME
-              value: catalog
-            - name: DB_SERVER
-              value: database
+            periodSeconds: 30

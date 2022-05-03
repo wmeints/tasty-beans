@@ -13,6 +13,6 @@ public class CustomerFactory
 
     public IActorRef CreateCustomer(Guid customerId)
     {
-        return _context.ActorOf(HappyCustomer.Props(customerId), $"customer-{customerId}");
+        return _context.ActorOf(Customer.Props(customerId), $"customer-{customerId}");
     }
 }

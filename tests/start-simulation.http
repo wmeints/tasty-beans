@@ -1,0 +1,7 @@
+POST http://localhost:56861/start
+Content-Type: application/json
+Accept: application/json
+
+{ 
+    "customerCount": 1
+}

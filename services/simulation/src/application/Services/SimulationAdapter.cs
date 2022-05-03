@@ -1,5 +1,6 @@
 ﻿using Akka.Actor;
 using TastyBeans.Simulation.Application.IntegrationEvents;
+using TastyBeans.Simulation.Application.Services.Registration;
 using TastyBeans.Simulation.Application.Services.Simulation;
 using TastyBeans.Simulation.Domain.Aggregates.CustomerAggregate.Commands;
 
@@ -10,10 +11,10 @@ public class SimulationAdapter: ISimulation
     private readonly ActorSystem _actorSystem;
     private readonly IActorRef _simulationActor;
 
-    public SimulationAdapter(ActorSystem actorSystem)
+    public SimulationAdapter(ActorSystem actorSystem, IRegistration registrationService)
     {
         _actorSystem = actorSystem;
-        _simulationActor = actorSystem.ActorOf(Simulator.Props(), "simulator");
+        _simulationActor = actorSystem.ActorOf(Simulator.Props(registrationService), "simulator");
     }
 
     public async Task<bool> IsRunningAsync()
@@ -26,6 +27,12 @@ public class SimulationAdapter: ISimulation
             SimulationStatus(false) => false,
             _ => throw new ArgumentOutOfRangeException()
         };
+    }
+
+    public Task StartSimulationAsync(int customerCount)
+    {
+        _simulationActor.Tell(new StartSimulation(customerCount));
+        return Task.CompletedTask;
     }
 
     public Task DeliveryAttemptFailedAsync(Guid shippingOrderId)
