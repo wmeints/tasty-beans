@@ -17,7 +17,9 @@
 #>
 
 param(
-    [System.String] $ContainerRegistry = "tastybeans.azurecr.io"
+    [System.String] $ContainerRegistry = "tastybeans.azurecr.io",
+    [System.String] $ReleaseVersion = "",
+    [System.String] $ServiceName = ""
 )
 
 # This table determines which components to build and how to build them.
@@ -34,11 +36,22 @@ $ImagesToBuild = @(
     @{ name = "shipping"; migrate = $true; entrypoint = "TastyBeans.Shipping.Api.dll" }
     @{ name = "recommendations"; migrate = $true; entrypoint = "TastyBeans.Recommendations.Api.dll" }
     @{ name = "transport"; migrate = $false; entrypoint = "TastyBeans.Transport.Api.dll" }
+    @{ name = "simulation"; migrate = $false; entrypoint = "TastyBeans.Simulation.Api.dll" }
 )
 
 # We generate a timestamp for the image tag.
 # This ensures we get fresh container images.
 $Timestamp = Get-Date -Format 'yyyyMMddHHmmss'
+
+if($ReleaseVersion -eq "") {
+    $ReleaseVersion = $Timestamp
+}
+
+$FilteredImageList = $ImagesToBuild
+
+if($ServiceName -ne "") {
+    $FilteredImageList = $FilteredImageList | Where-Object { $_.name -eq $ServiceName }
+}
 
 # Build the migration tooling for the application first.
 # We'll be generating migration images for each of the services.
@@ -46,18 +59,18 @@ docker build -t ${ContainerRegistry}/database-migrations:$Timestamp `
     -f ./tools/migrate-database/Dockerfile `
     ./tools/migrate-database
 
-foreach($ServiceDefinition in $ImagesToBuild) {
+foreach($ServiceDefinition in $FilteredImageList) {
     $GenerateMigrationContainer = $ServiceDefinition.migrate
 
     $ServiceName = $ServiceDefinition.name
 
     $MigrationDockerFilePath = "./services/$ServiceName/Dockerfile.migrations"
     $MigrationContextPath = "./services/$ServiceName"
-    $MigrationImageTag = "${ContainerRegistry}/${ServiceName}-migrations:$Timestamp"
+    $MigrationImageTag = "${ContainerRegistry}/${ServiceName}-migrations:$ReleaseVersion"
 
     $DockerFilePath = "./services/$ServiceName/Dockerfile"
     $Entrypoint = $ServiceDefinition.entrypoint
-    $ImageTag = "${ContainerRegistry}/${ServiceName}:$Timestamp"
+    $ImageTag = "${ContainerRegistry}/${ServiceName}:$ReleaseVersion"
     
     # Build the application container.
     docker build -t $ImageTag `
@@ -76,4 +89,6 @@ foreach($ServiceDefinition in $ImagesToBuild) {
     }
 }
 
-docker build -t "${ContainerRegistry}/portal:$Timestamp" -f ./services/portal/Dockerfile .
+if($ServiceName -eq "portal" || $ServiceName -eq "") {
+    docker build -t "${ContainerRegistry}/portal:$ReleaseVersion" -f ./services/portal/Dockerfile .    
+}
