@@ -4,7 +4,9 @@ using TastyBeans.Simulation.Application.Services.Registration;
 using TastyBeans.Simulation.Application.Services.Simulation;
 using TastyBeans.Simulation.Domain.Aggregates.CustomerAggregate;
 using TastyBeans.Simulation.Domain.Aggregates.CustomerAggregate.Commands;
+using TastyBeans.Simulation.Domain.Services.Ratings;
 using TastyBeans.Simulation.Domain.Services.ShippingInformation;
+using TastyBeans.Simulation.Domain.Services.Subscriptions;
 
 namespace TastyBeans.Simulation.Application.Services;
 
@@ -16,12 +18,14 @@ public class SimulationAdapter : ISimulation
     public SimulationAdapter(
         ActorSystem actorSystem, 
         IRegistration registrationService,
-        IShippingInformation shippingInformation)
+        IShippingInformation shippingInformation,
+        IRatings ratings,
+        ISubscriptions subscriptions)
     {
         _actorSystem = actorSystem;
         
         _simulationActor = actorSystem.ActorOf(
-            Simulator.Props(registrationService, shippingInformation), 
+            Simulator.Props(registrationService, shippingInformation, ratings, subscriptions), 
             "simulator");
     }
 

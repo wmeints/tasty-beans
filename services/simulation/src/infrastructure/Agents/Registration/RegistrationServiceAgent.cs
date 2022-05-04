@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Json;
 using TastyBeans.Simulation.Application.Services.Registration;
 
-namespace TastyBeans.Simulation.Infrastructure.Agents;
+namespace TastyBeans.Simulation.Infrastructure.Agents.Registration;
 
 public class RegistrationServiceAgent: IRegistration
 {

@@ -7,3 +7,4 @@ data:
     telemetry.loggingEndpoint: "http://seq.default:5341/"
     telemetry.name: timer.default
     telemetry.version: "{{ .Chart.Version }}"
+    timers.month-has-passed: "3 * * * * *"

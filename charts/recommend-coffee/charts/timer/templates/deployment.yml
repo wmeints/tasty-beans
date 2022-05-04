@@ -34,7 +34,10 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: TIMERS__MONTHHASPASSED
-              value: "30 * * * * *"
+              valueFrom:
+                configMapKeyRef:
+                  name: timer-config
+                  key: timers.month-has-passed
             - name: TELEMETRY__LOGGINGENDPOINT
               valueFrom:
                 configMapKeyRef:

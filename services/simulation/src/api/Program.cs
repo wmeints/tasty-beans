@@ -11,9 +11,14 @@ using TastyBeans.Simulation.Application.IntegrationEvents;
 using TastyBeans.Simulation.Application.Services;
 using TastyBeans.Simulation.Application.Services.Registration;
 using TastyBeans.Simulation.Domain.Aggregates.CustomerAggregate.Commands;
+using TastyBeans.Simulation.Domain.Services.Ratings;
 using TastyBeans.Simulation.Domain.Services.ShippingInformation;
+using TastyBeans.Simulation.Domain.Services.Subscriptions;
 using TastyBeans.Simulation.Infrastructure.Agents;
+using TastyBeans.Simulation.Infrastructure.Agents.Ratings;
+using TastyBeans.Simulation.Infrastructure.Agents.Registration;
 using TastyBeans.Simulation.Infrastructure.Agents.Shipping;
+using TastyBeans.Simulation.Infrastructure.Agents.Subscriptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,6 +89,16 @@ builder.Services.AddHttpClient<IShippingInformation, ShippingServiceAgent>(clien
 });
 
 builder.Services.AddHttpClient<IRegistration, RegistrationServiceAgent>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ServiceLocations:Registration"]);
+});
+
+builder.Services.AddHttpClient<IRatings, RatingsServiceAgent>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ServiceLocations:Ratings"]);
+});
+
+builder.Services.AddHttpClient<ISubscriptions, SubscriptionsServiceAgent>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["ServiceLocations:Registration"]);
 });

@@ -1,5 +1,7 @@
 ﻿using Akka.Actor;
+using TastyBeans.Simulation.Domain.Services.Ratings;
 using TastyBeans.Simulation.Domain.Services.ShippingInformation;
+using TastyBeans.Simulation.Domain.Services.Subscriptions;
 
 namespace TastyBeans.Simulation.Domain.Aggregates.CustomerAggregate;
 
@@ -7,20 +9,26 @@ public class CustomerFactory
 {
     private IActorRefFactory _context;
     private readonly IShippingInformation _shippingInformation;
-    private Random _random = new();
+    private readonly IRatings _ratings;
+    private readonly ISubscriptions _subscriptions;
+    private readonly Random _random = new();
     private readonly List<(double, WeightedCustomerProfile)> _customerProfiles = new();
     private readonly double _cumulativeWeight;
 
     public CustomerFactory(
         IActorRefFactory context,
         IShippingInformation shippingInformation,
+        IRatings ratings,
+        ISubscriptions subscriptions,
         List<WeightedCustomerProfile> customerProfiles)
     {
         _context = context;
         _shippingInformation = shippingInformation;
+        _ratings = ratings;
+        _subscriptions = subscriptions;
 
         _cumulativeWeight = 0.0;
-        
+
         for (int index = 0; index < customerProfiles.Count; index++)
         {
             _cumulativeWeight += customerProfiles[index].Weight;
@@ -46,7 +54,9 @@ public class CustomerFactory
         {
             throw new InvalidOperationException("Can't find a fitting customer profile");
         }
-        
-        return _context.ActorOf(Customer.Props(customerId, selectedCustomerProfile, _shippingInformation), $"customer-{customerId}");
+
+        return _context.ActorOf(
+            Customer.Props(customerId, selectedCustomerProfile, _shippingInformation, _ratings, _subscriptions),
+            $"customer-{customerId}");
     }
 }

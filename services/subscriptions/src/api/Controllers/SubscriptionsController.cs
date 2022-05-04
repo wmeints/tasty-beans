@@ -79,4 +79,27 @@ public class SubscriptionsController : ControllerBase
             return NotFound();
         }
     }
+
+    [HttpDelete("{customerId}")]
+    public async Task<IActionResult> Cancel(Guid customerId)
+    {
+        try
+        {
+            var command = new CancelSubscriptionCommand(customerId);
+            var result = await _cancelSubscriptionCommandHandler.ExecuteAsync(command);
+
+            ModelState.AddValidationErrors(result.Errors);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+        }
+        catch (AggregateNotFoundException ex)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
 }

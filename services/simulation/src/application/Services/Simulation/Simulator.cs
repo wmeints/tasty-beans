@@ -3,7 +3,9 @@ using Akka.Event;
 using TastyBeans.Simulation.Application.Services.Registration;
 using TastyBeans.Simulation.Domain.Aggregates.CustomerAggregate;
 using TastyBeans.Simulation.Domain.Aggregates.CustomerAggregate.Commands;
+using TastyBeans.Simulation.Domain.Services.Ratings;
 using TastyBeans.Simulation.Domain.Services.ShippingInformation;
+using TastyBeans.Simulation.Domain.Services.Subscriptions;
 
 namespace TastyBeans.Simulation.Application.Services.Simulation;
 
@@ -15,12 +17,17 @@ public class Simulator : ReceiveActor
     private readonly RegistrationDataFactory _registrationDataFactory;
     private readonly IRegistration _registrationService;
     private readonly IShippingInformation _shippingInformation;
+    private readonly IRatings _ratings;
+    private readonly ISubscriptions _subscriptions;
     private bool _running;
 
-    public Simulator(IRegistration registrationService, IShippingInformation shippingInformation)
+    public Simulator(IRegistration registrationService, IShippingInformation shippingInformation, IRatings ratings,
+        ISubscriptions subscriptions)
     {
         _registrationService = registrationService;
         _shippingInformation = shippingInformation;
+        _ratings = ratings;
+        _subscriptions = subscriptions;
         _registrationDataFactory = new RegistrationDataFactory();
 
         // When a new order is received, we need to connect the order to the customer.
@@ -38,7 +45,7 @@ public class Simulator : ReceiveActor
                 Context.GetLogger().Warning("Simulation is not running so customer behavior isn't simulated.");
                 return;
             }
-            
+
             var customerRef = _customerFactory!.CreateCustomer(msg.CustomerId);
             _customersById.Add(msg.CustomerId, customerRef);
         });
@@ -82,12 +89,13 @@ public class Simulator : ReceiveActor
         Receive<RegisterCustomer>(msg => OnRegisterCustomer());
     }
 
-    public static Props Props(IRegistration registrationService, IShippingInformation shippingInformation)
+    public static Props Props(IRegistration registrationService, IShippingInformation shippingInformation,
+        IRatings ratings, ISubscriptions subscriptions)
     {
         return new Props(
             type: typeof(Simulator),
             supervisorStrategy: Akka.Actor.SupervisorStrategy.DefaultStrategy,
-            args: new object[] {registrationService, shippingInformation});
+            args: new object[] {registrationService, shippingInformation, ratings, subscriptions});
     }
 
     private void OnRegisterCustomer()
@@ -103,7 +111,10 @@ public class Simulator : ReceiveActor
     private void OnStartSimulation(int customerCount, List<WeightedCustomerProfile> customerProfiles)
     {
         _running = true;
-        _customerFactory = new CustomerFactory(Context, _shippingInformation, customerProfiles);
+
+        _customerFactory = new CustomerFactory(
+            Context, _shippingInformation,
+            _ratings, _subscriptions, customerProfiles);
 
         for (int i = 0; i < customerCount; i++)
         {

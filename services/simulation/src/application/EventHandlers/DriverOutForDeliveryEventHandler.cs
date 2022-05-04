@@ -12,7 +12,7 @@ public class DriverOutForDeliveryEventHandler
         _simulation = simulation;
     }
 
-    public async Task HandleAsync(DeliveryAttemptFailedEvent evt)
+    public async Task HandleAsync(DriverOutForDeliveryEvent evt)
     {
         if (!await _simulation.IsRunningAsync())
         {

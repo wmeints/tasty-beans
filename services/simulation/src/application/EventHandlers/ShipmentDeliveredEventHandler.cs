@@ -12,7 +12,7 @@ public class ShipmentDeliveredEventHandler
         _simulation = simulation;
     }
 
-    public async Task HandleAsync(DeliveryAttemptFailedEvent evt)
+    public async Task HandleAsync(ShipmentDeliveredEvent evt)
     {
         if (!await _simulation.IsRunningAsync())
         {
