@@ -4,6 +4,8 @@
 @inject IHttpClientFactory ClientFactory;
 @inject NavigationManager Navigation;
 
+<NavigationBar></NavigationBar>
+
 <div class="container">
     <div class="row">
         <div class="col">
@@ -153,7 +155,7 @@
                 </div>
                 <div class="row mb-5">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-outline-primary">Register</button>
+                        <button type="submit" class="btn btn-primary">Register</button>
                     </div>
                 </div>
             </EditForm>
@@ -182,5 +184,4 @@
             Navigation.NavigateTo("/RegistrationCompleted");
         }
     }
-
 }
