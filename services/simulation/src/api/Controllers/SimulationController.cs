@@ -18,7 +18,7 @@ public class SimulationController: ControllerBase
     [HttpPost("start")]
     public async Task<IActionResult> StartSimulation(StartSimulationForm form)
     {
-        await _simulation.StartSimulationAsync(form.CustomerCount);
+        await _simulation.StartSimulationAsync(form.CustomerCount, form.Profiles);
         return Accepted();
     }
 }

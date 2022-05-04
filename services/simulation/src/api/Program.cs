@@ -11,7 +11,9 @@ using TastyBeans.Simulation.Application.IntegrationEvents;
 using TastyBeans.Simulation.Application.Services;
 using TastyBeans.Simulation.Application.Services.Registration;
 using TastyBeans.Simulation.Domain.Aggregates.CustomerAggregate.Commands;
+using TastyBeans.Simulation.Domain.Services.ShippingInformation;
 using TastyBeans.Simulation.Infrastructure.Agents;
+using TastyBeans.Simulation.Infrastructure.Agents.Shipping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,7 +75,13 @@ builder.Services.AddSingleton(sp =>
 
     return actorSystem;
 });
+
 builder.Services.AddSingleton<ISimulation, SimulationAdapter>();
+
+builder.Services.AddHttpClient<IShippingInformation, ShippingServiceAgent>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ServiceLocations:Shipping"]);
+});
 
 builder.Services.AddHttpClient<IRegistration, RegistrationServiceAgent>(client =>
 {

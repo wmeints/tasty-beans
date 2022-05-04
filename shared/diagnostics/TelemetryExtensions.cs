@@ -31,7 +31,6 @@ public static class TelemetryExtensions
                 .SetResourceBuilder(resourceBuilder)
                 .AddAspNetCoreInstrumentation()
                 .AddHttpClientInstrumentation()
-                .AddAspNetCoreInstrumentation()
                 .AddPrometheusExporter();
         });
     }

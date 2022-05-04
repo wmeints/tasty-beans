@@ -1,7 +1,19 @@
-POST http://localhost:56861/start
+POST https://recommend.coffee/simulation/start
 Content-Type: application/json
 Accept: application/json
 
 { 
-    "customerCount": 1
+    "customerCount": 1,
+    "profiles":[
+        { 
+            "weight": 1.0, 
+            "profile": {
+                "loyality": 0.99,
+                "loyalityDecay": 0.05,
+                "deliveryQualityLevel": 0.5,
+                "deliveryQualityGrowth": 0.01,
+                "productQuality" : 0.5
+            }
+        }
+    ]
 }

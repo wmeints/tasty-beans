@@ -2,19 +2,27 @@
 using TastyBeans.Simulation.Application.IntegrationEvents;
 using TastyBeans.Simulation.Application.Services.Registration;
 using TastyBeans.Simulation.Application.Services.Simulation;
+using TastyBeans.Simulation.Domain.Aggregates.CustomerAggregate;
 using TastyBeans.Simulation.Domain.Aggregates.CustomerAggregate.Commands;
+using TastyBeans.Simulation.Domain.Services.ShippingInformation;
 
 namespace TastyBeans.Simulation.Application.Services;
 
-public class SimulationAdapter: ISimulation
+public class SimulationAdapter : ISimulation
 {
     private readonly ActorSystem _actorSystem;
     private readonly IActorRef _simulationActor;
 
-    public SimulationAdapter(ActorSystem actorSystem, IRegistration registrationService)
+    public SimulationAdapter(
+        ActorSystem actorSystem, 
+        IRegistration registrationService,
+        IShippingInformation shippingInformation)
     {
         _actorSystem = actorSystem;
-        _simulationActor = actorSystem.ActorOf(Simulator.Props(registrationService), "simulator");
+        
+        _simulationActor = actorSystem.ActorOf(
+            Simulator.Props(registrationService, shippingInformation), 
+            "simulator");
     }
 
     public async Task<bool> IsRunningAsync()
@@ -29,9 +37,9 @@ public class SimulationAdapter: ISimulation
         };
     }
 
-    public Task StartSimulationAsync(int customerCount)
+    public Task StartSimulationAsync(int customerCount, List<WeightedCustomerProfile> customerProfiles)
     {
-        _simulationActor.Tell(new StartSimulation(customerCount));
+        _simulationActor.Tell(new StartSimulation(customerCount, customerProfiles));
         return Task.CompletedTask;
     }
 

@@ -15,7 +15,7 @@ public class CustomerProfile
     /// Gets or sets the level of decay for the loyality of the customer.
     /// </summary>
     /// <value>Value between 0 and 1 indicating how fast the loyality level should decay over time.
-    /// A value close to 1 means low decay rating. A value close to 0 means high decay rate.</value>
+    /// A value close to 1 means high decay rating. A value close to 0 means low decay rate.</value>
     public double LoyalityDecay { get; set; }
     
     /// <summary>
@@ -28,7 +28,7 @@ public class CustomerProfile
     /// Gets or sets the decay for the delivery quality level.
     /// </summary>
     /// <value>A value between 0 and 1 indicating how fast the delivery quality level should increase.</value>
-    public double DeliveryQualityDecay { get; set; }
+    public double DeliveryQualityGrowth { get; set; }
     
     /// <summary>
     /// Gets or sets the product quality level of the customer.

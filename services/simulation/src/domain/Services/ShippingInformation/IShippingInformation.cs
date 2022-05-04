@@ -2,5 +2,5 @@
 
 public interface IShippingInformation
 {
-    Task<ShippingOrder> GetShippingOrderAsync(Guid shippingOrderId);
+    Task<ShippingOrder?> GetShippingOrderAsync(Guid shippingOrderId);
 }

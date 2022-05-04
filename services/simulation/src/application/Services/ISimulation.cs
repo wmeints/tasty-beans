@@ -1,8 +1,10 @@
-﻿namespace TastyBeans.Simulation.Application.Services;
+﻿using TastyBeans.Simulation.Domain.Aggregates.CustomerAggregate;
+
+namespace TastyBeans.Simulation.Application.Services;
 
 public interface ISimulation
 {
-    Task StartSimulationAsync(int customerCount);
+    Task StartSimulationAsync(int customerCount, List<WeightedCustomerProfile> customerProfiles);
     Task<bool> IsRunningAsync();
     Task DeliveryAttemptFailedAsync(Guid shippingOrderId);
     Task DeliveryDelayedAsync(Guid shippingOrderId);
