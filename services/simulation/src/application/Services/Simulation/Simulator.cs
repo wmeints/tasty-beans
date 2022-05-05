@@ -13,7 +13,7 @@ public class Simulator : ReceiveActor
 {
     private readonly Dictionary<Guid, IActorRef> _customersById = new();
     private readonly Dictionary<Guid, IActorRef> _customersByShippingOrderId = new();
-    private CustomerFactory _customerFactory;
+    private CustomerFactory? _customerFactory;
     private readonly RegistrationDataFactory _registrationDataFactory;
     private readonly IRegistration _registrationService;
     private readonly IShippingInformation _shippingInformation;
@@ -21,7 +21,10 @@ public class Simulator : ReceiveActor
     private readonly ISubscriptions _subscriptions;
     private bool _running;
 
-    public Simulator(IRegistration registrationService, IShippingInformation shippingInformation, IRatings ratings,
+    public Simulator(
+        IRegistration registrationService, 
+        IShippingInformation shippingInformation, 
+        IRatings ratings,
         ISubscriptions subscriptions)
     {
         _registrationService = registrationService;
@@ -68,7 +71,7 @@ public class Simulator : ReceiveActor
         {
             var customerRef = LocateCustomerByShippingOrder(msg.ShippingOrderId);
             customerRef.Forward(msg);
-            
+
             _customersByShippingOrderId.Remove(msg.ShippingOrderId);
         });
 
@@ -130,7 +133,8 @@ public class Simulator : ReceiveActor
     {
         if (!_customersById.TryGetValue(customerId, out var customerRef))
         {
-            throw new ArgumentException($"Failed to locate the customer {customerId}");
+            Context.GetLogger().Warning("Failed to locate Customer {}", customerId);
+            return ActorRefs.Nobody;
         }
 
         return customerRef;
@@ -140,8 +144,8 @@ public class Simulator : ReceiveActor
     {
         if (!_customersByShippingOrderId.TryGetValue(shippingOrderId, out var customerRef))
         {
-            throw new ArgumentException(
-                $"Failed to locate the customer associated with shipping order {shippingOrderId}");
+            Context.GetLogger().Warning("Failed to locate customer for shipping order {}", shippingOrderId);
+            return ActorRefs.Nobody;
         }
 
         return customerRef;
