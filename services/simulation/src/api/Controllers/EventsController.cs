@@ -18,6 +18,7 @@ public class EventsController : ControllerBase
     private readonly ShipmentReturnedEventHandler _shipmentReturnedEventHandler;
     private readonly DriverOutForDeliveryEventHandler _driverOutForDeliveryEventHandler;
     private readonly CustomerRegisteredEventHandler _customerRegisteredEventHandler;
+    private readonly ShippingOrderCreatedEventHandler _shippingOrderCreatedEventHandler;
 
     private readonly ILogger<EventsController> _logger;
 
@@ -30,6 +31,7 @@ public class EventsController : ControllerBase
         ShipmentReturnedEventHandler shipmentReturnedEventHandler,
         DriverOutForDeliveryEventHandler driverOutForDeliveryEventHandler,
         CustomerRegisteredEventHandler customerRegisteredEventHandler,
+        ShippingOrderCreatedEventHandler shippingOrderCreatedEventHandler,
         ILogger<EventsController> logger)
     {
         _shipmentDeliveredEventHandler = shipmentDeliveredEventHandler;
@@ -40,9 +42,18 @@ public class EventsController : ControllerBase
         _shipmentReturnedEventHandler = shipmentReturnedEventHandler;
         _driverOutForDeliveryEventHandler = driverOutForDeliveryEventHandler;
         _customerRegisteredEventHandler = customerRegisteredEventHandler;
+        _shippingOrderCreatedEventHandler = shippingOrderCreatedEventHandler;
         _logger = logger;
     }
 
+    [HttpPost("ShippingOrderCreated")]
+    [Topic("pubsub", "shipping.shippingorder.created.v1")]
+    public async Task<IActionResult> ShippingOrderCreated(ShippingOrderCreatedEvent evt)
+    {
+        await _shippingOrderCreatedEventHandler.HandleAsync(evt);
+        return Accepted();
+    }
+    
     [HttpPost("CustomerRegistered")]
     [Topic("pubsub", "customermanagement.customer.registered.v1")]
     public async Task<IActionResult> CustomerRegistered(CustomerRegisteredEvent evt)

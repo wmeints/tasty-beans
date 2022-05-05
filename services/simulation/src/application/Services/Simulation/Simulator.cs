@@ -33,8 +33,10 @@ public class Simulator : ReceiveActor
         // When a new order is received, we need to connect the order to the customer.
         // Otherwise there's no way we can properly route order related events to a customer.
 
-        Receive<ShippingOrderCreated>(msg => _customersByShippingOrderId.Add(
-            msg.ShippingOrderId, LocateCustomerById(msg.CustomerId)));
+        Receive<ShippingOrderCreated>(msg =>
+        {
+            _customersByShippingOrderId.Add(msg.ShippingOrderId, LocateCustomerById(msg.CustomerId));
+        });
 
         // When a customer is registered we connect behavior to that customer.
 
@@ -53,30 +55,32 @@ public class Simulator : ReceiveActor
         // Route incoming events to the correct customer actor in the system.
         // The customer actor will perform actions based on what is happening to their orders.
 
-        Receive<DeliveryDelayed>(msg => LocateCustomerByShippingOrder(msg.ShippingOrderId).Tell(msg));
-        Receive<DeliveryAttemptFailed>(msg => LocateCustomerByShippingOrder(msg.ShippingOrderId).Tell(msg));
-        Receive<DriverOutForDelivery>(msg => LocateCustomerByShippingOrder(msg.ShippingOrderId).Tell(msg));
-        Receive<ShipmentSent>(msg => LocateCustomerByShippingOrder(msg.ShippingOrderId).Tell(msg));
-        Receive<ShipmentSorted>(msg => LocateCustomerByShippingOrder(msg.ShippingOrderId).Tell(msg));
+        Receive<DeliveryDelayed>(msg => LocateCustomerByShippingOrder(msg.ShippingOrderId).Forward(msg));
+        Receive<DeliveryAttemptFailed>(msg => LocateCustomerByShippingOrder(msg.ShippingOrderId).Forward(msg));
+        Receive<DriverOutForDelivery>(msg => LocateCustomerByShippingOrder(msg.ShippingOrderId).Forward(msg));
+        Receive<ShipmentSent>(msg => LocateCustomerByShippingOrder(msg.ShippingOrderId).Forward(msg));
+        Receive<ShipmentSorted>(msg => LocateCustomerByShippingOrder(msg.ShippingOrderId).Forward(msg));
 
         // There are several signals that will result in an order reaching a finalized state.
         // When this happens, we need to perform some house keeping as well as handling the message itself.
 
         Receive<ShipmentDelivered>(msg =>
         {
-            LocateCustomerByShippingOrder(msg.ShippingOrderId).Tell(msg);
+            var customerRef = LocateCustomerByShippingOrder(msg.ShippingOrderId);
+            customerRef.Forward(msg);
+            
             _customersByShippingOrderId.Remove(msg.ShippingOrderId);
         });
 
         Receive<ShipmentReturned>(msg =>
         {
-            LocateCustomerByShippingOrder(msg.ShippingOrderId).Tell(msg);
+            LocateCustomerByShippingOrder(msg.ShippingOrderId).Forward(msg);
             _customersByShippingOrderId.Remove(msg.ShippingOrderId);
         });
 
         Receive<ShipmentLost>(msg =>
         {
-            LocateCustomerByShippingOrder(msg.ShippingOrderId).Tell(msg);
+            LocateCustomerByShippingOrder(msg.ShippingOrderId).Forward(msg);
             _customersByShippingOrderId.Remove(msg.ShippingOrderId);
         });
 
@@ -95,7 +99,7 @@ public class Simulator : ReceiveActor
         return new Props(
             type: typeof(Simulator),
             supervisorStrategy: Akka.Actor.SupervisorStrategy.DefaultStrategy,
-            args: new object[] {registrationService, shippingInformation, ratings, subscriptions});
+            args: new object[] { registrationService, shippingInformation, ratings, subscriptions });
     }
 
     private void OnRegisterCustomer()
@@ -126,7 +130,7 @@ public class Simulator : ReceiveActor
     {
         if (!_customersById.TryGetValue(customerId, out var customerRef))
         {
-            customerRef = ActorRefs.Nobody;
+            throw new ArgumentException($"Failed to locate the customer {customerId}");
         }
 
         return customerRef;
@@ -136,7 +140,8 @@ public class Simulator : ReceiveActor
     {
         if (!_customersByShippingOrderId.TryGetValue(shippingOrderId, out var customerRef))
         {
-            customerRef = ActorRefs.Nobody;
+            throw new ArgumentException(
+                $"Failed to locate the customer associated with shipping order {shippingOrderId}");
         }
 
         return customerRef;

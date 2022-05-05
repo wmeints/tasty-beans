@@ -25,7 +25,7 @@ public class Customer : ReceiveActor
     private int _totalDeliveries;
     private int _deliveriesLost;
     private CircularBuffer<int> _previousRatings = new CircularBuffer<int>(3);
-    
+
 
     public Customer(Guid customerId, CustomerProfile customerProfile, IShippingInformation shippingInformation,
         IRatings ratings, ISubscriptions subscriptions)
@@ -46,7 +46,7 @@ public class Customer : ReceiveActor
         // We'll handle them all with a generic handler if not handled above.
         // We've done this to make sure our logs don't overflow with unwanted errors.
 
-        ReceiveAny(msg => { });
+        ReceiveAny(msg => { Sender.Tell(OK.Instance); });
     }
 
     public static Props Props(Guid customerId, CustomerProfile customerProfile,
@@ -55,15 +55,15 @@ public class Customer : ReceiveActor
         return new Props(
             type: typeof(Customer),
             supervisorStrategy: Akka.Actor.SupervisorStrategy.DefaultStrategy,
-            args: new object[] {customerId, customerProfile, shippingInformation, ratings, subscriptions});
+            args: new object[] { customerId, customerProfile, shippingInformation, ratings, subscriptions });
     }
 
     private async Task OnShipmentLost(Guid msgShippingOrderId)
     {
         Context.GetLogger().Info("Too bad, one of my shipments got lost!");
-        
+
         using var activity = Activities.ShipmentLost();
-        
+
         _deliveriesLost++;
         _totalDeliveries++;
 
@@ -86,14 +86,16 @@ public class Customer : ReceiveActor
         // By updating this, we slowly decrease the interest of the customer making it more likely
         // that the customer will cancel the subscription.
         UpdateLoyalityLevel();
+
+        Sender.Tell(OK.Instance);
     }
 
     private async Task OnShipmentDelivered(Guid shippingOrderId)
     {
         Context.GetLogger().Info("Yay, got another pack of coffee");
-        
+
         using var activity = Activities.ShipmentDelivered();
-        
+
         var shippingOrder = await _shippingInformation.GetShippingOrderAsync(shippingOrderId);
         var deliveredProduct = shippingOrder.OrderItems.First();
 
@@ -129,6 +131,8 @@ public class Customer : ReceiveActor
         // By updating this, we slowly decrease the interest of the customer making it more likely
         // that the customer will cancel the subscription.
         UpdateLoyalityLevel();
+
+        Sender.Tell(OK.Instance);
     }
 
     private bool IsNoLongerLoyal()
