@@ -14,7 +14,7 @@ public class ShippingServiceAgent: IShippingInformation
     
     public async Task<ShippingOrder?> GetShippingOrderAsync(Guid shippingOrderId)
     {
-        var response = await _client.GetFromJsonAsync<ShippingOrder>($"/z/{shippingOrderId}");
+        var response = await _client.GetFromJsonAsync<ShippingOrder>($"/orders/{shippingOrderId}");
         return response;
     }
 }
