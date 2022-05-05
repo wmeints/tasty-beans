@@ -20,7 +20,7 @@ public class Product
         Id = id;
         Name = name;
         Description = description;
-        Variants = new Collection<ProductVariant>();
+        Variants = variants;
     }
 
     public Guid Id { get; private set; }
