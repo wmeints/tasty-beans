@@ -1,7 +1,20 @@
 ﻿@page "/"
+@inject NavigationManager Navigation
+<PageTitle>Home - Tasty Beans</PageTitle>
+<div class="container mt-3 mb-3">
+    <div class="row">
+        <div class="ml-auto col-auto">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" @onclick="RedirectToLogin">Login</a>    
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
 
 <div class="container">
-    <div class="p-5 mb-4 bg-light rounded-3">
+    <div class="p-5 mb-4 bg-light rounded">
         <div class="container-fluid py-5">
             <div class="row">
                 <img class="col-4" src="/images/logo.png"/>
@@ -14,3 +27,19 @@
         </div>
     </div>
 </div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>A recommendation based coffee subscription</h2>
+            <p>With our recommendations feature, you can easily find the beans that suit your taste, and with our start-up guide, you can get brewing in no-time.</p>
+            <p>Our selection of beans is based on recommendations from coffee aficionados around the world. Whether you like your coffee light and delicate or dark and bold, we have the perfect beans for you. Start your subscription today and enjoy the best coffee beans delivered right to your door.</p>
+        </div>
+    </div>
+</div>
+
+@code {
+    private void RedirectToLogin()
+    {
+        Navigation.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+    }
+}

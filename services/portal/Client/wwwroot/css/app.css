@@ -1,5 +1,5 @@
-﻿body {
-    padding-top: 80px;
+﻿.with-top-nav {
+    margin-top: 80px;
 }
 
 #blazor-error-ui {
