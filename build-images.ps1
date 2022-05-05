@@ -89,6 +89,6 @@ foreach($ServiceDefinition in $FilteredImageList) {
     }
 }
 
-if($ServiceName -eq "portal" || $ServiceName -eq "") {
+if(($ServiceName -eq "portal") -or ($ServiceName -eq "")) {
     docker build -t "${ContainerRegistry}/portal:${ReleaseVersion}" -f ./services/portal/Dockerfile .    
 }
