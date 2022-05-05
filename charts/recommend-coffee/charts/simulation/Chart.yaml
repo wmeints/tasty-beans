@@ -1,0 +1,6 @@
+apiVersion: v2
+name: simulation
+description: Deploys the simulation microservice
+type: application
+version: 0.1.0-alpha.1
+appVersion: 1.0.0

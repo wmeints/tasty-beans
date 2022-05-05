@@ -7,6 +7,7 @@ using TastyBeans.Shared.Diagnostics;
 using TastyBeans.Shared.Infrastructure.EventBus;
 using TastyBeans.Shipping.Application.CommandHandlers;
 using TastyBeans.Shipping.Application.EventHandlers;
+using TastyBeans.Shipping.Application.QueryHandlers;
 using TastyBeans.Shipping.Application.Services;
 using TastyBeans.Shipping.Domain.Aggregates.CustomerAggregate;
 using TastyBeans.Shipping.Domain.Aggregates.ProductAggregate;
@@ -60,6 +61,7 @@ builder.Services.AddMetrics(telemetryOptions,
 builder.Services.AddLogging(telemetryOptions);
 
 builder.Services.AddEventPublisher(options => options.DeadLetterTopic = "shipping.deadletter.v1");
+
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IShippingOrderRepository, ShippingOrderRepository>();
@@ -67,6 +69,7 @@ builder.Services.AddScoped<CustomerRegisteredEventHandler>();
 builder.Services.AddScoped<ProductRegisteredEventHandler>();
 builder.Services.AddScoped<ProductUpdatedEventHandler>();
 builder.Services.AddScoped<CreateShippingOrderCommandHandler>();
+builder.Services.AddScoped<FindShippingOrderQueryHandler>();
 
 builder.Services.AddHttpClient<ITransportCompany, TransportCompanyAgent>(client =>
 {

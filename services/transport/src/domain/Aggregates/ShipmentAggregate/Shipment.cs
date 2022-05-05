@@ -1,5 +1,6 @@
 ﻿using Akka.Actor;
 using Akka.Event;
+using TastyBeans.Shared.Domain;
 using TastyBeans.Transport.Domain.Aggregates.ShipmentAggregate.Commands;
 using TastyBeans.Transport.Domain.Aggregates.ShipmentAggregate.Events;
 
@@ -17,7 +18,7 @@ public class Shipment : FSM<ShipmentStatus, IShipmentData>
         {
             if (state.FsmEvent is CreateShipmentCommand cmd)
             {
-                Context.System.EventStream.Publish(new ShipmentSentEvent(cmd.ShippingOrderId));
+                Context.System.EventStream.Publish((IDomainEvent)new ShipmentSentEvent(cmd.ShippingOrderId));
                 Self.Tell(new StartSortingCommand());
 
                 return GoTo(ShipmentStatus.Pending).Using(new ShipmentData(cmd.ShippingOrderId, 1));
@@ -54,7 +55,7 @@ public class Shipment : FSM<ShipmentStatus, IShipmentData>
                 {
                     logger.Warning("Shipment {ShippingOrderId} is lost.", shipmentData.ShippingOrderId);
 
-                    Context.System.EventStream.Publish(new ShipmentLostEvent(shipmentData.ShippingOrderId));
+                    Context.System.EventStream.Publish((IDomainEvent)new ShipmentLostEvent(shipmentData.ShippingOrderId) as IDomainEvent);
 
                     return Stop(Normal.Instance);
                 }
@@ -62,7 +63,7 @@ public class Shipment : FSM<ShipmentStatus, IShipmentData>
                 {
                     logger.Info("Shipment {ShippingOrderId} is sorted.", shipmentData.ShippingOrderId);
 
-                    Context.System.EventStream.Publish(new ShipmentSortedEvent(shipmentData.ShippingOrderId));
+                    Context.System.EventStream.Publish((IDomainEvent)new ShipmentSortedEvent(shipmentData.ShippingOrderId));
                     Self.Tell(new StartDeliveryCommand());
 
                     return GoTo(ShipmentStatus.Sorted).Using(shipmentData);
@@ -81,7 +82,7 @@ public class Shipment : FSM<ShipmentStatus, IShipmentData>
             {
                 logger.Info("Driver is out for delivery of shipment {ShippingOrderId}", shipmentData.ShippingOrderId);
 
-                Context.System.EventStream.Publish(new DriverOutForDeliveryEvent(shipmentData.ShippingOrderId));
+                Context.System.EventStream.Publish((IDomainEvent)new DriverOutForDeliveryEvent(shipmentData.ShippingOrderId));
                 Self.Tell(new CompleteDeliveryCommand());
 
                 return GoTo(ShipmentStatus.OutForDelivery).Using(shipmentData);
@@ -101,7 +102,7 @@ public class Shipment : FSM<ShipmentStatus, IShipmentData>
                 {
                     logger.Warning("Delivery of shipment {ShippingOrderId} is delayed", shipmentData.ShippingOrderId);
 
-                    Context.System.EventStream.Publish(new DeliveryDelayedEvent(shipmentData.ShippingOrderId));
+                    Context.System.EventStream.Publish((IDomainEvent)new DeliveryDelayedEvent(shipmentData.ShippingOrderId));
                     Self.Tell(new CompleteDeliveryCommand());
 
                     return GoTo(ShipmentStatus.OutForDelivery).Using(shipmentData);
@@ -113,7 +114,7 @@ public class Shipment : FSM<ShipmentStatus, IShipmentData>
                     {
                         logger.Warning("Deliver attempt {Attempt} failed for shipment {ShippingOrderId}. Trying again.");
 
-                        Context.System.EventStream.Publish(new DeliveryAttemptFailedEvent());
+                        Context.System.EventStream.Publish((IDomainEvent)new DeliveryAttemptFailedEvent(shipmentData.ShippingOrderId));
                         Self.Tell(new CompleteDeliveryCommand());
 
                         return GoTo(ShipmentStatus.OutForDelivery).Using(shipmentData with { Attempts = shipmentData.Attempts + 1 });
@@ -122,7 +123,7 @@ public class Shipment : FSM<ShipmentStatus, IShipmentData>
                     {
                         logger.Error("Failed to deliver shipment {ShippingOrderId}", shipmentData.ShippingOrderId);
 
-                        Context.System.EventStream.Publish(new ShipmentReturnedEvent(shipmentData.ShippingOrderId));
+                        Context.System.EventStream.Publish((IDomainEvent)new ShipmentReturnedEvent(shipmentData.ShippingOrderId));
 
                         return Stop(Normal.Instance);
                     }
@@ -131,7 +132,7 @@ public class Shipment : FSM<ShipmentStatus, IShipmentData>
                 logger.Info("Shipment {ShippingOrderId} was succesfully delivered after {Attempts} attempts.",
                     shipmentData.ShippingOrderId, shipmentData.Attempts);
 
-                Context.System.EventStream.Publish(new ShipmentDeliveredEvent(shipmentData.ShippingOrderId));
+                Context.System.EventStream.Publish((IDomainEvent)new ShipmentDeliveredEvent(shipmentData.ShippingOrderId));
 
                 return Stop(Normal.Instance);
             }

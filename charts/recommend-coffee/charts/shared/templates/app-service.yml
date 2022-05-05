@@ -78,6 +78,14 @@ spec:
             host: shipping.default.svc.cluster.local
             port:
               number: 80
+    - match:
+        - uri:
+            prefix: /simulation/
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: simulation.default.svc.cluster.local
     - route:
         - destination:
             host: portal.default.svc.cluster.local

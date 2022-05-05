@@ -41,12 +41,12 @@ spec:
             - name: TELEMETRY__LOGGINGENDPOINT
               valueFrom:
                 configMapKeyRef:
-                  name: customermanagement-config
+                  name: catalog-config
                   key: "telemetry.loggingEndpoint"
             - name: TELEMETRY__TRACINGENDPOINT
               valueFrom:
                 configMapKeyRef:
-                  name: customermanagement-config
+                  name: catalog-config
                   key: "telemetry.tracingEndpoint"
             - name: TELEMETRY__NAME
               valueFrom:
