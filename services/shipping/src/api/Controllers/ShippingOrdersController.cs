@@ -41,7 +41,7 @@ public class ShippingOrdersController : ControllerBase
     [HttpGet("{shippingOrderId}")]
     public async Task<IActionResult> Get(Guid shippingOrderId)
     {
-        var shippingOrder = _findShippingOrderQueryHandler.ExecuteAsync(shippingOrderId);
+        var shippingOrder = await _findShippingOrderQueryHandler.ExecuteAsync(shippingOrderId);
 
         if (shippingOrder == null)
         {
