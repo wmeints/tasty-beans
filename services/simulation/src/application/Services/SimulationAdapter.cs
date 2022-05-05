@@ -47,63 +47,53 @@ public class SimulationAdapter : ISimulation
         return Task.CompletedTask;
     }
 
-    public Task DeliveryAttemptFailedAsync(Guid shippingOrderId)
+    public async Task DeliveryAttemptFailedAsync(Guid shippingOrderId)
     {
-        _simulationActor.Tell(new DeliveryAttemptFailed(shippingOrderId));
-        return Task.CompletedTask;
+        await _simulationActor.Ask(new DeliveryAttemptFailed(shippingOrderId));
     }
 
-    public Task DeliveryDelayedAsync(Guid shippingOrderId)
+    public async Task DeliveryDelayedAsync(Guid shippingOrderId)
     {
-        _simulationActor.Tell(new DeliveryDelayed(shippingOrderId));
-        return Task.CompletedTask;
+        await _simulationActor.Ask(new DeliveryDelayed(shippingOrderId));
     }
 
-    public Task DriverOutForDeliveryAsync(Guid shippingOrderId)
+    public async Task DriverOutForDeliveryAsync(Guid shippingOrderId)
     {
-        _simulationActor.Tell(new DriverOutForDelivery(shippingOrderId));
-        return Task.CompletedTask;
+        await _simulationActor.Ask(new DriverOutForDelivery(shippingOrderId));
     }
 
-    public Task ShipmentDeliveredAsync(Guid shippingOrderId)
+    public async Task ShipmentDeliveredAsync(Guid shippingOrderId)
     {
-        _simulationActor.Tell(new ShipmentDelivered(shippingOrderId));
-        return Task.CompletedTask;
+        await _simulationActor.Ask(new ShipmentDelivered(shippingOrderId));
     }
 
-    public Task ShipmentLostAsync(Guid shippingOrderId)
+    public async Task ShipmentLostAsync(Guid shippingOrderId)
     {
-        _simulationActor.Tell(new ShipmentLost(shippingOrderId));
-        return Task.CompletedTask;
+        await _simulationActor.Ask(new ShipmentLost(shippingOrderId));
     }
 
-    public Task ShipmentReturnedAsync(Guid shippingOrderId)
+    public async Task ShipmentReturnedAsync(Guid shippingOrderId)
     {
-        _simulationActor.Tell(new ShipmentReturned(shippingOrderId));
-        return Task.CompletedTask;
+        await _simulationActor.Ask(new ShipmentReturned(shippingOrderId));
     }
 
-    public Task ShipmentSentAsync(Guid shippingOrderId)
+    public async Task ShipmentSentAsync(Guid shippingOrderId)
     {
-        _simulationActor.Tell(new ShipmentSent(shippingOrderId));
-        return Task.CompletedTask;
+        await _simulationActor.Ask(new ShipmentSent(shippingOrderId));
     }
 
-    public Task ShipmentSortedAsync(Guid shippingOrderId)
+    public async Task ShipmentSortedAsync(Guid shippingOrderId)
     {
-        _simulationActor.Tell(new ShipmentSorted(shippingOrderId));
-        return Task.CompletedTask;
+        await _simulationActor.Ask(new ShipmentSorted(shippingOrderId));
     }
 
-    public Task ShippingOrderCreated(Guid customerId, Guid shippingOrderId)
+    public async Task ShippingOrderCreated(Guid customerId, Guid shippingOrderId)
     {
-        _simulationActor.Tell(new ShippingOrderCreated(customerId, shippingOrderId));
-        return Task.CompletedTask;
+        await _simulationActor.Ask(new ShippingOrderCreated(customerId, shippingOrderId));
     }
 
-    public Task CustomerRegisteredAsync(Guid customerId)
+    public async Task CustomerRegisteredAsync(Guid customerId)
     {
-        _simulationActor.Tell(new CustomerRegistered(customerId));
-        return Task.CompletedTask;
+        await _simulationActor.Ask(new CustomerRegistered(customerId));
     }
 }
