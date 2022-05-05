@@ -37,8 +37,7 @@ All features are subject to change. But that's part of the fun :grin:
 Please make sure you have the following tools available:
 
 * [Helm 3](https://helm.sh/docs/intro/quickstart/)
-* [Docker](https://www.docker.com/get-started/)
-* [Minikube](https://minikube.sigs.k8s.io/docs/start/) or other Kubernetes cluster.
+* [Docker Desktop](https://www.docker.com/get-started/)
 * [Powershell](https://github.com/PowerShell/PowerShell)
 * [Istio](https://istio.io/latest/docs/setup/getting-started/)
 * [Dapr](https://docs.dapr.io/getting-started/install-dapr-cli/)
