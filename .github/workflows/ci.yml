@@ -9,6 +9,7 @@ env:
 
 jobs:
   build:
+    name: 'Build and push artifacts'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -24,6 +25,12 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
+        helm registry login tastybeans.azurecr.io --username ${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_PASSWORD }}
+      name: 'Login to helm registry'
+    - run: |
         ./push-images.ps1 -ReleaseVersion $BUILD_ID
       shell: pwsh
-      name: 'Push docker images'
+      name: 'Push docker images to remote registry'
+    - run: |
+        helm push ./charts/tasty-beans oci://tastybeans.azurecr.io/helm
+      name: 'Push helm chart to remote registry'
