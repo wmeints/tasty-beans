@@ -25,15 +25,23 @@ if($ReleaseVersion -eq "") {
 }
 
 docker push $ContainerRegistry/catalog:$ReleaseVersion
+docker push $ContainerRegistry/catalog-migrations:$ReleaseVersion
 docker push $ContainerRegistry/customermanagement:$ReleaseVersion
+docker push $ContainerRegistry/customermanagement-migrations:$ReleaseVersion
 docker push $ContainerRegistry/identity:$ReleaseVersion
+docker push $ContainerRegistry/identity-migrations:$ReleaseVersion
 docker push $ContainerRegistry/payments:$ReleaseVersion
+docker push $ContainerRegistry/payments-migrations:$ReleaseVersion
 docker push $ContainerRegistry/portal:$ReleaseVersion
 docker push $ContainerRegistry/ratings:$ReleaseVersion
+docker push $ContainerRegistry/ratings-migrations:$ReleaseVersion
 docker push $ContainerRegistry/recommendations:$ReleaseVersion
+docker push $ContainerRegistry/recommendations-migrations:$ReleaseVersion
 docker push $ContainerRegistry/registration:$ReleaseVersion
 docker push $ContainerRegistry/shipping:$ReleaseVersion
+docker push $ContainerRegistry/shipping-migrations:$ReleaseVersion
 docker push $ContainerRegistry/simulation:$ReleaseVersion
 docker push $ContainerRegistry/subscriptions:$ReleaseVersion
+docker push $ContainerRegistry/subscriptions-migrations:$ReleaseVersion
 docker push $ContainerRegistry/timer:$ReleaseVersion
 docker push $ContainerRegistry/transport:$ReleaseVersion
