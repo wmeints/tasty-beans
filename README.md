@@ -54,8 +54,7 @@ Please find [the installation guide](https://github.com/wmeints/recommend-coffee
 
 ## :book: Documentation
 
-This section covers some of the common patterns used in the demo solution.
 Please review [the wiki](https://github.com/wmeints/recommend-coffee/wiki) to
-learn more.
+learn more about using the solution.
 
 [PWSH_INSTALL]: https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux?view=powershell-7.2
