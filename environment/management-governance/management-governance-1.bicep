@@ -2,6 +2,9 @@ param location string
 param environment string
 param tags object
 
+var keyVaultResourceName = 'kv-tastybeans-${environment}'
+var containerRegistryResourceName = 'tastybeans'
+
 module appInfraResourceGroup 'resource-group/resource-group.bicep' = {
   name: 'app-infra-resource-group'
   scope: subscription()
@@ -36,6 +39,18 @@ module containerRegistry 'container-registry/container-registry.bicep' = {
   name: 'container-registry'
   params: {
     location: location
-    resourceName: 'tastybeans'
+    resourceName: containerRegistryResourceName
   }
 }
+
+module keyvault 'keyvault/keyvault.bicep' = {
+  name: 'keyvault'
+  params: {
+    resourceName: keyVaultResourceName
+    location: location
+    tags: tags
+  }
+}
+
+output keyVaultName string = keyVaultResourceName
+output containerRegistryName string = containerRegistryResourceName

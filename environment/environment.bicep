@@ -55,7 +55,13 @@ module appInfra 'app-infra/app-infra.bicep' = {
     location: location
     tags: tags
     sqlAdminLogin: sqlAdminLogin
-    sqlAdminPassword: sqlAdminPassword
+    sqlAdminPassword: sqlAdminPassword\
+    keyVaultName: managementGovernancePart1.outputs.keyVaultName
+    applicationInsightsName: runtimeInfra.outputs.applicationInsightsName
+    containerRegistryName: managementGovernancePart1.outputs.containerRegistryName
+    managementGovernanceResourceGroupName: managementGovernanceResourceGroupName
+    runtimeInfraResourceGroupName: runtimeInfraResourceGroupName
+    technicalInfraResourceGroupName: technicalInfraResourceGroupName
   }
   dependsOn: [
     runtimeInfra

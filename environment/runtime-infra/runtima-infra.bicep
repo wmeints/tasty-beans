@@ -2,6 +2,8 @@ param location string
 param environment string
 param tags object
 
+var applicationInsightsResourceName = 'as-tastybeans-${environment}'
+
 module aksCluster 'aks-cluster/aks-cluster.bicep' = {
   name: 'aks-cluster'
   params: {
@@ -26,8 +28,9 @@ module applicationInsights 'monitoring/app-insights.bicep' = {
   params: {
     analyticsWorkspaceId: analyticsWorkspace.outputs.logAnalyticsWorkspaceId
     location: location
-    resourceName: 'as-tastybeans-${environment}'
+    resourceName: applicationInsightsResourceName
   }
 }
 
 output aksClusterPrincipalId string = aksCluster.outputs.aksClusterPrincipalId
+output applicationInsightsName string = applicationInsightsResourceName
