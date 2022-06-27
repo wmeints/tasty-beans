@@ -1,10 +1,10 @@
 ﻿namespace TastyBeans.Shared.Domain;
 
-public abstract class AggregateRoot<T>: Entity<T>
+public abstract class AggregateRoot
 {
     private readonly List<IDomainEvent> _events = new();
     
-    protected AggregateRoot(T id) : base(id)
+    protected AggregateRoot(Guid id)
     {
     }
     
@@ -19,6 +19,11 @@ public abstract class AggregateRoot<T>: Entity<T>
 
     protected virtual void Emit(IDomainEvent evt)
     {
-        _events.Add(evt);
+        if (TryApplyEvent(evt))
+        {
+            _events.Add(evt);
+        }
     }
+
+    protected abstract bool TryApplyEvent(IDomainEvent evt);
 }
