@@ -6,28 +6,23 @@ namespace TastyBeans.Catalog.Application.CommandHandlers;
 
 public class RegisterProductCommandHandler
 {
+    private readonly IEventStore _eventStore;
     private readonly IEventPublisher _eventPublisher;
-    private readonly IProductRepository _productRepository;
 
-    public RegisterProductCommandHandler(IProductRepository productRepository, IEventPublisher eventPublisher)
+    public RegisterProductCommandHandler(IEventStore eventStore, IEventPublisher eventPublisher)
     {
-        _productRepository = productRepository;
+        _eventStore = eventStore;
         _eventPublisher = eventPublisher;
     }
 
-    public async Task<RegisterProductCommandResponse> ExecuteAsync(RegisterProductCommand cmd)
+    public async Task ExecuteAsync(Register cmd)
     {
-        using var activity = Activities.ExecuteCommand("RegisterProduct");
-        var response = Product.Register(cmd);
+        var product = new Product(cmd);
 
-        if (response.IsValid)
+        if (product.IsValid)
         {
-            await _productRepository.InsertAsync(response.Product);
-            await _eventPublisher.PublishEventsAsync(response.Events);
-            
-            Metrics.ProductsRegistered.Add(1);
+            await _eventStore.AppendAsync(product.Id, product.Version, product.PendingDomainEvents);
+            await _eventPublisher.PublishEventsAsync(product.PendingDomainEvents);
         }
-
-        return response;
     }
 }

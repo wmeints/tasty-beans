@@ -7,35 +7,31 @@ namespace TastyBeans.Catalog.Application.CommandHandlers;
 
 public class DiscontinueProductCommandHandler
 {
-    private readonly IProductRepository _productRepository;
+    private readonly IEventStore _eventStore;
     private readonly IEventPublisher _eventPublisher;
 
-    public DiscontinueProductCommandHandler(IProductRepository productRepository, IEventPublisher eventPublisher)
+    public DiscontinueProductCommandHandler(IEventStore eventStore, IEventPublisher eventPublisher)
     {
-        _productRepository = productRepository;
+        _eventStore = eventStore;
         _eventPublisher = eventPublisher;
     }
 
-    public async Task<DiscontinueProductCommandResponse> ExecuteAsync(DiscontinueProductCommand cmd)
+    public async Task ExecuteAsync(Discontinue cmd)
     {
         using var activity = Activities.ExecuteCommand("DiscontinueProduct");
-        var product = await _productRepository.FindByIdAsync(cmd.ProductId);
+        var product = await _eventStore.GetAsync<Product>(cmd.ProductId);
 
         if (product == null)
         {
             throw new AggregateNotFoundException("Can't find the specified product");
         }
 
-        var response = product.Discontinue(cmd);
+        product.Discontinue(cmd);
 
-        if (response.IsValid)
+        if (product.IsValid)
         {
-            await _productRepository.UpdateAsync(product);
-            await _eventPublisher.PublishEventsAsync(response.Events);
-            
-            Metrics.ProductsDiscontinued.Add(1);
+            await _eventStore.AppendAsync(product.Id, product.Version, product.PendingDomainEvents);
+            await _eventPublisher.PublishEventsAsync(product.PendingDomainEvents);
         }
-
-        return response;
     }
 }

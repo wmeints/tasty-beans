@@ -2,9 +2,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\domain\Domain.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\application\Application.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\domain\Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\application\Application.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\domain\Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

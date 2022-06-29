@@ -4,8 +4,8 @@
     <ProjectReference Include="..\domain\Domain.csproj" />
     <ProjectReference Include="..\application\Application.csproj" />
     <ProjectReference Include="..\infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\api\Api.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\diagnostics\Diagnostics.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\api\Api.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\diagnostics\Diagnostics.csproj" />
   </ItemGroup>
 
   <ItemGroup>

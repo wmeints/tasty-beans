@@ -3,13 +3,12 @@
   <ItemGroup>
     <ProjectReference Include="..\domain\Domain.csproj" />
     <ProjectReference Include="..\application\Application.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\domain\Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\domain\Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
   </ItemGroup>
 
   <PropertyGroup>

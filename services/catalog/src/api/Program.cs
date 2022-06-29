@@ -4,14 +4,13 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using TastyBeans.Catalog.Application.CommandHandlers;
 using TastyBeans.Catalog.Application.QueryHandlers;
-using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
-using TastyBeans.Catalog.Infrastructure.Persistence;
 using TastyBeans.Shared.Diagnostics;
 using TastyBeans.Shared.Infrastructure.EventBus;
+using TastyBeans.Shared.Infrastructure.EventStore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddEventStore(options =>
 {
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultDatabase"),
@@ -36,7 +35,7 @@ builder.Services
     });
 
 builder.Services.AddHeaderPropagation();
-builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
+builder.Services.AddHealthChecks().AddDbContextCheck<EventStoreDbContext>();
 
 var telemetryOptions = builder.Configuration.GetSection("Telemetry").Get<TelemetryOptions>();
 
@@ -55,11 +54,9 @@ builder.Services.AddMetrics(telemetryOptions,
 builder.Services.AddLogging(telemetryOptions);
 
 builder.Services.AddEventPublisher(options => options.DeadLetterTopic = "catalog.deadletter.v1");
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddScoped<RegisterProductCommandHandler>();
-builder.Services.AddScoped<UpdateProductCommandHandler>();
-builder.Services.AddScoped<TasteTestProductCommandHandler>();
+builder.Services.AddScoped<CompleteTasteTestCommandHandler>();
 builder.Services.AddScoped<DiscontinueProductCommandHandler>();
 builder.Services.AddScoped<FindProductByIdQueryHandler>();
 builder.Services.AddScoped<FindAllProductsQueryHandler>();
@@ -67,7 +64,7 @@ builder.Services.AddScoped<FindAllProductsQueryHandler>();
 var app = builder.Build();
 
 await using var scope = app.Services.CreateAsyncScope();
-await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+await using var dbContext = scope.ServiceProvider.GetRequiredService<EventStoreDbContext>();
 
 await dbContext.Database.MigrateAsync();
 

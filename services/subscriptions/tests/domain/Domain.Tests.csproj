@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\domain\Domain.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>

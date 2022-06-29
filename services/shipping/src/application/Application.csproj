@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\domain\Domain.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\application\Application.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\application\Application.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

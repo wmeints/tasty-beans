@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\shared\application\Application.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\application\Application.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\domain\Domain.csproj" />
     <ProjectReference Include="..\application\Application.csproj" />
   </ItemGroup>

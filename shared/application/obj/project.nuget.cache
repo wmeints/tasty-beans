@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "hSjC04lE/6b3wb3+mArCITpzjR0TtCnq9ZGw0nNHGyDFETdH2Q/AWifSuCvs45tF4kzOjU4EDeV41IkW9whQPA==",
+  "success": true,
+  "projectFilePath": "D:\\code\\recommend-coffee\\shared\\application\\Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\wme\\.nuget\\packages\\fluentvalidation\\10.4.0\\fluentvalidation.10.4.0.nupkg.sha512",
+    "C:\\Users\\wme\\.nuget\\packages\\nodatime\\3.1.0\\nodatime.3.1.0.nupkg.sha512",
+    "C:\\Users\\wme\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.7.1\\system.runtime.compilerservices.unsafe.4.7.1.nupkg.sha512"
+  ],
+  "logs": []
+}

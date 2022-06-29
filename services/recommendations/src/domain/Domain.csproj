@@ -12,7 +12,7 @@
     <PackageReference Include="NodaTime" Version="3.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\shared\domain\Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>

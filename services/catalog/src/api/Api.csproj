@@ -16,7 +16,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.4" />
   </ItemGroup>
 
@@ -24,10 +23,10 @@
     <ProjectReference Include="..\application\Application.csproj" />
     <ProjectReference Include="..\domain\Domain.csproj" />
     <ProjectReference Include="..\infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\application\Application.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\domain\Domain.csproj" />
-    <ProjectReference Include="..\..\..\..\shared\diagnostics\Diagnostics.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\application\Application.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\domain\Domain.csproj" />
+    <ProjectReference Include="..\..\..\..\shared\src\diagnostics\Diagnostics.csproj" />
   </ItemGroup>
 
 </Project>
