@@ -5,6 +5,7 @@ using FakeItEasy;
 using TastyBeans.Catalog.Application.CommandHandlers;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Events;
 using TastyBeans.Shared.Application;
 using TastyBeans.Shared.Domain;
 using Xunit;
@@ -13,64 +14,66 @@ namespace TastyBeans.Catalog.Application.Tests.CommandHandlers;
 
 public class DiscontinueProductCommandHandlerTests
 {
-    private IProductRepository _productRepository;
+    private IEventStore _eventStore;
     private IEventPublisher _eventPublisher;
     private DiscontinueProductCommandHandler _commandHandler;
 
     public DiscontinueProductCommandHandlerTests()
     {
-        _productRepository = A.Fake<IProductRepository>();
+        _eventStore = A.Fake<IEventStore>();
         _eventPublisher = A.Fake<IEventPublisher>();
-        _commandHandler = new DiscontinueProductCommandHandler(_productRepository, _eventPublisher);
+        _commandHandler = new DiscontinueProductCommandHandler(_eventStore, _eventPublisher);
     }
 
     [Fact]
     public async Task CanHandleCommands()
     {
-        var product = new Product(Guid.NewGuid(), "Test", "Test", new[]
+        var productId = Guid.NewGuid();
+        var product = new Product(productId, 1, new IDomainEvent[]
         {
-            new ProductVariant(250, 5.95m)
+            new Registered(productId, "Test", "Test")
         });
 
-        A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns(product);
+        A.CallTo(() => _eventStore.GetAsync<Product>(A<Guid>.Ignored)).Returns(product);
 
-        var command = new DiscontinueProductCommand(product.Id);
-        var response = await _commandHandler.ExecuteAsync(command);
+        var command = new Discontinue(product.Id);
+        await _commandHandler.ExecuteAsync(command);
 
         A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<IDomainEvent>>.Ignored)).MustHaveHappened();
-        A.CallTo(() => _productRepository.UpdateAsync(A<Product>.Ignored)).MustHaveHappened();
+        A.CallTo(() => _eventStore.AppendAsync(A<Guid>.Ignored, A<long>.Ignored, A<IEnumerable<IDomainEvent>>.Ignored)).MustHaveHappened();
     }
 
     [Fact]
     public async Task DoesntPublishEventIfCommandIsInvalid()
     {
-        var product = new Product(Guid.NewGuid(), "Test", "Test", new[]
+        var productId = Guid.NewGuid();
+        var product = new Product(productId, 1, new IDomainEvent[]
         {
-            new ProductVariant(250, 5.95m)
+            new Registered(productId, "Test", "Test")
         });
 
         // Discontinue the product once before executing the actual command through the handler.
-        product.Discontinue(new DiscontinueProductCommand(product.Id));
+        product.Discontinue(new Discontinue(product.Id));
 
-        A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns(product);
+        A.CallTo(() => _eventStore.GetAsync<Product>(A<Guid>.Ignored)).Returns(product);
 
-        var command = new DiscontinueProductCommand(product.Id);
-        var response = await _commandHandler.ExecuteAsync(command);
+        var command = new Discontinue(product.Id);
+        await _commandHandler.ExecuteAsync(command);
 
         A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<IDomainEvent>>.Ignored)).MustNotHaveHappened();
-        A.CallTo(() => _productRepository.UpdateAsync(A<Product>.Ignored)).MustNotHaveHappened();
+        A.CallTo(() => _eventStore.AppendAsync(A<Guid>.Ignored, A<long>.Ignored, A<IEnumerable<IDomainEvent>>.Ignored)).MustNotHaveHappened();
     }
 
     [Fact]
     public async Task ThrowsExceptionWhenEntityDoesntExist()
     {
-        A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns((Product?)null);
+        A.CallTo(() => _eventStore.GetAsync<Product>(A<Guid>.Ignored)).Returns((Product?)null);
 
-        var command = new DiscontinueProductCommand(Guid.NewGuid());
+        var command = new Discontinue(Guid.NewGuid());
 
         await Assert.ThrowsAsync<AggregateNotFoundException>(async () =>
         {
-            var response = await _commandHandler.ExecuteAsync(command);
+            await _commandHandler.ExecuteAsync(command);
         });
     }
 }

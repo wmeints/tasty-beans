@@ -14,43 +14,43 @@ public class EventStore : IEventStore
         _eventStoreDbContext = eventStoreDbContext;
     }
 
-    public async Task<T> GetOrCreateAsync<T>(Guid aggregateId)
+    public async Task<T?> GetAsync<T>(Guid aggregateId) where T : AggregateRoot
     {
         var eventRecords = await _eventStoreDbContext.DomainEvents
             .Where(x => x.AggregateId == aggregateId)
             .OrderBy(x => x.SequenceNumber)
             .ToListAsync();
 
-        if (eventRecords.Any())
+        if (!eventRecords.Any())
         {
-            var domainEvents = eventRecords
-                .Select(eventRecord =>
-                {
-                    var eventType = DomainEventRegistry.GetType(eventRecord.PayloadType);
-
-                    if (eventType == null)
-                    {
-                        throw new InvalidOperationException(
-                            $"Can't deserialize event payload type {eventRecord.PayloadType}. No mapping registered.");
-                    }
-
-                    var domainEvent = (IDomainEvent?)JsonSerializer.Deserialize(eventRecord.PayloadData, eventType);
-
-                    if (domainEvent == null)
-                    {
-                        throw new InvalidOperationException($"Can't deserialize event payload for event {eventRecord.Id}");
-                    }
-
-                    return domainEvent;
-                })
-                .ToList();
-
-            long expectedVersion = eventRecords.Max(x => x.SequenceNumber);
-
-            return (T)Activator.CreateInstance(typeof(T), aggregateId, expectedVersion, domainEvents)!;
+            return null;
         }
 
-        return (T)Activator.CreateInstance(typeof(T), aggregateId)!;
+        var domainEvents = eventRecords
+            .Select(eventRecord =>
+            {
+                var eventType = DomainEventRegistry.GetType(eventRecord.PayloadType);
+
+                if (eventType == null)
+                {
+                    throw new InvalidOperationException(
+                        $"Can't deserialize event payload type {eventRecord.PayloadType}. No mapping registered.");
+                }
+
+                var domainEvent = (IDomainEvent?)JsonSerializer.Deserialize(eventRecord.PayloadData, eventType);
+
+                if (domainEvent == null)
+                {
+                    throw new InvalidOperationException($"Can't deserialize event payload for event {eventRecord.Id}");
+                }
+
+                return domainEvent;
+            })
+            .ToList();
+
+        long expectedVersion = eventRecords.Max(x => x.SequenceNumber);
+
+        return (T)Activator.CreateInstance(typeof(T), aggregateId, expectedVersion, domainEvents)!;
     }
 
     public async Task AppendAsync(Guid aggregateId, long expectedVersion, IEnumerable<IDomainEvent> domainEvents)

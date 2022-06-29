@@ -1,132 +1,91 @@
-﻿using System.Collections.ObjectModel;
+﻿using FluentValidation;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Events;
-using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Validators;
 using TastyBeans.Shared.Domain;
 
 namespace TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 
-public class Product
+public class Product : AggregateRoot
 {
-    private Product()
-    {
-        Name = "";
-        Description = "";
-        Variants = new Collection<ProductVariant>();
-    }
-    
-    public Product(Guid id, string name, string description, ICollection<ProductVariant> variants)
-    {
-        Id = id;
-        Name = name;
-        Description = description;
-        Variants = variants;
-    }
-
-    public Guid Id { get; private set; }
     public string Name { get; private set; }
     public string Description { get; private set; }
-    public bool Discontinued { get; private set; }
-    public List<string>? FlavorNotes { get; private set; }
-    public string? Taste { get; private set; }
     public int? RoastLevel { get; private set; }
-    public ICollection<ProductVariant> Variants { get; private set; }
+    public string? Taste { get; private set; }
+    public IReadOnlyCollection<string>? FlavorNotes { get; private set; }
+    public bool IsAvailable { get; private set; }
+    public bool IsDiscontinued { get; private set; }
 
-    public UpdateProductCommandResponse Update(UpdateProductCommand cmd)
+    public Product(Register cmd) : base(cmd.Id)
     {
-        using var activity = Activities.Update(cmd.ProductId);
-        
-        var validator = new UpdateProductCommandValidator();
-        var validationResult = validator.Validate(cmd);
-
-        if (!validationResult.IsValid)
-        {
-            var errors = validationResult.Errors
-                .Select(x => new ValidationError(x.PropertyName, x.ErrorMessage))
-                .ToList();
-            
-            return new UpdateProductCommandResponse(errors, Enumerable.Empty<IDomainEvent>());
-        }
-
-        Name = cmd.Name;
-        Description = cmd.Description;
-        Variants = new List<ProductVariant>(cmd.Variants);
-
-        var evt = new ProductUpdatedEvent(Id, Name, Description, Variants);
-
-        return new UpdateProductCommandResponse(
-            Enumerable.Empty<ValidationError>(),
-            new IDomainEvent[] { evt });
+        Emit(new Registered(Id, cmd.Name,cmd.Description));
     }
 
-    public DiscontinueProductCommandResponse Discontinue(DiscontinueProductCommand cmd)
+    public Product(Guid id, long version, IEnumerable<IDomainEvent> domainEvents) : base(id, version, domainEvents)
     {
-        using var activity = Activities.Discontinue(cmd.ProductId);
-        
-        if (Discontinued)
-        {
-            return new DiscontinueProductCommandResponse(new[]
-            {
-                new ValidationError("", "Product is already discontinued.")
-            }, Enumerable.Empty<IDomainEvent>());
-        }
-
-        Discontinued = true;
-
-        var evt = new ProductDiscontinuedEvent(Id);
-
-        return new DiscontinueProductCommandResponse(
-            Enumerable.Empty<ValidationError>(), 
-            new IDomainEvent[] { evt });
     }
 
-    public TasteTestProductCommandResponse TasteTest(TasteTestProductCommand cmd)
+    public void CompleteTasteTest(CompleteTasteTest cmd)
     {
-        using var activity = Activities.TasteTest(cmd.ProductId);
-        
-        var validator = new TasteTestCommandValidator();
-        var validationResult = validator.Validate(cmd);
-
-        if (!validationResult.IsValid)
+        if (IsAvailable)
         {
-            return new TasteTestProductCommandResponse(
-                validationResult.GetValidationErrors(),
-                Enumerable.Empty<IDomainEvent>());
+            throw new InvalidOperationException("Product is already available for shipping to subscribers");
         }
 
-        RoastLevel = cmd.RoastLevel;
-        Taste = cmd.Taste;
-        FlavorNotes = cmd.FlavorNotes.ToList();
-
-        var tasteTestedEvt = new ProductTasteTestedEvent(Id, RoastLevel.Value, Taste, FlavorNotes);
+        if (IsDiscontinued)
+        {
+            throw new InvalidOperationException("Can't taste test a discontinued product");
+        }
         
-        return new TasteTestProductCommandResponse(
-            Enumerable.Empty<ValidationError>(),
-            new IDomainEvent[] { tasteTestedEvt });
+        Emit(new TasteTestCompleted(Id, cmd.RoastLevel,cmd.Taste,cmd.FlavorNotes));
+    }
+
+    public void Discontinue(Discontinue cmd)
+    {
+        if (IsDiscontinued)
+        {
+            throw new InvalidOperationException("Can't discontinue an already discontinued product");
+        }
+        
+        Emit(new Discontinued(Id));
     }
     
-    public static RegisterProductCommandResponse Register(RegisterProductCommand cmd)
+    protected override bool TryApplyEvent(IDomainEvent evt)
     {
-        using var activity = Activities.Register();
-        
-        var validator = new RegisterProductCommandValidator();
-        var validationResult = validator.Validate(cmd);
-
-        if (!validationResult.IsValid)
+        switch (evt)
         {
-            var errors = validationResult.Errors
-                .Select(x => new ValidationError(x.PropertyName, x.ErrorMessage))
-                .ToList();
-            
-            return new RegisterProductCommandResponse(null, errors, Enumerable.Empty<IDomainEvent>());
+            case Registered registered:
+                Apply(registered);
+                break;
+            case Discontinued discontinued:
+                Apply(discontinued);
+                break;
+            case TasteTestCompleted tasteTestCompleted:
+                Apply(tasteTestCompleted);
+                break;
+            default:
+                return false;
         }
 
-        var product = new Product(Guid.NewGuid(), cmd.Name, cmd.Description, cmd.Variants.ToList());
-        var evt = new ProductRegisteredEvent(product.Id, product.Name, product.Description, product.Variants);
+        return true;
+    }
 
-        return new RegisterProductCommandResponse(
-            product, 
-            Enumerable.Empty<ValidationError>(),
-            new IDomainEvent[] { evt });
+    private void Apply(Registered registered)
+    {
+        Name = registered.Name;
+        Description = registered.Description;
+    }
+    
+    private void Apply(TasteTestCompleted tasteTestCompleted)
+    {
+        Taste = tasteTestCompleted.Taste;
+        FlavorNotes = tasteTestCompleted.FlavorNotes.ToList().AsReadOnly();
+        RoastLevel = tasteTestCompleted.RoastLevel;
+        IsAvailable = true;
+    }
+
+    private void Apply(Discontinued discontinued)
+    {
+        IsAvailable = false;
+        IsDiscontinued = true;
     }
 }

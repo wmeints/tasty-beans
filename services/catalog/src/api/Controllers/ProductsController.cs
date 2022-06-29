@@ -14,25 +14,22 @@ namespace TastyBeans.Catalog.Api.Controllers;
 public class ProductsController : ControllerBase
 {
     private readonly RegisterProductCommandHandler _registerProductCommandHandler;
-    private readonly UpdateProductCommandHandler _updateProductCommandHandler;
     private readonly DiscontinueProductCommandHandler _discontinueProductCommandHandler;
     private readonly FindProductByIdQueryHandler _findProductByIdQueryHandler;
     private readonly FindAllProductsQueryHandler _findAllProductsQueryHandler;
-    private readonly TasteTestProductCommandHandler _tasteTestProductCommandHandler;
+    private readonly CompleteTasteTestCommandHandler _completeTasteTestCommandHandler;
 
     public ProductsController(RegisterProductCommandHandler registerProductCommandHandler,
-        UpdateProductCommandHandler updateProductCommandHandler,
         DiscontinueProductCommandHandler discontinueProductCommandHandler,
         FindProductByIdQueryHandler findProductByIdQueryHandler,
         FindAllProductsQueryHandler findAllProductsQueryHandler, 
-        TasteTestProductCommandHandler tasteTestProductCommandHandler)
+        CompleteTasteTestCommandHandler completeTasteTestCommandHandler)
     {
         _registerProductCommandHandler = registerProductCommandHandler;
-        _updateProductCommandHandler = updateProductCommandHandler;
         _discontinueProductCommandHandler = discontinueProductCommandHandler;
         _findProductByIdQueryHandler = findProductByIdQueryHandler;
         _findAllProductsQueryHandler = findAllProductsQueryHandler;
-        _tasteTestProductCommandHandler = tasteTestProductCommandHandler;
+        _completeTasteTestCommandHandler = completeTasteTestCommandHandler;
     }
 
     [HttpGet]
@@ -58,51 +55,25 @@ public class ProductsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Product>> Create(CreateProductForm form)
     {
-        var command = new RegisterProductCommand(form.Name, form.Description, form.Variants);
-        var response = await _registerProductCommandHandler.ExecuteAsync(command);
-
-        ModelState.AddValidationErrors(response.Errors);
+        var productId = Guid.NewGuid();
+        var command = new Register(productId, form.Name, form.Description);
+        await _registerProductCommandHandler.ExecuteAsync(command);
 
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
-        
-        return Ok(response.Product);
+
+        return CreatedAtAction("Details", new { id = productId });
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<Product>> Update(Guid id, UpdateProductForm form)
-    {
-        try
-        {
-            var command = new UpdateProductCommand(id, form.Name, form.Description, form.Variants);
-            var response = await _updateProductCommandHandler.ExecuteAsync(command);
-
-            ModelState.AddValidationErrors(response.Errors);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return Accepted();
-        }
-        catch (AggregateNotFoundException)
-        {
-            return NotFound();
-        }
-    }
-
-    [HttpPost("{id}/taste")]
+    [HttpPost("{id}/taste-test-results")]
     public async Task<IActionResult> TasteTest(Guid id, TasteTestForm form)
     {
         try
         {
-            var command = new TasteTestProductCommand(id, form.RoastLevel, form.Taste, form.FlavorNotes);
-            var response = await _tasteTestProductCommandHandler.ExecuteAsync(command);
-            
-            ModelState.AddValidationErrors(response.Errors);
+            var command = new CompleteTasteTest(id, form.RoastLevel, form.Taste, form.FlavorNotes);
+            await _completeTasteTestCommandHandler.ExecuteAsync(command);
             
             if (!ModelState.IsValid)
             {
@@ -122,10 +93,8 @@ public class ProductsController : ControllerBase
     {
         try
         {
-            var command = new DiscontinueProductCommand(id);
-            var response = await _discontinueProductCommandHandler.ExecuteAsync(command);
-
-            ModelState.AddValidationErrors(response.Errors);
+            var command = new Discontinue(id);
+            await _discontinueProductCommandHandler.ExecuteAsync(command);
 
             if (!ModelState.IsValid)
             {

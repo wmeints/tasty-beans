@@ -11,12 +11,12 @@ public class ProductTests
 {
     public class WhenRegistering
     {
-        private RegisterProductCommand _command;
+        private Register _command;
         private RegisterProductCommandResponse _response;
 
         public WhenRegistering()
         {
-            _command = new RegisterProductCommand(
+            _command = new Register(
                 "Ultra black 3000(tm)",
                 "So dark, it will burn a hole in your coffee cup",
                 new[] { new ProductVariant(500, 12.95m) });
@@ -35,7 +35,6 @@ public class ProductTests
         {
             _response.Product.Name.Should().Be(_command.Name);
             _response.Product.Description.Should().Be(_command.Description);
-            _response.Product.Variants.Should().Contain(_command.Variants);
         }
 
         [Fact]
@@ -47,7 +46,7 @@ public class ProductTests
         [Fact]
         public void Then_AProductRegisteredEventIsReturned()
         {
-            _response.Events.Should().ContainSingle(x => x is ProductRegisteredEvent);
+            _response.Events.Should().ContainSingle(x => x is Registered);
         }
     }
 
@@ -102,7 +101,7 @@ public class ProductTests
     public class WhenDiscontinuing
     {
         private Product _product;
-        private DiscontinueProductCommand _command;
+        private Discontinue _command;
         private DiscontinueProductCommandResponse _response;
 
         public WhenDiscontinuing()
@@ -116,7 +115,7 @@ public class ProductTests
                     new ProductVariant(1000, 12.95m)
                 });
 
-            _command = new DiscontinueProductCommand(_product.Id);
+            _command = new Discontinue(_product.Id);
             _response = _product.Discontinue(_command);
         }
 
@@ -135,7 +134,7 @@ public class ProductTests
         [Fact]
         public void Then_ADiscontinuedEventIsReturned()
         {
-            _response.Events.Should().ContainSingle(x => x is ProductDiscontinuedEvent);
+            _response.Events.Should().ContainSingle(x => x is Discontinued);
         }
     }
 
@@ -143,11 +142,11 @@ public class ProductTests
     {
         private Product _product;
         private readonly TasteTestProductCommandResponse _response;
-        private readonly TasteTestProductCommand _productCommand;
+        private readonly CompleteTasteTest _productCommand;
 
         public WhenTasteTesting()
         {
-            var result = Product.Register(new RegisterProductCommand(
+            var result = Product.Register(new Register(
                 Name: "Diesel",
                 Description:
                 "Dark, rich and energizing, here’s fuel for your morning (or afternoon, or evening). A bit of earthy smokiness gives it extra oomph.",
@@ -155,7 +154,7 @@ public class ProductTests
 
             _product = result.Product;
 
-            _productCommand = new TasteTestProductCommand(_product.Id, 8, "Comforting & Rich",
+            _productCommand = new CompleteTasteTest(_product.Id, 8, "Comforting & Rich",
                 new[] { "Roastiness", "Ripe Fruit", "Milk Chocolate" });
             
             _response = _product.TasteTest(_productCommand);
@@ -164,7 +163,7 @@ public class ProductTests
         [Fact]
         public void PublishesTasteTestedEvent()
         {
-            _response.Events.Should().ContainSingle(x => x is ProductTasteTestedEvent);
+            _response.Events.Should().ContainSingle(x => x is TasteTestCompleted);
         }
 
         [Fact]
