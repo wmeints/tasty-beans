@@ -12,15 +12,13 @@ public class Product
     {
         Name = "";
         Description = "";
-        Variants = new Collection<ProductVariant>();
     }
     
-    public Product(Guid id, string name, string description, ICollection<ProductVariant> variants)
+    public Product(Guid id, string name, string description)
     {
         Id = id;
         Name = name;
         Description = description;
-        Variants = variants;
     }
 
     public Guid Id { get; private set; }
@@ -30,7 +28,6 @@ public class Product
     public List<string>? FlavorNotes { get; private set; }
     public string? Taste { get; private set; }
     public int? RoastLevel { get; private set; }
-    public ICollection<ProductVariant> Variants { get; private set; }
 
     public UpdateProductCommandResponse Update(UpdateProductCommand cmd)
     {
@@ -50,9 +47,8 @@ public class Product
 
         Name = cmd.Name;
         Description = cmd.Description;
-        Variants = new List<ProductVariant>(cmd.Variants);
 
-        var evt = new ProductUpdatedEvent(Id, Name, Description, Variants);
+        var evt = new ProductUpdatedEvent(Id, Name, Description);
 
         return new UpdateProductCommandResponse(
             Enumerable.Empty<ValidationError>(),
@@ -121,8 +117,8 @@ public class Product
             return new RegisterProductCommandResponse(null, errors, Enumerable.Empty<IDomainEvent>());
         }
 
-        var product = new Product(Guid.NewGuid(), cmd.Name, cmd.Description, cmd.Variants.ToList());
-        var evt = new ProductRegisteredEvent(product.Id, product.Name, product.Description, product.Variants);
+        var product = new Product(Guid.NewGuid(), cmd.Name, cmd.Description);
+        var evt = new ProductRegisteredEvent(product.Id, product.Name, product.Description);
 
         return new RegisterProductCommandResponse(
             product, 

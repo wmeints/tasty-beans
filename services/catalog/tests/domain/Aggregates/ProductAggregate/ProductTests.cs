@@ -35,7 +35,6 @@ public class ProductTests
         {
             _response.Product.Name.Should().Be(_command.Name);
             _response.Product.Description.Should().Be(_command.Description);
-            _response.Product.Variants.Should().Contain(_command.Variants);
         }
 
         [Fact]
@@ -61,11 +60,7 @@ public class ProductTests
         {
             _product = new Product(Guid.NewGuid(),
                 "Ultrablack 2000 (tm)",
-                "The ultimate black coffee",
-                new[]
-                {
-                    new ProductVariant(250, 5.67m)
-                });
+                "The ultimate black coffee");
 
             _command = new UpdateProductCommand(
                 _product.Id,
@@ -83,7 +78,6 @@ public class ProductTests
         {
             _product.Name.Should().Be(_command.Name);
             _product.Description.Should().Be(_command.Description);
-            _product.Variants.Should().Contain(_command.Variants);
         }
 
         [Fact]
@@ -110,11 +104,7 @@ public class ProductTests
             _product = new Product(
                 Guid.NewGuid(),
                 "Weaksauce",
-                "A very lame blend of coffee",
-                new[]
-                {
-                    new ProductVariant(1000, 12.95m)
-                });
+                "A very lame blend of coffee");
 
             _command = new DiscontinueProductCommand(_product.Id);
             _response = _product.Discontinue(_command);

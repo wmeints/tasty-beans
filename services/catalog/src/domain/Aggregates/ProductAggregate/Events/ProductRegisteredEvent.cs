@@ -6,5 +6,4 @@ namespace TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Events;
 public record ProductRegisteredEvent(
     Guid ProductId,
     string Name,
-    string Description,
-    IEnumerable<ProductVariant> Variants): IDomainEvent;
+    string Description): IDomainEvent;

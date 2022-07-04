@@ -33,11 +33,7 @@ public class UpdateProductCommandHandlerTests
         var product = new Product(
             Guid.NewGuid(),
             "Test coffee",
-            "Test description",
-            new ProductVariant[]
-            {
-                new ProductVariant(250, 5.95m)
-            });
+            "Test description");
 
         A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns(product);
 
@@ -60,11 +56,7 @@ public class UpdateProductCommandHandlerTests
         var product = new Product(
             Guid.NewGuid(),
             "Test coffee",
-            "Test description",
-            new ProductVariant[]
-            {
-                new ProductVariant(250, 5.95m)
-            });
+            "Test description");
 
         A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns(product);
 
@@ -84,11 +76,7 @@ public class UpdateProductCommandHandlerTests
         var product = new Product(
             Guid.NewGuid(),
             "Test coffee",
-            "Test description",
-            new ProductVariant[]
-            {
-                new ProductVariant(250, 5.95m)
-            });
+            "Test description");
 
         A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns((Product?)null);
 
@@ -98,6 +86,5 @@ public class UpdateProductCommandHandlerTests
         {
             var response = await _commandHandler.ExecuteAsync(command);
         });
-
     }
 }

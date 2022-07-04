@@ -27,12 +27,6 @@ public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
             );
 
         builder.Property(x => x.Taste).HasMaxLength(100);
-
-        var variantsNavigation = builder.OwnsMany(x => x.Variants);
-
-        variantsNavigation.Property(x => x.Weight).IsRequired();
-        variantsNavigation.Property(x => x.UnitPrice).HasPrecision(5, 2).IsRequired();
-
         builder.HasIndex(x => x.Name);
     }
 }

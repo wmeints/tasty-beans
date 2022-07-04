@@ -27,10 +27,7 @@ public class DiscontinueProductCommandHandlerTests
     [Fact]
     public async Task CanHandleCommands()
     {
-        var product = new Product(Guid.NewGuid(), "Test", "Test", new[]
-        {
-            new ProductVariant(250, 5.95m)
-        });
+        var product = new Product(Guid.NewGuid(), "Test", "Test");
 
         A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns(product);
 
@@ -44,10 +41,7 @@ public class DiscontinueProductCommandHandlerTests
     [Fact]
     public async Task DoesntPublishEventIfCommandIsInvalid()
     {
-        var product = new Product(Guid.NewGuid(), "Test", "Test", new[]
-        {
-            new ProductVariant(250, 5.95m)
-        });
+        var product = new Product(Guid.NewGuid(), "Test", "Test");
 
         // Discontinue the product once before executing the actual command through the handler.
         product.Discontinue(new DiscontinueProductCommand(product.Id));

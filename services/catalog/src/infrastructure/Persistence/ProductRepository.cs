@@ -17,7 +17,6 @@ public class ProductRepository: IProductRepository
     {
         using var activity = Activities.ExecuteDatabaseCommand();
         var items = await _applicationDbContext.Products
-            .Include(x => x.Variants)
             .OrderBy(x => x.Name)
             .Skip(pageIndex * pageSize)
             .Take(pageSize)
@@ -33,7 +32,6 @@ public class ProductRepository: IProductRepository
         using var activity = Activities.ExecuteDatabaseCommand();
         
         return await _applicationDbContext.Products
-            .Include(x => x.Variants)
             .SingleOrDefaultAsync(x => x.Id == id);
     }
 
