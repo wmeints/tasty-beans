@@ -39,14 +39,14 @@ public class ProductsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<PagedResult<Product>>> Index(int page = 0)
     {
-        var result = await _findAllProductsQueryHandler.ExecuteAsync(new FindAllProducts(page, 20));
+        var result = await _findAllProductsQueryHandler.Handle(new FindAllProducts(page, 20));
         return Ok(result);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Product>> Details(Guid id)
     {
-        var result = await _findProductByIdQueryHandler.ExecuteAsync(new FindProductById(id));
+        var result = await _findProductByIdQueryHandler.Handle(new FindProductById(id));
 
         if (result == null)
         {
@@ -60,7 +60,7 @@ public class ProductsController : ControllerBase
     public async Task<ActionResult<Product>> Create(CreateProductForm form)
     {
         var command = new RegisterProductCommand(form.Name, form.Description);
-        var response = await _registerProductCommandHandler.ExecuteAsync(command);
+        var response = await _registerProductCommandHandler.Handle(command);
 
         ModelState.AddValidationErrors(response.Errors);
 
@@ -78,7 +78,7 @@ public class ProductsController : ControllerBase
         try
         {
             var command = new UpdateProductCommand(id, form.Name, form.Description);
-            var response = await _updateProductCommandHandler.ExecuteAsync(command);
+            var response = await _updateProductCommandHandler.Handle(command);
 
             ModelState.AddValidationErrors(response.Errors);
 
@@ -101,7 +101,7 @@ public class ProductsController : ControllerBase
         try
         {
             var command = new TasteTestProductCommand(id, form.RoastLevel, form.Taste, form.FlavorNotes);
-            var response = await _tasteTestProductCommandHandler.ExecuteAsync(command);
+            var response = await _tasteTestProductCommandHandler.Handle(command);
             
             ModelState.AddValidationErrors(response.Errors);
             
@@ -124,7 +124,7 @@ public class ProductsController : ControllerBase
         try
         {
             var command = new DiscontinueProductCommand(id);
-            var response = await _discontinueProductCommandHandler.ExecuteAsync(command);
+            var response = await _discontinueProductCommandHandler.Handle(command);
 
             ModelState.AddValidationErrors(response.Errors);
 

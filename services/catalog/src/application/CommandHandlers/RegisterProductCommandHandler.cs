@@ -1,10 +1,11 @@
-﻿using TastyBeans.Catalog.Application.Commands;
+﻿using MediatR;
+using TastyBeans.Catalog.Application.Commands;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 using TastyBeans.Shared.Application;
 
 namespace TastyBeans.Catalog.Application.CommandHandlers;
 
-public class RegisterProductCommandHandler
+public class RegisterProductCommandHandler: IRequestHandler<RegisterProductCommand, RegisterProductCommandResponse>
 {
     private readonly IEventPublisher _eventPublisher;
     private readonly IProductRepository _productRepository;
@@ -14,11 +15,10 @@ public class RegisterProductCommandHandler
         _productRepository = productRepository;
         _eventPublisher = eventPublisher;
     }
-
-    public async Task<RegisterProductCommandResponse> ExecuteAsync(RegisterProductCommand cmd)
+    
+    public async Task<RegisterProductCommandResponse> Handle(RegisterProductCommand request, CancellationToken cancellationToken = default)
     {
-        using var activity = Activities.ExecuteCommand("RegisterProduct");
-        var product = new Product(Guid.NewGuid(), cmd.Name, cmd.Description);
+        var product = new Product(Guid.NewGuid(), request.Name, request.Description);
 
         if (product.IsValid)
         {

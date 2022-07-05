@@ -32,7 +32,7 @@ public class DiscontinueProductCommandHandlerTests
         A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns(product);
 
         var command = new DiscontinueProductCommand(product.Id);
-        var response = await _commandHandler.ExecuteAsync(command);
+        var response = await _commandHandler.Handle(command);
 
         A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<object>>.Ignored)).MustHaveHappened();
         A.CallTo(() => _productRepository.UpdateAsync(A<Product>.Ignored)).MustHaveHappened();
@@ -47,7 +47,7 @@ public class DiscontinueProductCommandHandlerTests
 
         await Assert.ThrowsAsync<AggregateNotFoundException>(async () =>
         {
-            var response = await _commandHandler.ExecuteAsync(command);
+            var response = await _commandHandler.Handle(command);
         });
     }
 }

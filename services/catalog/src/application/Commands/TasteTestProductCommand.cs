@@ -1,3 +1,5 @@
-﻿namespace TastyBeans.Catalog.Application.Commands;
+﻿using MediatR;
 
-public record TasteTestProductCommand(Guid ProductId, int RoastLevel, string Taste, string[] FlavorNotes);
+namespace TastyBeans.Catalog.Application.Commands;
+
+public record TasteTestProductCommand(Guid ProductId, int RoastLevel, string Taste, string[] FlavorNotes): IRequest<TasteTestProductCommandResponse>;

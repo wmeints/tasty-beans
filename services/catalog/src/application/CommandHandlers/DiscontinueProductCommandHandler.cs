@@ -1,11 +1,12 @@
-﻿using TastyBeans.Catalog.Application.Commands;
+﻿using MediatR;
+using TastyBeans.Catalog.Application.Commands;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 using TastyBeans.Shared.Application;
 using TastyBeans.Shared.Domain;
 
 namespace TastyBeans.Catalog.Application.CommandHandlers;
 
-public class DiscontinueProductCommandHandler
+public class DiscontinueProductCommandHandler: IRequestHandler<DiscontinueProductCommand, DiscontinueProductCommandResponse>
 {
     private readonly IProductRepository _productRepository;
     private readonly IEventPublisher _eventPublisher;
@@ -16,10 +17,9 @@ public class DiscontinueProductCommandHandler
         _eventPublisher = eventPublisher;
     }
 
-    public async Task<DiscontinueProductCommandResponse> ExecuteAsync(DiscontinueProductCommand cmd)
+    public async Task<DiscontinueProductCommandResponse> Handle(DiscontinueProductCommand request, CancellationToken cancellationToken = default)
     {
-        using var activity = Activities.ExecuteCommand("DiscontinueProduct");
-        var product = await _productRepository.FindByIdAsync(cmd.ProductId);
+        var product = await _productRepository.FindByIdAsync(request.ProductId);
 
         if (product == null)
         {

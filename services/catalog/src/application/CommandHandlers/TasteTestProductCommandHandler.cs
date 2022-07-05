@@ -1,11 +1,12 @@
-﻿using TastyBeans.Catalog.Application.Commands;
+﻿using MediatR;
+using TastyBeans.Catalog.Application.Commands;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 using TastyBeans.Shared.Application;
 using TastyBeans.Shared.Domain;
 
 namespace TastyBeans.Catalog.Application.CommandHandlers;
 
-public class TasteTestProductCommandHandler
+public class TasteTestProductCommandHandler : IRequestHandler<TasteTestProductCommand, TasteTestProductCommandResponse>
 {
     private readonly IProductRepository _productRepository;
     private readonly IEventPublisher _eventPublisher;
@@ -16,24 +17,22 @@ public class TasteTestProductCommandHandler
         _eventPublisher = eventPublisher;
     }
 
-    public async Task<TasteTestProductCommandResponse> ExecuteAsync(TasteTestProductCommand cmd)
+    public async Task<TasteTestProductCommandResponse> Handle(TasteTestProductCommand request,
+        CancellationToken cancellationToken = default)
     {
-        using var activity = Activities.ExecuteCommand("TasteTestProduct");
-        var product = await _productRepository.FindByIdAsync(cmd.ProductId);
+        var product = await _productRepository.FindByIdAsync(request.ProductId);
 
         if (product == null)
         {
             throw new AggregateNotFoundException("Can't find the specified product");
         }
 
-        product.CompleteTasteTest(cmd.Taste,cmd.FlavorNotes,cmd.RoastLevel);
-        
+        product.CompleteTasteTest(request.Taste, request.FlavorNotes, request.RoastLevel);
+
         if (product.IsValid)
         {
             await _productRepository.UpdateAsync(product);
             await _eventPublisher.PublishEventsAsync(product.PendingDomainEvents);
-            
-            Metrics.ProductsTasteTested.Add(1);
         }
 
         return new TasteTestProductCommandResponse(product.BusinessRuleViolations);

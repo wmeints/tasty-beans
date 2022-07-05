@@ -1,11 +1,12 @@
-﻿using TastyBeans.Catalog.Application.Commands;
+﻿using MediatR;
+using TastyBeans.Catalog.Application.Commands;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 using TastyBeans.Shared.Application;
 using TastyBeans.Shared.Domain;
 
 namespace TastyBeans.Catalog.Application.CommandHandlers;
 
-public class UpdateProductCommandHandler
+public class UpdateProductCommandHandler: IRequestHandler<UpdateProductCommand, UpdateProductCommandResponse>
 {
     private readonly IProductRepository _productRepository;
     private readonly IEventPublisher _eventPublisher;
@@ -16,17 +17,16 @@ public class UpdateProductCommandHandler
         _eventPublisher = eventPublisher;
     }
 
-    public async Task<UpdateProductCommandResponse> ExecuteAsync(UpdateProductCommand cmd)
+    public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken = default)
     {
-        using var activity = Activities.ExecuteCommand("UpdateProduct");
-        var product = await _productRepository.FindByIdAsync(cmd.ProductId);
+        var product = await _productRepository.FindByIdAsync(request.ProductId);
 
         if (product == null)
         {
             throw new AggregateNotFoundException("Can't find the specified product");
         }
 
-        product.UpdateProductDetails(cmd.Name, cmd.Description);
+        product.UpdateProductDetails(request.Name, request.Description);
 
         if (product.IsValid)
         {

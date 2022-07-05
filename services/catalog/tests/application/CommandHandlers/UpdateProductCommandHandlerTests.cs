@@ -16,10 +16,8 @@ public class UpdateProductCommandHandlerTests
 {
     private IProductRepository _productRepository;
     private IEventPublisher _eventPublisher;
-
     private UpdateProductCommandHandler _commandHandler;
-        
-    
+
     public UpdateProductCommandHandlerTests()
     {
         _productRepository = A.Fake<IProductRepository>();
@@ -39,7 +37,7 @@ public class UpdateProductCommandHandlerTests
 
         var command = new UpdateProductCommand(product.Id, "Test", "Test");
 
-        var response = await _commandHandler.ExecuteAsync(command);
+        var response = await _commandHandler.Handle(command);
 
         A.CallTo(() => _productRepository.UpdateAsync(A<Product>.Ignored)).MustHaveHappened();
         A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<object>>.Ignored)).MustHaveHappened();
@@ -61,7 +59,7 @@ public class UpdateProductCommandHandlerTests
 
         await Assert.ThrowsAsync<AggregateNotFoundException>(async () =>
         {
-            var response = await _commandHandler.ExecuteAsync(command);
+            var response = await _commandHandler.Handle(command);
         });
     }
 }

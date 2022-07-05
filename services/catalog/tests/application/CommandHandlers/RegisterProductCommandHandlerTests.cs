@@ -34,7 +34,7 @@ public class RegisterProductCommandHandlerTests
             "Test coffee", 
             "some description");
         
-        var response = await _commandHandler.ExecuteAsync(command);
+        var response = await _commandHandler.Handle(command);
 
         A.CallTo(() => _productRepository.InsertAsync(A<Product>.Ignored)).MustHaveHappened();
         A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<object>>.Ignored)).MustHaveHappened();
