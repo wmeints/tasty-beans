@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FakeItEasy;
 using TastyBeans.Catalog.Application.CommandHandlers;
+using TastyBeans.Catalog.Application.Commands;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
-using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
 using TastyBeans.Shared.Application;
 using TastyBeans.Shared.Domain;
 using Xunit;
@@ -34,25 +34,8 @@ public class DiscontinueProductCommandHandlerTests
         var command = new DiscontinueProductCommand(product.Id);
         var response = await _commandHandler.ExecuteAsync(command);
 
-        A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<IDomainEvent>>.Ignored)).MustHaveHappened();
+        A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<object>>.Ignored)).MustHaveHappened();
         A.CallTo(() => _productRepository.UpdateAsync(A<Product>.Ignored)).MustHaveHappened();
-    }
-
-    [Fact]
-    public async Task DoesntPublishEventIfCommandIsInvalid()
-    {
-        var product = new Product(Guid.NewGuid(), "Test", "Test");
-
-        // Discontinue the product once before executing the actual command through the handler.
-        product.Discontinue(new DiscontinueProductCommand(product.Id));
-
-        A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns(product);
-
-        var command = new DiscontinueProductCommand(product.Id);
-        var response = await _commandHandler.ExecuteAsync(command);
-
-        A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<IDomainEvent>>.Ignored)).MustNotHaveHappened();
-        A.CallTo(() => _productRepository.UpdateAsync(A<Product>.Ignored)).MustNotHaveHappened();
     }
 
     [Fact]

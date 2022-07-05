@@ -1,5 +1,5 @@
-﻿using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
-using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
+﻿using TastyBeans.Catalog.Application.Commands;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 using TastyBeans.Shared.Application;
 
 namespace TastyBeans.Catalog.Application.CommandHandlers;
@@ -18,16 +18,14 @@ public class RegisterProductCommandHandler
     public async Task<RegisterProductCommandResponse> ExecuteAsync(RegisterProductCommand cmd)
     {
         using var activity = Activities.ExecuteCommand("RegisterProduct");
-        var response = Product.Register(cmd);
+        var product = new Product(Guid.NewGuid(), cmd.Name, cmd.Description);
 
-        if (response.IsValid)
+        if (product.IsValid)
         {
-            await _productRepository.InsertAsync(response.Product);
-            await _eventPublisher.PublishEventsAsync(response.Events);
-            
-            Metrics.ProductsRegistered.Add(1);
+            await _productRepository.InsertAsync(product);
+            await _eventPublisher.PublishEventsAsync(product.PendingDomainEvents);
         }
 
-        return response;
+        return new RegisterProductCommandResponse(product, product.BusinessRuleViolations);
     }
 }

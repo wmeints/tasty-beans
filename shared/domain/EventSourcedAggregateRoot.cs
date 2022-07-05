@@ -1,31 +1,38 @@
-﻿namespace TastyBeans.Shared.Domain;
+﻿using NodaTime.TimeZones;
 
-public class EventSourcedAggregateRoot<T> : AggregateRoot<T>
+namespace TastyBeans.Shared.Domain;
+
+public abstract class EventSourcedAggregateRoot
 {
-    private static readonly EventSourcedAggregateModel<T> _metaModel = new();
+    private readonly List<object> _pendingDomainEvents = new();
+    private readonly List<BusinessRuleViolation> _businessRuleViolations = new();
 
-    public EventSourcedAggregateRoot(T id) : base(id)
+    public IReadOnlyCollection<object> PendingDomainEvents => _pendingDomainEvents.AsReadOnly();
+    public IReadOnlyCollection<BusinessRuleViolation> BusinessRuleViolations => _businessRuleViolations.AsReadOnly();
+    public long Version { get; protected set; } = 0L;
+    public bool IsValid => !_businessRuleViolations.Any();
+
+    public void ClearPendingDomainEvents()
+    {
+        _pendingDomainEvents.Clear();
+    }
+    
+    protected EventSourcedAggregateRoot()
     {
     }
 
-    public EventSourcedAggregateRoot(T id, IEnumerable<IDomainEvent> events):base(id)
+    protected void Emit(object evt)
     {
-        
-    }
-
-    protected override void Emit(IDomainEvent evt)
-    {
-        base.Emit(evt);
-        ApplyEvent(evt);
-    }
-
-    private void ApplyEvent(IDomainEvent evt)
-    {
-        if (!_metaModel.EventHandlers.TryGetValue(evt.GetType(), out var eventHandlerMethod))
+        if (TryApplyEvent(evt))
         {
-            throw new Exception($"No event handler method defined in the aggregate for event type {evt.GetType().FullName}");
+            _pendingDomainEvents.Add(evt);
         }
-
-        eventHandlerMethod.Invoke(this, new object? [] { evt });
     }
+
+    protected void AddBusinessRuleViolation(string errorMessage)
+    {
+        _businessRuleViolations.Add(new(errorMessage));
+    }
+
+    protected abstract bool TryApplyEvent(object evt);
 }

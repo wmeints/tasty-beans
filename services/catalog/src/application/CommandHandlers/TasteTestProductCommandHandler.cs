@@ -1,5 +1,5 @@
-﻿using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
-using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
+﻿using TastyBeans.Catalog.Application.Commands;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 using TastyBeans.Shared.Application;
 using TastyBeans.Shared.Domain;
 
@@ -26,16 +26,16 @@ public class TasteTestProductCommandHandler
             throw new AggregateNotFoundException("Can't find the specified product");
         }
 
-        var response = product.TasteTest(cmd);
+        product.CompleteTasteTest(cmd.Taste,cmd.FlavorNotes,cmd.RoastLevel);
         
-        if (response.IsValid)
+        if (product.IsValid)
         {
             await _productRepository.UpdateAsync(product);
-            await _eventPublisher.PublishEventsAsync(response.Events);
+            await _eventPublisher.PublishEventsAsync(product.PendingDomainEvents);
             
             Metrics.ProductsTasteTested.Add(1);
         }
 
-        return response;
+        return new TasteTestProductCommandResponse(product.BusinessRuleViolations);
     }
 }

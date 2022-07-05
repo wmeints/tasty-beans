@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using FakeItEasy;
 using FluentAssertions;
 using TastyBeans.Catalog.Application.CommandHandlers;
+using TastyBeans.Catalog.Application.Commands;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
-using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
 using TastyBeans.Shared.Application;
 using TastyBeans.Shared.Domain;
 using Xunit;
@@ -32,32 +32,12 @@ public class RegisterProductCommandHandlerTests
     {
         var command = new RegisterProductCommand(
             "Test coffee", 
-            "some description", 
-            new List<ProductVariant>
-            {
-                new ProductVariant(250, 9.95m)
-            });
+            "some description");
         
         var response = await _commandHandler.ExecuteAsync(command);
 
         A.CallTo(() => _productRepository.InsertAsync(A<Product>.Ignored)).MustHaveHappened();
-        A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<IDomainEvent>>.Ignored)).MustHaveHappened();
-
-        response.Should().NotBeNull();
-    }
-
-    [Fact]
-    public async Task DoesntPublishEventsWhenResponseIsInvalid()
-    {
-        var command = new RegisterProductCommand(
-            "Test coffee", 
-            "some description", 
-            new List<ProductVariant>());
-        
-        var response = await _commandHandler.ExecuteAsync(command);
-
-        A.CallTo(() => _productRepository.InsertAsync(A<Product>.Ignored)).MustNotHaveHappened();
-        A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<IDomainEvent>>.Ignored)).MustNotHaveHappened();
+        A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<object>>.Ignored)).MustHaveHappened();
 
         response.Should().NotBeNull();
     }

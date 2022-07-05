@@ -2,9 +2,10 @@
 using TastyBeans.Catalog.Api.Common;
 using TastyBeans.Catalog.Api.Forms;
 using TastyBeans.Catalog.Application.CommandHandlers;
+using TastyBeans.Catalog.Application.Commands;
+using TastyBeans.Catalog.Application.Queries;
 using TastyBeans.Catalog.Application.QueryHandlers;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
-using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
 using TastyBeans.Shared.Domain;
 
 namespace TastyBeans.Catalog.Api.Controllers;
@@ -38,14 +39,14 @@ public class ProductsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<PagedResult<Product>>> Index(int page = 0)
     {
-        var result = await _findAllProductsQueryHandler.ExecuteAsync(page, 20);
+        var result = await _findAllProductsQueryHandler.ExecuteAsync(new FindAllProducts(page, 20));
         return Ok(result);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Product>> Details(Guid id)
     {
-        var result = await _findProductByIdQueryHandler.ExecuteAsync(id);
+        var result = await _findProductByIdQueryHandler.ExecuteAsync(new FindProductById(id));
 
         if (result == null)
         {
@@ -58,7 +59,7 @@ public class ProductsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Product>> Create(CreateProductForm form)
     {
-        var command = new RegisterProductCommand(form.Name, form.Description, form.Variants);
+        var command = new RegisterProductCommand(form.Name, form.Description);
         var response = await _registerProductCommandHandler.ExecuteAsync(command);
 
         ModelState.AddValidationErrors(response.Errors);
@@ -76,7 +77,7 @@ public class ProductsController : ControllerBase
     {
         try
         {
-            var command = new UpdateProductCommand(id, form.Name, form.Description, form.Variants);
+            var command = new UpdateProductCommand(id, form.Name, form.Description);
             var response = await _updateProductCommandHandler.ExecuteAsync(command);
 
             ModelState.AddValidationErrors(response.Errors);

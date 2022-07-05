@@ -10,5 +10,4 @@ public class UpdateProductForm
     
     [Required(AllowEmptyStrings = false)]
     public string Description { get; set; } = "";
-    public List<ProductVariant> Variants { get; set; } = new();
 }

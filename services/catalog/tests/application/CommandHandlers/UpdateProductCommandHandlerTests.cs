@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using FakeItEasy;
 using FluentAssertions;
 using TastyBeans.Catalog.Application.CommandHandlers;
+using TastyBeans.Catalog.Application.Commands;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
-using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
 using TastyBeans.Shared.Application;
 using TastyBeans.Shared.Domain;
 using Xunit;
@@ -37,35 +37,12 @@ public class UpdateProductCommandHandlerTests
 
         A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns(product);
 
-        var command = new UpdateProductCommand(product.Id, "Test", "Test", new[]
-        {
-            new ProductVariant(500, 12.45m)
-        });
+        var command = new UpdateProductCommand(product.Id, "Test", "Test");
 
         var response = await _commandHandler.ExecuteAsync(command);
 
         A.CallTo(() => _productRepository.UpdateAsync(A<Product>.Ignored)).MustHaveHappened();
-        A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<IDomainEvent>>.Ignored)).MustHaveHappened();
-
-        response.Should().NotBeNull();
-    }
-
-    [Fact]
-    public async Task DoesntPublishEventsIfResponseIsInvalid()
-    {
-        var product = new Product(
-            Guid.NewGuid(),
-            "Test coffee",
-            "Test description");
-
-        A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns(product);
-
-        var command = new UpdateProductCommand(product.Id, "Test", "Test", new List<ProductVariant>());
-
-        var response = await _commandHandler.ExecuteAsync(command);
-
-        A.CallTo(() => _productRepository.UpdateAsync(A<Product>.Ignored)).MustNotHaveHappened();
-        A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<IDomainEvent>>.Ignored)).MustNotHaveHappened();
+        A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<object>>.Ignored)).MustHaveHappened();
 
         response.Should().NotBeNull();
     }
@@ -80,7 +57,7 @@ public class UpdateProductCommandHandlerTests
 
         A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns((Product?)null);
 
-        var command = new UpdateProductCommand(product.Id, "Test", "Test", new List<ProductVariant>());
+        var command = new UpdateProductCommand(product.Id, "Test", "Test");
 
         await Assert.ThrowsAsync<AggregateNotFoundException>(async () =>
         {

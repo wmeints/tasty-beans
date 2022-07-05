@@ -1,5 +1,5 @@
-﻿using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
-using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Commands;
+﻿using TastyBeans.Catalog.Application.Commands;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 using TastyBeans.Shared.Application;
 using TastyBeans.Shared.Domain;
 
@@ -26,14 +26,14 @@ public class UpdateProductCommandHandler
             throw new AggregateNotFoundException("Can't find the specified product");
         }
 
-        var response = product.Update(cmd);
+        product.UpdateProductDetails(cmd.Name, cmd.Description);
 
-        if (response.IsValid)
+        if (product.IsValid)
         {
             await _productRepository.UpdateAsync(product);
-            await _eventPublisher.PublishEventsAsync(response.Events);
+            await _eventPublisher.PublishEventsAsync(product.PendingDomainEvents);
         }
 
-        return response;
+        return new UpdateProductCommandResponse(product.BusinessRuleViolations);
     }
 }

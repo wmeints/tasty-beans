@@ -8,7 +8,7 @@ public abstract class AggregateRoot<T>: Entity<T>
     {
     }
     
-    public long Version { get; private set; } = 0L;
+    public long Version { get; protected set; } = 0L;
 
     public IReadOnlyCollection<IDomainEvent> PendingDomainEvents => _events.AsReadOnly();
 

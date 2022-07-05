@@ -1,4 +1,5 @@
-﻿using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
+﻿using TastyBeans.Catalog.Application.Queries;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 
 namespace TastyBeans.Catalog.Application.QueryHandlers;
 
@@ -11,9 +12,9 @@ public class FindProductByIdQueryHandler
         _productRepository = productRepository;
     }
 
-    public async Task<Product?> ExecuteAsync(Guid productId)
+    public async Task<Product?> ExecuteAsync(FindProductById query)
     {
         using var activity = Activities.ExecuteQuery("FindProductById");
-        return await _productRepository.FindByIdAsync(productId);
+        return await _productRepository.FindByIdAsync(query.Id);
     }
 }

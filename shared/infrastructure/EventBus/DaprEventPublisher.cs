@@ -20,7 +20,7 @@ public class DaprEventPublisher : IEventPublisher
         _options = options;
     }
 
-    public async Task PublishEventsAsync(IEnumerable<IDomainEvent> events)
+    public async Task PublishEventsAsync(IEnumerable<object> events)
     {
         foreach (var evt in events)
         {
