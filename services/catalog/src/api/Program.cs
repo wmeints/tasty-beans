@@ -1,8 +1,11 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Baseline;
+using MediatR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using TastyBeans.Catalog.Application.CommandHandlers;
+using TastyBeans.Catalog.Application.Commands;
 using TastyBeans.Catalog.Application.QueryHandlers;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 using TastyBeans.Catalog.Infrastructure.Persistence;
@@ -59,12 +62,7 @@ builder.Services.AddLogging(telemetryOptions);
 builder.Services.AddEventPublisher(options => options.DeadLetterTopic = "catalog.deadletter.v1");
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
-builder.Services.AddScoped<RegisterProductCommandHandler>();
-builder.Services.AddScoped<UpdateProductCommandHandler>();
-builder.Services.AddScoped<TasteTestProductCommandHandler>();
-builder.Services.AddScoped<DiscontinueProductCommandHandler>();
-builder.Services.AddScoped<FindProductByIdQueryHandler>();
-builder.Services.AddScoped<FindAllProductsQueryHandler>();
+builder.Services.AddMediatR(typeof(RegisterProductCommand).Assembly);
 
 var app = builder.Build();
 

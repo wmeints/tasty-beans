@@ -2,7 +2,7 @@
 
 namespace TastyBeans.Catalog.Application.Commands;
 
-public record DiscontinueProductCommandResponse(IEnumerable<BusinessRuleViolation> Errors)
+public record DiscontinueProductCommandResponse(bool ProductExists, IEnumerable<BusinessRuleViolation> Errors)
 {
     public bool IsValid => !Errors.Any();
 }

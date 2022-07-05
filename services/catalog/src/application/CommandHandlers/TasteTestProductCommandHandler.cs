@@ -24,7 +24,7 @@ public class TasteTestProductCommandHandler : IRequestHandler<TasteTestProductCo
 
         if (product == null)
         {
-            throw new AggregateNotFoundException("Can't find the specified product");
+            return new TasteTestProductCommandResponse(false, Enumerable.Empty<BusinessRuleViolation>());
         }
 
         product.CompleteTasteTest(request.Taste, request.FlavorNotes, request.RoastLevel);
@@ -35,6 +35,6 @@ public class TasteTestProductCommandHandler : IRequestHandler<TasteTestProductCo
             await _eventPublisher.PublishEventsAsync(product.PendingDomainEvents);
         }
 
-        return new TasteTestProductCommandResponse(product.BusinessRuleViolations);
+        return new TasteTestProductCommandResponse(true, product.BusinessRuleViolations);
     }
 }

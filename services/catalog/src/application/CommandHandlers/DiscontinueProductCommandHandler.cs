@@ -6,7 +6,8 @@ using TastyBeans.Shared.Domain;
 
 namespace TastyBeans.Catalog.Application.CommandHandlers;
 
-public class DiscontinueProductCommandHandler: IRequestHandler<DiscontinueProductCommand, DiscontinueProductCommandResponse>
+public class
+    DiscontinueProductCommandHandler : IRequestHandler<DiscontinueProductCommand, DiscontinueProductCommandResponse>
 {
     private readonly IProductRepository _productRepository;
     private readonly IEventPublisher _eventPublisher;
@@ -17,13 +18,14 @@ public class DiscontinueProductCommandHandler: IRequestHandler<DiscontinueProduc
         _eventPublisher = eventPublisher;
     }
 
-    public async Task<DiscontinueProductCommandResponse> Handle(DiscontinueProductCommand request, CancellationToken cancellationToken = default)
+    public async Task<DiscontinueProductCommandResponse> Handle(DiscontinueProductCommand request,
+        CancellationToken cancellationToken = default)
     {
         var product = await _productRepository.FindByIdAsync(request.ProductId);
 
         if (product == null)
         {
-            throw new AggregateNotFoundException("Can't find the specified product");
+            return new DiscontinueProductCommandResponse(false, Enumerable.Empty<BusinessRuleViolation>());
         }
 
         product.Discontinue();
@@ -34,6 +36,6 @@ public class DiscontinueProductCommandHandler: IRequestHandler<DiscontinueProduc
             await _eventPublisher.PublishEventsAsync(product.PendingDomainEvents);
         }
 
-        return new DiscontinueProductCommandResponse(product.BusinessRuleViolations);
+        return new DiscontinueProductCommandResponse(true, product.BusinessRuleViolations);
     }
 }

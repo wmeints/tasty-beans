@@ -23,7 +23,7 @@ public class UpdateProductCommandHandler: IRequestHandler<UpdateProductCommand, 
 
         if (product == null)
         {
-            throw new AggregateNotFoundException("Can't find the specified product");
+            return new UpdateProductCommandResponse(false, Enumerable.Empty<BusinessRuleViolation>());
         }
 
         product.UpdateProductDetails(request.Name, request.Description);
@@ -34,6 +34,6 @@ public class UpdateProductCommandHandler: IRequestHandler<UpdateProductCommand, 
             await _eventPublisher.PublishEventsAsync(product.PendingDomainEvents);
         }
 
-        return new UpdateProductCommandResponse(product.BusinessRuleViolations);
+        return new UpdateProductCommandResponse(true, product.BusinessRuleViolations);
     }
 }

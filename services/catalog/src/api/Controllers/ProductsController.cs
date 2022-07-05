@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 using TastyBeans.Catalog.Api.Common;
 using TastyBeans.Catalog.Api.Forms;
 using TastyBeans.Catalog.Application.CommandHandlers;
@@ -14,53 +16,37 @@ namespace TastyBeans.Catalog.Api.Controllers;
 [Route("/products")]
 public class ProductsController : ControllerBase
 {
-    private readonly RegisterProductCommandHandler _registerProductCommandHandler;
-    private readonly UpdateProductCommandHandler _updateProductCommandHandler;
-    private readonly DiscontinueProductCommandHandler _discontinueProductCommandHandler;
-    private readonly FindProductByIdQueryHandler _findProductByIdQueryHandler;
-    private readonly FindAllProductsQueryHandler _findAllProductsQueryHandler;
-    private readonly TasteTestProductCommandHandler _tasteTestProductCommandHandler;
+    private readonly IMediator _mediator;
 
-    public ProductsController(RegisterProductCommandHandler registerProductCommandHandler,
-        UpdateProductCommandHandler updateProductCommandHandler,
-        DiscontinueProductCommandHandler discontinueProductCommandHandler,
-        FindProductByIdQueryHandler findProductByIdQueryHandler,
-        FindAllProductsQueryHandler findAllProductsQueryHandler, 
-        TasteTestProductCommandHandler tasteTestProductCommandHandler)
+    public ProductsController(IMediator mediator)
     {
-        _registerProductCommandHandler = registerProductCommandHandler;
-        _updateProductCommandHandler = updateProductCommandHandler;
-        _discontinueProductCommandHandler = discontinueProductCommandHandler;
-        _findProductByIdQueryHandler = findProductByIdQueryHandler;
-        _findAllProductsQueryHandler = findAllProductsQueryHandler;
-        _tasteTestProductCommandHandler = tasteTestProductCommandHandler;
+        _mediator = mediator;
     }
 
     [HttpGet]
     public async Task<ActionResult<PagedResult<Product>>> Index(int page = 0)
     {
-        var result = await _findAllProductsQueryHandler.Handle(new FindAllProducts(page, 20));
+        var result = await _mediator.Send(new FindAllProducts(page, 20));
         return Ok(result);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Product>> Details(Guid id)
     {
-        var result = await _findProductByIdQueryHandler.Handle(new FindProductById(id));
+        var result = await _mediator.Send(new FindProductById(id));
 
-        if (result == null)
+        if (result.Product == null)
         {
             return NotFound();
         }
 
-        return Ok(result);
+        return Ok(result.Product);
     }
 
     [HttpPost]
     public async Task<ActionResult<Product>> Create(CreateProductForm form)
     {
-        var command = new RegisterProductCommand(form.Name, form.Description);
-        var response = await _registerProductCommandHandler.Handle(command);
+        var response = await _mediator.Send(new RegisterProductCommand(form.Name, form.Description));
 
         ModelState.AddValidationErrors(response.Errors);
 
@@ -68,76 +54,65 @@ public class ProductsController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-        
+
         return Ok(response.Product);
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult<Product>> Update(Guid id, UpdateProductForm form)
     {
-        try
+        var command = new UpdateProductCommand(id, form.Name, form.Description);
+        var response = await _mediator.Send(command);
+
+        ModelState.AddValidationErrors(response.Errors);
+
+        if (!ModelState.IsValid)
         {
-            var command = new UpdateProductCommand(id, form.Name, form.Description);
-            var response = await _updateProductCommandHandler.Handle(command);
-
-            ModelState.AddValidationErrors(response.Errors);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return Accepted();
+            return BadRequest(ModelState);
         }
-        catch (AggregateNotFoundException)
-        {
-            return NotFound();
-        }
+
+        return Accepted();
     }
 
     [HttpPost("{id}/taste")]
     public async Task<IActionResult> TasteTest(Guid id, TasteTestForm form)
     {
-        try
-        {
-            var command = new TasteTestProductCommand(id, form.RoastLevel, form.Taste, form.FlavorNotes);
-            var response = await _tasteTestProductCommandHandler.Handle(command);
-            
-            ModelState.AddValidationErrors(response.Errors);
-            
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            
-            return AcceptedAtAction("Details", new { id = id });
-        }
-        catch (AggregateNotFoundException)
+        var response = await _mediator.Send(new TasteTestProductCommand(
+            id, form.RoastLevel, form.Taste, form.FlavorNotes));
+
+        if (!response.ProductExists)
         {
             return NotFound();
         }
+
+        ModelState.AddValidationErrors(response.Errors);
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        return AcceptedAtAction("Details", new {id = id});
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        try
-        {
-            var command = new DiscontinueProductCommand(id);
-            var response = await _discontinueProductCommandHandler.Handle(command);
+        var command = new DiscontinueProductCommand(id);
+        var response = await _mediator.Send(command);
 
-            ModelState.AddValidationErrors(response.Errors);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return NoContent();
-        }
-        catch (AggregateNotFoundException)
+        if (!response.ProductExists)
         {
             return NotFound();
         }
+
+        ModelState.AddValidationErrors(response.Errors);
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        return NoContent();
     }
 }

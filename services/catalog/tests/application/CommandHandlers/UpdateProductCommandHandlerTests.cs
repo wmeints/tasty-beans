@@ -53,13 +53,11 @@ public class UpdateProductCommandHandlerTests
             "Test coffee",
             "Test description");
 
-        A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns((Product?)null);
+        A.CallTo(() => _productRepository.FindByIdAsync(A<Guid>.Ignored)).Returns((Product?) null);
 
         var command = new UpdateProductCommand(product.Id, "Test", "Test");
+        var response = await _commandHandler.Handle(command);
 
-        await Assert.ThrowsAsync<AggregateNotFoundException>(async () =>
-        {
-            var response = await _commandHandler.Handle(command);
-        });
+        response.ProductExists.Should().BeFalse();
     }
 }
