@@ -33,6 +33,8 @@ builder.Services
         };
 
         serializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+        daprClientBuilder.UseJsonSerializationOptions(serializerOptions);
     });
 
 builder.Services.AddHeaderPropagation();
