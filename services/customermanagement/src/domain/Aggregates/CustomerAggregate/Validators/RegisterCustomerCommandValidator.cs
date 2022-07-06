@@ -9,7 +9,7 @@ public class RegisterCustomerCommandValidator : AbstractValidator<RegisterCustom
     {
         RuleFor(x => x.FirstName).NotEmpty().MaximumLength(100);
         RuleFor(x => x.LastName).NotEmpty().MaximumLength(100);
-        RuleFor(x => x.TelephoneNumber).NotEmpty().MaximumLength(13);
+        RuleFor(x => x.TelephoneNumber).NotEmpty().MaximumLength(20);
         RuleFor(x => x.EmailAddress).NotEmpty().MaximumLength(500);
 
         RuleFor(x=>x.InvoiceAddress).SetValidator(new AddressValidator());

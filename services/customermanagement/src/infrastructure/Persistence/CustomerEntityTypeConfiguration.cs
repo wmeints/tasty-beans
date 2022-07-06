@@ -11,7 +11,7 @@ public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer
         builder.Property<byte[]>("Version").IsRowVersion();
         builder.Property(x => x.FirstName).HasMaxLength(100).IsRequired();
         builder.Property(x => x.LastName).HasMaxLength(100).IsRequired();
-        builder.Property(x => x.TelephoneNumber).HasMaxLength(13).IsRequired();
+        builder.Property(x => x.TelephoneNumber).HasMaxLength(20).IsRequired();
         builder.Property(x => x.EmailAddress).HasMaxLength(500).IsRequired();
 
         var invoiceAddress = builder.OwnsOne(x=>x.InvoiceAddress);

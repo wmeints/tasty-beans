@@ -13,4 +13,9 @@
 	  <ProjectReference Include="..\..\..\..\shared\application\Application.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <PackageReference Include="Faker.Net" Version="2.0.154" />
+	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+	</ItemGroup>
+
 </Project>

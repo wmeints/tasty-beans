@@ -2,9 +2,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using RecommendCoffee.CustomerManagement.Infrastructure.Persistence;
 using TastyBeans.CustomerManagement.Application.CommandHandlers;
 using TastyBeans.CustomerManagement.Application.QueryHandlers;
+using TastyBeans.CustomerManagement.Application.Services;
 using TastyBeans.CustomerManagement.Domain.Aggregates.CustomerAggregate;
 using TastyBeans.CustomerManagement.Infrastructure.Persistence;
 using TastyBeans.Shared.Diagnostics;
@@ -63,12 +63,19 @@ builder.Services.AddScoped<RegisterCustomerCommandHandler>();
 builder.Services.AddScoped<FindCustomerQueryHandler>();
 builder.Services.AddScoped<FindAllCustomersQueryHandler>();
 
+builder.Services.AddScoped<ICustomerGenerationService, CustomerGenerationService>();
+builder.Services.AddScoped<ICustomerSampleRepository, CustomerSampleRepository>();
+
 var app = builder.Build();
 
 await using var scope = app.Services.CreateAsyncScope();
 await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
 await dbContext.Database.MigrateAsync();
+
+// We use seed data to prep the environment for use with MLOps.
+var customerGenerationService = scope.ServiceProvider.GetRequiredService<ICustomerGenerationService>();
+await customerGenerationService.GenerateAsync("SeedData/customers.csv");
 
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
 app.UseHeaderPropagation();
