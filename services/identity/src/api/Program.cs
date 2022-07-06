@@ -36,6 +36,7 @@ builder.Services
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
     
+        
         serializerOptions.Converters.Add(new JsonStringEnumConverter());
 
         daprClientBuilder.UseJsonSerializationOptions(serializerOptions);
