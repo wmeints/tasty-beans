@@ -1,7 +1,9 @@
 using System.Reflection;
+using Dapr;
 using Dapr.Client;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Polly;
 using TastyBeans.Shared.Application;
 using TastyBeans.Shared.Domain;
 
@@ -13,7 +15,12 @@ public class DaprEventPublisher : IEventPublisher
     private readonly IOptions<DaprEventPublisherOptions> _options;
     private readonly DaprClient _daprClient;
 
-    public DaprEventPublisher(DaprClient daprClient, ILogger<DaprEventPublisher> logger, IOptions<DaprEventPublisherOptions> options)
+    private static AsyncPolicy _retryPolicy = Policy.Handle<DaprException>().RetryForeverAsync();
+
+    public DaprEventPublisher(
+        DaprClient daprClient, 
+        ILogger<DaprEventPublisher> logger,
+        IOptions<DaprEventPublisherOptions> options)
     {
         _daprClient = daprClient;
         _logger = logger;
@@ -22,6 +29,11 @@ public class DaprEventPublisher : IEventPublisher
 
     public async Task PublishEventsAsync(IEnumerable<IDomainEvent> events)
     {
+        await _retryPolicy.ExecuteAsync(async () => await PublishEventsInternalAsync(events));
+    }
+
+    private async Task PublishEventsInternalAsync(IEnumerable<IDomainEvent> events)
+    {
         foreach (var evt in events)
         {
             var topic = evt.GetType().GetCustomAttribute<TopicAttribute>();
@@ -29,20 +41,23 @@ public class DaprEventPublisher : IEventPublisher
             if (topic == null)
             {
                 _logger.LogWarning(
-                    "Missing topic attribute on event {eventType}. It will be published on the dead letter topic.", 
+                    "Missing topic attribute on event {eventType}. It will be published on the dead letter topic.",
                     evt.GetType().Name);
             }
 
             try
             {
-                await _daprClient.PublishEventAsync<object>("pubsub", topic?.Name ?? _options.Value.DeadLetterTopic,
-                    evt);
+                var targetTopic = topic?.Name ?? _options.Value.DeadLetterTopic;
+                await _daprClient.PublishEventAsync<object>("pubsub", targetTopic, evt);
             }
-            catch (Exception ex)
+            catch (DaprException ex)
             {
                 _logger.LogWarning(
-                    "A problem happened while publishing the event. This could be caused by the target application raising an error. Original error was: {Error}", 
+                    "A problem happened while publishing the event. This could be caused by the " +
+                    "target application raising an error. Original error was: {Error}",
                     ex);
+
+                throw;
             }
         }
     }

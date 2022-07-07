@@ -20,6 +20,9 @@ COPY services/${SERVICE_NAME} /project/services/${SERVICE_NAME}
 
 RUN dotnet publish src/api/Api.csproj -o /dist
 
+# We include seed data to prefill the microservice for demo purposes.
+COPY services/${SERVICE_NAME}/src/api/SeedData/customers.csv /dist/SeedData/customers.csv
+
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 
 ARG ENTRYPOINT
