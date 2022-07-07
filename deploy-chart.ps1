@@ -65,7 +65,7 @@ if($ReleaseVersion -eq "") {
 
 Write-Host "Installing helm chart"
 
-helm install --generate-name ./charts/tasty-beans `
+helm install --generate-name ./src/charts/tasty-beans `
     --set global.releaseVersion=$ReleaseVersion `
     --set global.containerRegistry="${ContainerRegistry}" `
     --set shared.databasePassword="${DatabasePassword}"

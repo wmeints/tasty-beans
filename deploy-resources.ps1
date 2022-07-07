@@ -28,7 +28,7 @@ az account set --subscription "${SubscriptionId}"
 
 az deployment group create `
     -g $ResourceGroupName `
-    --template-file ./environment/environment.bicep `
+    --template-file ./iac/main.bicep `
     --parameters environment=$Environment `
     --parameters location=$Location `
     --parameters containerRegistryName=$ContainerRegistryName `
