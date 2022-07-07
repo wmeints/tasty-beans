@@ -71,7 +71,7 @@ foreach($ServiceDefinition in $FilteredImageList) {
     $DockerFilePath = "./services/$ServiceName/Dockerfile"
     $Entrypoint = $ServiceDefinition.entrypoint
     $ImageTag = "${ContainerRegistry}/${ServiceName}:$ReleaseVersion"
-    $ContextPath = ./src/
+    $ContextPath = "./src/"
     
     # Build the application container.
     docker build -t $ImageTag `
