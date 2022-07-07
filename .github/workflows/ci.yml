@@ -32,7 +32,7 @@ jobs:
       shell: pwsh
       name: 'Push docker images to remote registry'
     - run: |
-        helm package ./charts/tasty-beans
+        helm package ./src/charts/tasty-beans
       name: 'Package helm chart'
     - run: |
         helm push ./tasty-beans-0.1.0-alpha.1.tgz oci://tastybeans.azurecr.io/helm
