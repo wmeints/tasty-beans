@@ -1,24 +1,30 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Baseline;
+using Marten;
 using MediatR;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-using TastyBeans.Catalog.Application.CommandHandlers;
 using TastyBeans.Catalog.Application.Commands;
-using TastyBeans.Catalog.Application.QueryHandlers;
+using TastyBeans.Catalog.Application.Projections;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
+using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Events;
 using TastyBeans.Catalog.Infrastructure.Persistence;
 using TastyBeans.Shared.Diagnostics;
 using TastyBeans.Shared.Infrastructure.EventBus;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddMarten(options =>
 {
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultDatabase"),
-        opts => opts.EnableRetryOnFailure());
+    options.Connection(builder.Configuration.GetConnectionString("EventStore"));
+
+    options.Projections.Add<ProductInformationProjection>();
+    
+    options.Events.AddEventType(typeof(ProductRegisteredEvent));
+    options.Events.AddEventType(typeof(ProductUpdatedEvent));
+    options.Events.AddEventType(typeof(ProductTasteTestedEvent));
+    options.Events.AddEventType(typeof(ProductDiscontinuedEvent));
 });
 
 builder.Services
@@ -36,7 +42,6 @@ builder.Services
         };
 
         serializerOptions.Converters.Add(new JsonStringEnumConverter());
-
         daprClientBuilder.UseJsonSerializationOptions(serializerOptions);
     });
 

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Marten;
+using MediatR;
 using TastyBeans.Catalog.Application.Commands;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 using TastyBeans.Shared.Application;
@@ -7,12 +8,12 @@ namespace TastyBeans.Catalog.Application.CommandHandlers;
 
 public class RegisterProductCommandHandler: IRequestHandler<RegisterProductCommand, RegisterProductCommandResponse>
 {
+    private readonly IDocumentSession _documentSession;
     private readonly IEventPublisher _eventPublisher;
-    private readonly IProductRepository _productRepository;
 
-    public RegisterProductCommandHandler(IProductRepository productRepository, IEventPublisher eventPublisher)
+    public RegisterProductCommandHandler(IDocumentSession documentSession, IEventPublisher eventPublisher)
     {
-        _productRepository = productRepository;
+        _documentSession = documentSession;
         _eventPublisher = eventPublisher;
     }
     
@@ -22,7 +23,9 @@ public class RegisterProductCommandHandler: IRequestHandler<RegisterProductComma
 
         if (product.IsValid)
         {
-            await _productRepository.InsertAsync(product);
+            _documentSession.Events.StartStream<Product>(product.Id, product.PendingDomainEvents);
+            
+            await _documentSession.SaveChangesAsync(cancellationToken);
             await _eventPublisher.PublishEventsAsync(product.PendingDomainEvents);
         }
 

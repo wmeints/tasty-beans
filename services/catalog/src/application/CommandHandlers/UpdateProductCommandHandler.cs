@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Marten;
+using MediatR;
 using TastyBeans.Catalog.Application.Commands;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 using TastyBeans.Shared.Application;
@@ -6,20 +7,22 @@ using TastyBeans.Shared.Domain;
 
 namespace TastyBeans.Catalog.Application.CommandHandlers;
 
-public class UpdateProductCommandHandler: IRequestHandler<UpdateProductCommand, UpdateProductCommandResponse>
+public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, UpdateProductCommandResponse>
 {
-    private readonly IProductRepository _productRepository;
+    private readonly IDocumentSession _documentSession;
     private readonly IEventPublisher _eventPublisher;
 
-    public UpdateProductCommandHandler(IProductRepository productRepository, IEventPublisher eventPublisher)
+    public UpdateProductCommandHandler(IDocumentSession documentSession, IEventPublisher eventPublisher)
     {
-        _productRepository = productRepository;
+        _documentSession = documentSession;
         _eventPublisher = eventPublisher;
     }
 
-    public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken = default)
+    public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommand request,
+        CancellationToken cancellationToken = default)
     {
-        var product = await _productRepository.FindByIdAsync(request.ProductId);
+        var product = await _documentSession.Events.AggregateStreamAsync<Product>(
+            request.ProductId, token: cancellationToken);
 
         if (product == null)
         {
@@ -30,7 +33,10 @@ public class UpdateProductCommandHandler: IRequestHandler<UpdateProductCommand, 
 
         if (product.IsValid)
         {
-            await _productRepository.UpdateAsync(product);
+            await _documentSession.Events.AppendOptimistic(
+                product.Id, cancellationToken, product.PendingDomainEvents.ToArray());
+
+            await _documentSession.SaveChangesAsync(cancellationToken);
             await _eventPublisher.PublishEventsAsync(product.PendingDomainEvents);
         }
 

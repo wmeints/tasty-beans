@@ -6,6 +6,6 @@ namespace TastyBeans.Catalog.Domain.Aggregates.ProductAggregate.Events;
 public record ProductTasteTestedEvent(
     Guid ProductId,
     string Taste, 
-    IEnumerable<string> FlavorNotes,
+    string[] FlavorNotes,
     int RoastLevel 
 );

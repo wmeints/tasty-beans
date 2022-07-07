@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Marten;
+using MediatR;
 using TastyBeans.Catalog.Application.Commands;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
 using TastyBeans.Shared.Application;
@@ -8,19 +9,20 @@ namespace TastyBeans.Catalog.Application.CommandHandlers;
 
 public class TasteTestProductCommandHandler : IRequestHandler<TasteTestProductCommand, TasteTestProductCommandResponse>
 {
-    private readonly IProductRepository _productRepository;
+    private readonly IDocumentSession _documentSession;
     private readonly IEventPublisher _eventPublisher;
 
-    public TasteTestProductCommandHandler(IProductRepository productRepository, IEventPublisher eventPublisher)
+    public TasteTestProductCommandHandler(IDocumentSession documentSession, IEventPublisher eventPublisher)
     {
-        _productRepository = productRepository;
+        _documentSession = documentSession;
         _eventPublisher = eventPublisher;
     }
 
     public async Task<TasteTestProductCommandResponse> Handle(TasteTestProductCommand request,
         CancellationToken cancellationToken = default)
     {
-        var product = await _productRepository.FindByIdAsync(request.ProductId);
+        var product = await _documentSession.Events.AggregateStreamAsync<Product>(
+            request.ProductId, token: cancellationToken);
 
         if (product == null)
         {
@@ -31,7 +33,11 @@ public class TasteTestProductCommandHandler : IRequestHandler<TasteTestProductCo
 
         if (product.IsValid)
         {
-            await _productRepository.UpdateAsync(product);
+            await _documentSession.Events.AppendOptimistic(
+                request.ProductId, cancellationToken, product.PendingDomainEvents.ToArray());
+
+            await _documentSession.SaveChangesAsync(cancellationToken);
+
             await _eventPublisher.PublishEventsAsync(product.PendingDomainEvents);
         }
 

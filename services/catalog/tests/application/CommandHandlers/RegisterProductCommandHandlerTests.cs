@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FakeItEasy;
 using FluentAssertions;
+using Marten;
+using Marten.Events;
 using TastyBeans.Catalog.Application.CommandHandlers;
 using TastyBeans.Catalog.Application.Commands;
 using TastyBeans.Catalog.Domain.Aggregates.ProductAggregate;
@@ -13,18 +16,22 @@ namespace TastyBeans.Catalog.Application.Tests.CommandHandlers;
 
 public class RegisterProductCommandHandlerTests
 {
-    private IProductRepository _productRepository;
     private IEventPublisher _eventPublisher;
     private RegisterProductCommandHandler _commandHandler;
+    private IDocumentSession _documentSession;
+    private IEventStore _eventStore;
 
     public RegisterProductCommandHandlerTests()
     {
-        _productRepository = A.Fake<IProductRepository>();
+        _documentSession = A.Fake<IDocumentSession>();
         _eventPublisher = A.Fake<IEventPublisher>();
+        _eventStore = A.Fake<IEventStore>();
         
-        _commandHandler = new RegisterProductCommandHandler(_productRepository, _eventPublisher);
+        A.CallTo(() => _documentSession.Events).Returns(_eventStore);
+        A.CallTo(() => _eventStore.StartStream<Product>(A<Guid>.Ignored, A<IEnumerable<object>>.Ignored))
+            .Returns(A.Fake<StreamAction>());
         
-        A.CallTo(() => _productRepository.InsertAsync(A<Product>.Ignored)).Returns(1);
+        _commandHandler = new RegisterProductCommandHandler(_documentSession, _eventPublisher);
     }
     
     [Fact]
@@ -36,7 +43,7 @@ public class RegisterProductCommandHandlerTests
         
         var response = await _commandHandler.Handle(command);
 
-        A.CallTo(() => _productRepository.InsertAsync(A<Product>.Ignored)).MustHaveHappened();
+        A.CallTo(() => _eventStore.StartStream<Product>(A<Guid>.Ignored, A<IEnumerable<object>>.Ignored)).MustHaveHappened();
         A.CallTo(() => _eventPublisher.PublishEventsAsync(A<IEnumerable<object>>.Ignored)).MustHaveHappened();
 
         response.Should().NotBeNull();
