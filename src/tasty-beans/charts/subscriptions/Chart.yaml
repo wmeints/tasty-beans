@@ -1,6 +1,0 @@
-apiVersion: v2
-name: subscriptions
-description: Deploys the subscriptions microservice
-type: application
-version: 0.1.0-alpha.1
-appVersion: 1.16.0

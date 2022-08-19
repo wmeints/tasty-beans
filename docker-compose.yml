@@ -1,0 +1,93 @@
+services:
+  database:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: postgres
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+  eventbus:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./eventbus/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./eventbus/definitions.json:/etc/rabbitmq/definitions.json:ro
+  identity:
+    image: tastybeans.azurecr.io/identity
+    build: 
+      context: identity
+    ports:
+      - 5000:80
+    environment:
+      CONNECTIONSTRINGS__DEFAULTDATABASE: server=database;database=identity;user id=postgres;password=${DB_PASSWORD}
+      EVENTBUS__HOSTNAME: eventbus
+      EVENTBUS__PORT: 5672
+      EVENTBUS__USERNAME: guest
+      EVENTBUS__PASSWORD: guest
+    depends_on:
+      - eventbus
+      - database
+  payments:
+    image: tastybeans.azurecr.io/payments
+    build: 
+      context: payments
+    ports:
+      - 5001:80
+    environment:
+      CONNECTIONSTRINGS__DEFAULTDATABASE: server=database;database=payments;user id=postgres;password=${DB_PASSWORD}
+      EVENTBUS__HOSTNAME: eventbus
+      EVENTBUS__PORT: 5672
+      EVENTBUS__USERNAME: guest
+      EVENTBUS__PASSWORD: guest
+    depends_on:
+      - eventbus
+      - database
+  profile:
+    image: tastybeans.azurecr.io/profile
+    build: 
+      context: profile
+    ports:
+      - 5002:80
+    environment:
+      CONNECTIONSTRINGS__DEFAULTDATABASE: server=database;database=profile;user id=postgres;password=${DB_PASSWORD}
+      EVENTBUS__HOSTNAME: eventbus
+      EVENTBUS__PORT: 5672
+      EVENTBUS__USERNAME: guest
+      EVENTBUS__PASSWORD: guest
+    depends_on:
+      - eventbus
+      - database
+  registration:
+    image: tastybeans.azurecr.io/registration
+    build: 
+      context: registration
+    ports:
+      - 5003:80
+    environment:
+      CONNECTIONSTRINGS__DEFAULTDATABASE: server=database;database=registration;user id=postgres;password=${DB_PASSWORD}
+      EVENTBUS__HOSTNAME: eventbus
+      EVENTBUS__PORT: 5672
+      EVENTBUS__USERNAME: guest
+      EVENTBUS__PASSWORD: guest
+      SERVICEREGISTRY__PROFILE: "http://profile"
+      SERVICEREGISTRY__PAYMENTS: "http://payments"
+    depends_on:
+      - eventbus
+      - database
+      - payments
+      - profile
+  timer:
+    image: tastybeans.azurecr.io/timer
+    build:
+      context: timer
+    environment:
+      EVENTBUS__HOSTNAME: eventbus
+      EVENTBUS__PORT: 5672
+      EVENTBUS__USERNAME: guest
+      EVENTBUS__PASSWORD: guest
+    depends_on:
+      - eventbus

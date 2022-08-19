@@ -1,0 +1,89 @@
+{
+    "vhosts": [
+        {
+            "name": "/"
+        }
+    ],
+    "users": [
+        { 
+            "name": "guest",
+            "password": "guest",
+            "tags": "administrator"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "guest",
+            "vhost": "/",
+            "configure": ".*",
+            "read": ".*",
+            "write": ".*"
+        }
+    ],
+    "queues": [
+        {
+            "name": "profile",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "registration",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "payments",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        }
+    ],
+    "exchanges": [
+        {
+            "name": "events",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        }
+    ],
+    "bindings": [
+        {
+            "source": "events",
+            "vhost": "/",
+            "destination": "profile",
+            "destination_type": "queue",
+            "routing_key": "timer.month-has-passed.#",
+            "arguments": { }
+        },
+        {
+            "source": "events",
+            "vhost": "/",
+            "destination": "registration",
+            "destination_type": "queue",
+            "routing_key": "profile.customer.registered.#",
+            "arguments": { }
+        },
+        {
+            "source": "events",
+            "vhost": "/",
+            "destination": "registration",
+            "destination_type": "queue",
+            "routing_key": "payments.payment-method.registered.#",
+            "arguments": { }
+        }
+    ]
+}

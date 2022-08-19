@@ -1,7 +1,0 @@
-POST http://localhost:54640/events/monthhaspassed
-Content-Type: application/json
-Accept: application/json
-
-{
-    
-}

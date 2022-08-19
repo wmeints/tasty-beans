@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aeb10725-62dc-4168-8a04-8b7c2aedd977</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TastyBeans.Profile.Domain\TastyBeans.Profile.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Jasper.Persistence.Marten" Version="2.0.0-alpha-5" />
+    <PackageReference Include="Jasper.RabbitMQ" Version="2.0.0-alpha-5" />
+    <PackageReference Include="Marten" Version="5.8.0" />
+  </ItemGroup>
+
+</Project>

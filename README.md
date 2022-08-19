@@ -1,6 +1,6 @@
 # Tasty Beans sample solution
 
-![Tasty Beans logo](./images/tasty-beans.png)
+![Tasty Beans logo](./docs/images/tasty-beans.png)
 
 Welcome to Tasty Beans, the subscription-based coffee beans shop that makes it
 easy to get your hands on the best beans around!
@@ -36,25 +36,25 @@ All features are subject to change. But that's part of the fun :grin:
 
 Please make sure you have the following tools available:
 
-* [Helm 3](https://helm.sh/docs/intro/quickstart/)
 * [Docker Desktop](https://www.docker.com/get-started/)
 * [Powershell](https://github.com/PowerShell/PowerShell)
 * [Istio](https://istio.io/latest/docs/setup/getting-started/)
-* [Dapr](https://docs.dapr.io/getting-started/install-dapr-cli/)
 
 You'll need 2 CPU cores available and 16GB of memory for all the containers in
 the solution. You can deploy with less, but it's untested, so you've been warned.
 
-Make sure you have `istio`, `helm`, and `kubectl` in your `PATH` variable. The
+Make sure you have `istio`, and `kubectl` in your `PATH` variable. The
 utility scripts expect you to have these tools available.
 
 ## :rocket: Getting started
 
-Please find [the installation guide](https://github.com/wmeints/recommend-coffee/wiki/Installation-guide) on the Wiki.
+Please find [the installation guide](https://github.com/wmeints/tasty-beans/wiki/Installation-guide) on the Wiki.
 
 ## :book: Documentation
 
-Please review [the wiki](https://github.com/wmeints/recommend-coffee/wiki) to
+:warning: The documentation isn't fully up-to-date yet.
+
+Please review [the wiki](https://github.com/wmeints/tasty-beans/wiki) to
 learn more about using the solution.
 
 [PWSH_INSTALL]: https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux?view=powershell-7.2

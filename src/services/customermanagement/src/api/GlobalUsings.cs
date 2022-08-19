@@ -1,1 +1,0 @@
-global using TastyBeans.Shared.Infrastructure;

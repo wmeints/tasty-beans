@@ -1,7 +1,0 @@
-.env
-.vs/
-.vscode/
-.idea/
-infrastructure/secrets.yml
-
-*.DotSettings.user

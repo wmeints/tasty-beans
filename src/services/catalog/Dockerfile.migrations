@@ -1,5 +1,0 @@
-ARG TOOL_VERSION
-ARG REPOSITORY
-FROM ${REPOSITORY}/database-migrations:${TOOL_VERSION}
-
-COPY sql/*.sql /sql/

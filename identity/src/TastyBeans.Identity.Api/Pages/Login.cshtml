@@ -1,0 +1,30 @@
+@page "/Account/Login"
+@model LoginPageModel
+@{
+    ViewBag.Title = "Login";
+}
+<partial name="Shared/_NavigationBar"/>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <h1>@ViewBag.Title</h1>
+            <p>Please provide your e-mail address to start the login process.</p>
+            <div class="alert alert-danger" asp-validation-summary="All">
+                <h4 class="alert-heading">Woops!</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="Input.EmailAddress" class="form-label"></label>
+                    <input type="email" class="form-control" asp-for="Input.EmailAddress"/>
+                </div> 
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Start login</button>
+                </div>
+            </form>      
+        </div>
+    </div>
+</div>
