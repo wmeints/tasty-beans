@@ -1,0 +1,37 @@
+apiVersion: mlops.aigency.com/v1alpha1
+kind: Workspace
+metadata:
+  name: tastybeans
+spec:
+  workflows:
+    controller:
+      replicas: 1
+      image: willemmeints/workflow-controller:latest
+      resources:
+        requests:
+          cpu: 100m
+          memory: 500Mi
+    agentPools:
+      - name: default
+        replicas: 1
+        image: willemmeints/workflow-agent:latest
+        resources:
+          requests:
+            cpu: 1
+            memory: 4Gi
+  experimentTracking:
+    replicas: 1
+    image: willemmeints/experiment-tracking:latest
+    resources:
+      requests:
+        cpu: 100m
+        memory: 500Mi
+  compute:
+    workers:
+      - name: default
+        maxReplicas: 4
+        minReplicas: 2
+        resources:
+          requests:
+            cpu: 1
+            memory: 32Gi
