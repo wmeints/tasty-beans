@@ -64,14 +64,14 @@ foreach($ServiceDefinition in $FilteredImageList) {
 
     $ServiceName = $ServiceDefinition.name
 
-    $MigrationDockerFilePath = "./src/services/$ServiceName/Dockerfile.migrations"
-    $MigrationContextPath = "./src/services/$ServiceName"
+    $MigrationDockerFilePath = "./platform/services/$ServiceName/Dockerfile.migrations"
+    $MigrationContextPath = "./platform/services/$ServiceName"
     $MigrationImageTag = "${ContainerRegistry}/${ServiceName}-migrations:$ReleaseVersion"
 
-    $DockerFilePath = "./services/$ServiceName/Dockerfile"
+    $DockerFilePath = "./platform/services/$ServiceName/Dockerfile"
     $Entrypoint = $ServiceDefinition.entrypoint
     $ImageTag = "${ContainerRegistry}/${ServiceName}:$ReleaseVersion"
-    $ContextPath = "./src/"
+    $ContextPath = "./platform/"
     
     # Build the application container.
     docker build -t $ImageTag `
@@ -92,5 +92,5 @@ foreach($ServiceDefinition in $FilteredImageList) {
 }
 
 if(($ServiceName -eq "portal") -or ($ServiceName -eq "")) {
-    docker build -t "${ContainerRegistry}/portal:${ReleaseVersion}" -f ./src/services/portal/Dockerfile ./src/    
+    docker build -t "${ContainerRegistry}/portal:${ReleaseVersion}" -f ./platform/services/portal/Dockerfile ./platform/    
 }
